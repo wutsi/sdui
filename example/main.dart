@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../src/route.dart';
+import 'package:sdui/sdui.dart';
 
 const String ROUTE_HOME = '''
 {
