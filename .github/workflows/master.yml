@@ -1,0 +1,28 @@
+name: master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  #--------------------------
+  # BUILD
+  #--------------------------
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Publish package
+        run: |
+          mkdir -p ~/.pub-cache
+          cat <<EOF > ~/.pub-cache/credentials.json ${{DART_CREDENTIALS}}
+          dart pub publish -f
