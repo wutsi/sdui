@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
 import 'action.dart';
@@ -9,6 +10,25 @@ import 'form.dart';
 import 'widget.dart';
 
 /// Descriptor of a form Input
+///
+/// Attributes
+/// - name: REQUIRED. This should be the name of the input field
+/// - type: Type of input field. The possible values are:
+///    - `text`: Free text
+///    - `phone`: Phone number
+///    - `date`: Date
+///    - `time`: Time
+/// - value: Default value.
+///    - When `type=date`, the format should be `yyyy-MM-dd` (Ex: 2020-07-30)
+///    - When `type=time`, the format should be `HH:mm` (Ex: 23:30)
+/// - hideText: if `true`, the input text will be hide. (Default: `false`)
+/// - caption: Title of the input
+/// - hint: Help test for user
+/// - required: if `true`, validation will be fired to ensure that the field has a value
+/// - readOnly: if `true`, the field will not be editable (Default: `false`)
+/// - maxLength: Maximum length of the field
+/// - maxLine: Maximum number of line  (for multi-line input)
+/// - minLength: Minimum length of the field (Default: 0)
 class SDUInput extends SDUIWidget implements SDUIFormField {
   String name = '_no_name_';
   String? value;
@@ -54,24 +74,16 @@ class SDUInput extends SDUIWidget implements SDUIFormField {
   Widget _createWidget(BuildContext context) {
     switch (type.toLowerCase()) {
       case 'submit':
-        return SubmitWidgetStateful(this);
+        return _SubmitWidgetStateful(this);
+
+      case 'date':
+      case 'time':
+        return _DateTimeWidgetStateful(this);
 
       default:
-        return TextFormField(
-            key: FormFieldKey(name),
-            enabled: enabled,
-            decoration: _toInputDecoration(),
-            controller: TextEditingController(text: value),
-            obscureText: hideText,
-            readOnly: readOnly,
-            maxLength: maxLength,
-            maxLines: maxLines,
-            validator: (String? value) => _onValidate(value));
+        return _TextFieldWidgetStateful(this);
     }
   }
-
-  InputDecoration? _toInputDecoration() => InputDecoration(
-      hintText: hint, label: caption == null ? null : Text(caption!));
 
   String? _onValidate(String? value) {
     if (required && (value == null || value.isEmpty)) {
@@ -91,16 +103,64 @@ class SDUInput extends SDUIWidget implements SDUIFormField {
   }
 }
 
-class SubmitWidgetStateful extends StatefulWidget {
+class _TextFieldWidgetStateful extends StatefulWidget {
   final SDUInput delegate;
 
-  const SubmitWidgetStateful(this.delegate, {Key? key}) : super(key: key);
+  const _TextFieldWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => SubmitWidgetState(delegate);
+  State<StatefulWidget> createState() => _TextFieldWidgetState(delegate);
 }
 
-class SubmitWidgetState extends State<SubmitWidgetStateful> {
+class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
+  SDUInput delegate;
+  String state = '';
+
+  _TextFieldWidgetState(this.delegate);
+
+  @override
+  void initState() {
+    super.initState();
+    state = delegate.value ?? '';
+    delegate.provider?.setData(delegate.name, state);
+  }
+
+  @override
+  Widget build(BuildContext context) => TextFormField(
+      enabled: delegate.enabled,
+      decoration: _toInputDecoration(),
+      controller: TextEditingController(text: state),
+      obscureText: delegate.hideText,
+      readOnly: delegate.readOnly,
+      maxLength: delegate.maxLength,
+      maxLines: delegate.maxLines,
+      onChanged: (String value) => _onChanged(value),
+      validator: (String? value) => _onValidate(value));
+
+  InputDecoration? _toInputDecoration() => InputDecoration(
+      hintText: delegate.hint,
+      label: delegate.caption == null ? null : Text(delegate.caption!));
+
+  String? _onValidate(String? value) => delegate._onValidate(value);
+
+  void _onChanged(String value) {
+    setState(() {
+      state = value;
+    });
+    delegate.provider?.setData(delegate.name, value);
+  }
+}
+
+class _SubmitWidgetStateful extends StatefulWidget {
+  final SDUInput delegate;
+
+  const _SubmitWidgetStateful(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _SubmitWidgetState(delegate);
+}
+
+class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
   static final Logger _logger = Logger(
     printer: LogfmtPrinter(),
   );
@@ -108,7 +168,7 @@ class SubmitWidgetState extends State<SubmitWidgetStateful> {
   bool enabled = false;
   SDUInput delegate;
 
-  SubmitWidgetState(this.delegate);
+  _SubmitWidgetState(this.delegate);
 
   @override
   void initState() {
@@ -159,5 +219,122 @@ class SubmitWidgetState extends State<SubmitWidgetStateful> {
     setState(() {
       enabled = false;
     });
+  }
+}
+
+class _DateTimeWidgetStateful extends StatefulWidget {
+  final SDUInput delegate;
+
+  const _DateTimeWidgetStateful(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _DateTimeWidgetState(delegate);
+}
+
+class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
+  static final Logger _logger = Logger(
+    printer: LogfmtPrinter(),
+  );
+
+  DateTime state = DateTime.now();
+  DateFormat displayDateFormat = DateFormat("yyyy-MM-dd");
+  DateFormat dataDateFormat = DateFormat("yyyy-MM-dd");
+  SDUInput delegate;
+
+  _DateTimeWidgetState(this.delegate);
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (delegate.type == 'date') {
+      displayDateFormat = DateFormat("dd MMM yyyy");
+      dataDateFormat = DateFormat("yyyy-MM-dd");
+    } else {
+      displayDateFormat = DateFormat("HH:mm");
+      dataDateFormat = DateFormat("HH:mm");
+    }
+
+    if (delegate.value == null || delegate.value?.isEmpty == true) {
+      state = DateTime.now();
+    } else {
+      try {
+        state = dataDateFormat.parse(delegate.value!);
+      } catch (e) {
+        _logger.w("Invalid date: ${delegate.value}");
+      }
+    }
+    delegate.provider?.setData(delegate.name, _text());
+  }
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Text(delegate.caption ?? '',
+                style: const TextStyle(color: Color(0xff707070), fontSize: 12)),
+          ),
+          SizedBox(
+              width: double.infinity,
+              child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(width: 1, color: Color(0xff909090))),
+                  ),
+                  child: TextButton(
+                    style: const ButtonStyle(alignment: Alignment.centerLeft),
+                    child: Text(
+                      _displayText(),
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    onPressed: () => _selectDateOrTime(context),
+                  )))
+        ],
+      ));
+
+  String _text() => dataDateFormat.format(state);
+
+  String _displayText() => displayDateFormat.format(state);
+
+  void _selectDateOrTime(BuildContext context) async {
+    if (delegate.type == 'date') {
+      _selectDate(context);
+    } else if (delegate.type == 'time') {
+      _selectTime(context);
+    }
+  }
+
+  void _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: state,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(DateTime.now().year + 100),
+    );
+
+    if (picked != null && picked != state) {
+      setState(() {
+        state = picked;
+        delegate.provider?.setData(delegate.name, _text());
+      });
+    }
+  }
+
+  void _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay(hour: state.hour, minute: state.minute));
+
+    if (picked != null) {
+      setState(() {
+        state = DateTime(
+            state.year, state.month, state.day, picked.hour, picked.minute);
+        delegate.provider?.setData(delegate.name, _text());
+      });
+    }
   }
 }

@@ -6,18 +6,13 @@ import 'widget.dart';
 /// Interface for returning the data of a form
 abstract class SDUIFormDataProvider {
   Map<String, String> getData();
+
+  void setData(String name, String value);
 }
 
 /// Interface for attaching a form with its fields
 abstract class SDUIFormField {
   void attach(GlobalKey<FormState> formKey, SDUIFormDataProvider provider);
-}
-
-class FormFieldKey extends ValueKey<String> {
-  const FormFieldKey(String value) : super(value);
-
-  @override
-  String toString() => value;
 }
 
 /// Descriptor of [Form]
@@ -48,23 +43,17 @@ class FormWidgetStateful extends StatefulWidget {
 class FormWidgetState extends State<FormWidgetStateful>
     implements SDUIFormDataProvider {
   SDUIForm delegate;
-  List<Widget> widgets = <Widget>[];
+  Map<String, String> data = <String, String>{};
   final key = GlobalKey<FormState>();
 
   FormWidgetState(this.delegate);
 
   @override
-  Map<String, String> getData() {
-    var data = <String, String>{};
-    int i = 0;
-    widgets.forEach((element) {
-      i++;
-      String name = element.key?.toString() ?? '_key_$i';
-      if (element is TextFormField) {
-        data[name] = element.controller?.text ?? '';
-      }
-    });
-    return data;
+  Map<String, String> getData() => data;
+
+  @override
+  void setData(String name, String value) {
+    data[name] = value;
   }
 
   @override
@@ -79,11 +68,13 @@ class FormWidgetState extends State<FormWidgetStateful>
 
   @override
   Widget build(BuildContext context) {
-    widgets = delegate.childrenWidgets(context);
     return Form(
         key: key,
         child: Column(
-          children: widgets.map((e) => _decorate(e)).toList(),
+          children: delegate
+              .childrenWidgets(context)
+              .map((e) => _decorate(e))
+              .toList(),
         ));
   }
 

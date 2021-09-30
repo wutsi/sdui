@@ -75,7 +75,7 @@ class SDUIListItemSwitch extends SDUIWidget {
   String? icon;
 
   @override
-  Widget toWidget(BuildContext context) => ListItemSwitchWidget(this);
+  Widget toWidget(BuildContext context) => _ListItemSwitchWidget(this);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -94,20 +94,20 @@ class SDUIListItemSwitch extends SDUIWidget {
   }
 }
 
-class ListItemSwitchWidget extends StatefulWidget {
+class _ListItemSwitchWidget extends StatefulWidget {
   final SDUIListItemSwitch delegate;
 
-  const ListItemSwitchWidget(this.delegate, {Key? key}) : super(key: key);
+  const _ListItemSwitchWidget(this.delegate, {Key? key}) : super(key: key);
 
   @override
-  ListItemSwitchState createState() => ListItemSwitchState(delegate);
+  _ListItemSwitchState createState() => _ListItemSwitchState(delegate);
 }
 
-class ListItemSwitchState extends State<ListItemSwitchWidget> {
+class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   bool state = false;
   SDUIListItemSwitch delegate;
 
-  ListItemSwitchState(this.delegate);
+  _ListItemSwitchState(this.delegate);
 
   @override
   void initState() {
