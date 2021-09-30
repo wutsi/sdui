@@ -26,8 +26,13 @@ jobs:
           flutter pub get
           dart pub get
 
-      - name: Publish package
+      - name: Setup credentials
         run: |
           mkdir -p ~/.pub-cache
           cat <<EOF > ~/.pub-cache/credentials.json ${DART_CREDENTIALS}
-          dart pub publish -f
+
+      - name: Check publish warnings
+        run: dart pub publish --dry-run
+
+      - name: Publish package
+        run: dart pub publish -f
