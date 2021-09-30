@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
+/// Descriptor of a [CachedNetworkImage]
 class SDUIImage extends SDUIWidget {
   String? url;
   double? width;

@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-class SDUIFlexible extends SDUIComposite {
-  int? flex;
-  String? fit;
+/// Descriptor of a [Flexible]
+class SDUIFlexible extends SDUIWidget {
+  /// see [Flexible.flex]
+  int flex = 0;
 
-  SDUIFlexible({this.flex = 1, this.fit});
+  /// see [Flexible.fit]
+  String fit = 'tight';
 
   @override
-  Widget toWidget(context) => Flexible(
-      child: child().toWidget(context), flex: flex ?? 1, fit: _toFlexFit());
+  Widget toWidget(context) =>
+      Flexible(child: child().toWidget(context), flex: flex, fit: _toFlexFit());
 
   FlexFit _toFlexFit() {
-    switch (fit?.toLowerCase()) {
+    switch (fit.toLowerCase()) {
       case "loose":
         return FlexFit.loose;
       default:
@@ -24,8 +26,8 @@ class SDUIFlexible extends SDUIComposite {
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
-    fit = json?["fit"];
-    flex = json?["flex"];
+    fit = json?["fit"] ?? 0;
+    flex = json?["flex"] ?? 'tight';
     return this;
   }
 }

@@ -7,12 +7,27 @@ import 'package:logger/logger.dart';
 
 import 'route.dart';
 
+/// Descriptor of a widget behavior.
+/// This class can be used to:
+/// - Handle the screen navigation
+/// - Execute commands
 class SDUIAction {
   static final Logger _logger = Logger(
     printer: LogfmtPrinter(),
   );
 
+  /// Type of action.
+  ///
+  /// The supported values:
+  /// - `screen`: To redirect to another screen
+  /// - `command`: To execute a command on the server
   String type = '';
+
+  /// Action URL.
+  ///
+  /// - ``route:/..``: redirects users to previous route
+  /// - URL starting with ``route:/<ROUTE_NAME>`` redirect user the a named route. (Ex: ``route:/checkout``)
+  /// - URL starting with ``http://`` or ``https`` redirect user to a server driven page
   String url = '';
 
   SDUIAction fromJson(Map<String, dynamic>? attributes) {
@@ -36,7 +51,12 @@ class SDUIAction {
   Future<String> _navigate(BuildContext context, Map<String, dynamic>? data) {
     if (_isRoute()) {
       _logger.i('Navigating to route to $url');
-      Navigator.pushNamed(context, url.substring(6));
+      var route = url.substring(6);
+      if (route == '/..') {
+        Navigator.pop(context);
+      } else {
+        Navigator.pushNamed(context, route);
+      }
     } else if (_isNetwork()) {
       _logger.i('Navigating to screen $url');
       Navigator.push(

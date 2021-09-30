@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
+/// Descriptor of an [Icon]
 class SDUIIcon extends SDUIWidget {
-  String? code;
+  /// Icon code point in Hexadecimal
+  String? codePoint;
 
-  SDUIIcon({this.code});
+  SDUIIcon({this.codePoint});
 
   @override
-  Widget toWidget(BuildContext context) => Icon(toIconData(code));
+  Widget toWidget(BuildContext context) => Icon(toIconData(codePoint));
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? attributes) {
-    code = attributes?["code"];
+    codePoint = attributes?["code"];
     return this;
   }
 }

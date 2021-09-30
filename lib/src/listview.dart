@@ -4,7 +4,8 @@ import 'package:flutter/painting.dart';
 
 import 'widget.dart';
 
-class SDUIListView extends SDUIComposite {
+/// Descriptor of a [ListView]
+class SDUIListView extends SDUIWidget {
   String? direction;
   bool? separator;
 
@@ -35,9 +36,7 @@ class SDUIListView extends SDUIComposite {
   }
 }
 
-///
-/// ListItem
-///
+/// Descriptor of a [ListTile]
 class SDUIListItem extends SDUIWidget {
   String? caption;
   String? subCaption;
@@ -67,9 +66,7 @@ class SDUIListItem extends SDUIWidget {
   }
 }
 
-///
-/// ListItemSwitch
-///
+/// Descriptor of a [SwitchListTile]
 class SDUIListItemSwitch extends SDUIWidget {
   bool selected = false;
   String name = '';

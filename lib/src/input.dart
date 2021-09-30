@@ -8,6 +8,7 @@ import 'action.dart';
 import 'form.dart';
 import 'widget.dart';
 
+/// Descriptor of a form Input
 class SDUInput extends SDUIWidget implements SDUIFormField {
   String name = '_no_name_';
   String? value;

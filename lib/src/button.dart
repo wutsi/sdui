@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
+/// Descriptor of a [ElevatedButton]
 class SDUIButton extends SDUIWidget {
   String? caption;
 

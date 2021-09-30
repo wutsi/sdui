@@ -74,7 +74,6 @@ const String ROUTE_HOME = '''
           }
         }
       }
-
     ]
 	}
 }

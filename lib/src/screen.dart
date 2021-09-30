@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-class SDUIScreen extends SDUIComposite {
+/// Descriptor of a screen, implemented as [Scaffold]
+class SDUIScreen extends SDUIWidget {
   String? title;
 
   SDUIScreen({this.title});

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-class SDUIColumn extends SDUIComposite {
+/// Descriptor of a [Column]
+class SDUIColumn extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) => Column(
         children: childrenWidgets(context),

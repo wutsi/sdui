@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
+/// Descriptor of a [RadioListTile]
 class SDUIRadio extends SDUIWidget {
   String? caption;
   String? subCaption;
@@ -28,7 +29,8 @@ class SDUIRadio extends SDUIWidget {
   }
 }
 
-class SDUIRadioGroup extends SDUIComposite {
+/// Descriptor of a radio group
+class SDUIRadioGroup extends SDUIWidget {
   String? name;
   String? value;
 

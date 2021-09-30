@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 
 import 'widget.dart';
 
+/// Descriptor of a [Text]
 class SDUIText extends SDUIWidget {
   String? caption;
   String? overflow;

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-class SDUIRow extends SDUIComposite {
+/// Descriptor of a [Row]
+class SDUIRow extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) => Row(
         children: childrenWidgets(context),

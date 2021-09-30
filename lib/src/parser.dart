@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+
 import 'action.dart';
 import 'button.dart';
 import 'column.dart';
@@ -16,6 +20,11 @@ import 'widget.dart';
 
 //-- Core ------------------------------------
 class SDUIParser {
+  static Widget parseJson(String json, BuildContext context) {
+    var data = jsonDecode(json);
+    return fromJson(data).toWidget(context);
+  }
+
   static SDUIWidget fromJson(Map<String, dynamic>? json) {
     // Widget
     var type = json?["type"].toString().toLowerCase();
@@ -87,15 +96,13 @@ class SDUIParser {
     }
 
     // Children
-    if (widget is SDUIComposite) {
-      var child = json?["child"];
-      if (child is Map<String, dynamic>) {
-        widget.children = [SDUIParser.fromJson(child)];
-      } else {
-        var children = json?["children"];
-        if (children is List<dynamic>) {
-          widget.children = children.map((e) => _fromJson(e)).toList();
-        }
+    var child = json?["child"];
+    if (child is Map<String, dynamic>) {
+      widget.children = [SDUIParser.fromJson(child)];
+    } else {
+      var children = json?["children"];
+      if (children is List<dynamic>) {
+        widget.children = children.map((e) => _fromJson(e)).toList();
       }
     }
 

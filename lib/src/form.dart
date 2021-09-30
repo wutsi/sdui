@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-abstract class SDUIFormField {
-  void attach(GlobalKey<FormState> formKey, SDUIFormDataProvider provider);
-}
-
+/// Interface for returning the data of a form
 abstract class SDUIFormDataProvider {
   Map<String, String> getData();
+}
+
+/// Interface for attaching a form with its fields
+abstract class SDUIFormField {
+  void attach(GlobalKey<FormState> formKey, SDUIFormDataProvider provider);
 }
 
 class FormFieldKey extends ValueKey<String> {
@@ -18,7 +20,9 @@ class FormFieldKey extends ValueKey<String> {
   String toString() => value;
 }
 
-class SDUIForm extends SDUIComposite {
+/// Descriptor of [Form]
+class SDUIForm extends SDUIWidget {
+  /// Padding to apply to each child of the form
   double? padding;
 
   @override

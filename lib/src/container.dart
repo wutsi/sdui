@@ -4,7 +4,8 @@ import 'package:flutter/painting.dart';
 
 import 'widget.dart';
 
-class SDUIContainer extends SDUIComposite {
+/// Descriptor of a [Container].
+class SDUIContainer extends SDUIWidget {
   String? alignment;
   double? padding;
   double? margin;
@@ -27,7 +28,7 @@ class SDUIContainer extends SDUIComposite {
         margin: margin == null ? null : EdgeInsets.all(margin!),
         padding: padding == null ? null : EdgeInsets.all(padding!),
         alignment: _toAlignment(),
-        decoration: _toBoxDecoration(),
+        decoration: _toBoxDecoration(context),
       );
 
   Alignment? _toAlignment() {
@@ -54,12 +55,12 @@ class SDUIContainer extends SDUIComposite {
     return null;
   }
 
-  BoxDecoration _toBoxDecoration() => BoxDecoration(
+  BoxDecoration _toBoxDecoration(BuildContext context) => BoxDecoration(
         color: toColor(background),
-        border: border == null || borderColor == null
+        border: border == null
             ? null
             : Border.all(
-                color: toColor(borderColor)!,
+                color: toColor(borderColor) ?? Theme.of(context).primaryColor,
                 width: border!,
               ),
         borderRadius:

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -75,8 +73,7 @@ class DynamicRouteState extends State<DynamicRoute> {
           future: content,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var json = jsonDecode(snapshot.data!);
-              return SDUIParser.fromJson(json).toWidget(context);
+              return SDUIParser.parseJson(snapshot.data!, context);
             } else if (snapshot.hasError) {
               return const Icon(Icons.error);
             }
