@@ -34,7 +34,7 @@ jobs:
       - name: Dry Run
         uses: sakebook/actions-flutter-pub-publisher@v1.3.1
         with:
-          credential: ${{ secrets.PUB_CREDENTIAL_JSON }}
+          credential: ${{ secrets.PUB_CREDENTIALS_JSON }}
           flutter_package: true
           skip_test: true
           dry_run: true
@@ -42,7 +42,7 @@ jobs:
       - name: Publish
         uses: sakebook/actions-flutter-pub-publisher@v1.3.1
         with:
-          credential: ${{ secrets.PUB_CREDENTIAL_JSON }}
+          credential: ${{ secrets.PUB_CREDENTIALS_JSON }}
           flutter_package: true
           skip_test: true
           dry_run: false
