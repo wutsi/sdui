@@ -32,17 +32,5 @@ jobs:
           cat <<EOF > ~/.pub-cache/credentials.json ${DART_CREDENTIALS}
 
       - name: Dry Run
-        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
-        with:
-          credential: ${{ secrets.PUB_CREDENTIALS_JSON }}
-          flutter_package: true
-          skip_test: true
-          dry_run: true
+        run: dart pub publish --dry-run
 
-      - name: Publish
-        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
-        with:
-          credential: ${{ secrets.PUB_CREDENTIALS_JSON }}
-          flutter_package: true
-          skip_test: true
-          dry_run: false
