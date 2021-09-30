@@ -22,10 +22,10 @@ import 'widget.dart';
 class SDUIParser {
   static Widget parseJson(String json, BuildContext context) {
     var data = jsonDecode(json);
-    return fromJson(data).toWidget(context);
+    return _fromJson(data).toWidget(context);
   }
 
-  static SDUIWidget fromJson(Map<String, dynamic>? json) {
+  static SDUIWidget _fromJson(Map<String, dynamic>? json) {
     // Widget
     var type = json?["type"].toString().toLowerCase();
     SDUIWidget? widget;
@@ -98,7 +98,7 @@ class SDUIParser {
     // Children
     var child = json?["child"];
     if (child is Map<String, dynamic>) {
-      widget.children = [SDUIParser.fromJson(child)];
+      widget.children = [_fromJson(child)];
     } else {
       var children = json?["children"];
       if (children is List<dynamic>) {
@@ -107,13 +107,5 @@ class SDUIParser {
     }
 
     return widget;
-  }
-
-  static SDUIWidget _fromJson(dynamic json) {
-    if (json is Map<String, dynamic>) {
-      return SDUIParser.fromJson(json);
-    } else {
-      throw Exception("Bad Json: $json");
-    }
   }
 }
