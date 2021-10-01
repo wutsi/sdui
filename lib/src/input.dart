@@ -114,6 +114,11 @@ class SDUIInput extends SDUIWidget implements SDUIFormField {
         return "Invalid URL address";
       }
     }
+    if (type == 'number' && !empty) {
+      if (double.tryParse(value) == null) {
+        return "Invalid number";
+      }
+    }
     return null;
   }
 
