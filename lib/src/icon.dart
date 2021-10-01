@@ -14,8 +14,8 @@ class SDUIIcon extends SDUIWidget {
   Widget toWidget(BuildContext context) => Icon(toIconData(codePoint));
 
   @override
-  SDUIWidget fromJson(Map<String, dynamic>? attributes) {
-    codePoint = attributes?["code"];
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    codePoint = json?["code"];
     return this;
   }
 }

@@ -1,3 +1,9 @@
+## [0.0.4] 2021-09-30
+### Changed
+- Renamed `SDUInput` to `SDUIInput`
+### Added
+- Add phone number input
+
 ## [0.0.3] 2021-09-30
 ### Added
 - Add date and time pickers

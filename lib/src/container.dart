@@ -68,14 +68,14 @@ class SDUIContainer extends SDUIWidget {
       );
 
   @override
-  SDUIWidget fromJson(Map<String, dynamic>? attributes) {
-    alignment = attributes?["alignment"];
-    padding = attributes?["padding"];
-    margin = attributes?["margin"];
-    border = attributes?["border"];
-    borderRadius = attributes?["borderRadius"];
-    borderColor = attributes?["borderColor"];
-    background = attributes?["background"];
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    alignment = json?["alignment"];
+    padding = json?["padding"];
+    margin = json?["margin"];
+    border = json?["border"];
+    borderRadius = json?["borderRadius"];
+    borderColor = json?["borderColor"];
+    background = json?["background"];
     return this;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
 
-const String ROUTE_HOME = '''
+const String home = '''
 {
 	"type": "Screen",
 	"attributes": {
@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
 
   Map<String, WidgetBuilder> _routes() => {
         '/': (context) =>
-            DynamicRoute(provider: StaticRouteContentProvider(ROUTE_HOME)),
+            DynamicRoute(provider: StaticRouteContentProvider(home)),
         '/wutsi/settings': (context) => DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://localhost:8080/app/demo/settings')),

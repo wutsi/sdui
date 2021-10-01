@@ -52,7 +52,7 @@ class SDUIParser {
         widget = SDUIImage();
         break;
       case "input":
-        widget = SDUInput();
+        widget = SDUIInput();
         break;
       case "listview":
         widget = SDUIListView().fromJson(json);

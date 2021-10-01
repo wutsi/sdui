@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'package:logger/logger.dart';
 
 import 'action.dart';
@@ -29,7 +32,7 @@ import 'widget.dart';
 /// - maxLength: Maximum length of the field
 /// - maxLine: Maximum number of line  (for multi-line input)
 /// - minLength: Minimum length of the field (Default: 0)
-class SDUInput extends SDUIWidget implements SDUIFormField {
+class SDUIInput extends SDUIWidget implements SDUIFormField {
   String name = '_no_name_';
   String? value;
   bool hideText = false;
@@ -80,6 +83,9 @@ class SDUInput extends SDUIWidget implements SDUIFormField {
       case 'time':
         return _DateTimeWidgetStateful(this);
 
+      case 'phone':
+        return _PhoneWidgetStateful(this);
+
       default:
         return _TextFieldWidgetStateful(this);
     }
@@ -104,7 +110,7 @@ class SDUInput extends SDUIWidget implements SDUIFormField {
 }
 
 class _TextFieldWidgetStateful extends StatefulWidget {
-  final SDUInput delegate;
+  final SDUIInput delegate;
 
   const _TextFieldWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
@@ -113,7 +119,7 @@ class _TextFieldWidgetStateful extends StatefulWidget {
 }
 
 class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
-  SDUInput delegate;
+  SDUIInput delegate;
   String state = '';
 
   _TextFieldWidgetState(this.delegate);
@@ -152,7 +158,7 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
 }
 
 class _SubmitWidgetStateful extends StatefulWidget {
-  final SDUInput delegate;
+  final SDUIInput delegate;
 
   const _SubmitWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
@@ -166,7 +172,7 @@ class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
   );
 
   bool enabled = false;
-  SDUInput delegate;
+  SDUIInput delegate;
 
   _SubmitWidgetState(this.delegate);
 
@@ -223,7 +229,7 @@ class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
 }
 
 class _DateTimeWidgetStateful extends StatefulWidget {
-  final SDUInput delegate;
+  final SDUIInput delegate;
 
   const _DateTimeWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
@@ -239,7 +245,7 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
   DateTime state = DateTime.now();
   DateFormat displayDateFormat = DateFormat("yyyy-MM-dd");
   DateFormat dataDateFormat = DateFormat("yyyy-MM-dd");
-  SDUInput delegate;
+  SDUIInput delegate;
 
   _DateTimeWidgetState(this.delegate);
 
@@ -336,5 +342,62 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
         delegate.provider?.setData(delegate.name, _text());
       });
     }
+  }
+}
+
+class _PhoneWidgetStateful extends StatefulWidget {
+  final SDUIInput delegate;
+
+  const _PhoneWidgetStateful(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _PhoneWidgetState(delegate);
+}
+
+class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
+  PhoneNumber state =
+      PhoneNumber(countryISOCode: 'US', countryCode: '', number: '');
+  SDUIInput delegate;
+
+  _PhoneWidgetState(this.delegate);
+
+  @override
+  void initState() {
+    super.initState();
+
+    delegate.provider?.setData(delegate.name, delegate.value ?? '');
+    state = _toPhoneNumber(delegate.value ?? '');
+  }
+
+  PhoneNumber _toPhoneNumber(String completeNumber) {
+    for (int i = 0; i < countries.length; i++) {
+      var maxLength = countries[i]["max_length"] as int;
+      var dialCode = countries[i]["dial_code"] as int;
+      var dialCodeLength = "$dialCode".length;
+      if (completeNumber.startsWith("+$dialCode") &&
+          maxLength == completeNumber.length - dialCodeLength - 1) {
+        var code = countries[i]["code"] as String;
+        return PhoneNumber(
+            countryISOCode: code,
+            countryCode: "$dialCode",
+            number: completeNumber.substring(1 + dialCodeLength));
+      }
+    }
+    return PhoneNumber(countryISOCode: 'US', countryCode: '', number: '');
+  }
+
+  @override
+  Widget build(BuildContext context) => IntlPhoneField(
+      readOnly: delegate.readOnly,
+      enabled: delegate.enabled,
+      initialCountryCode: state.countryISOCode,
+      controller: TextEditingController(text: state.number),
+      decoration: InputDecoration(
+        labelText: delegate.caption,
+      ),
+      onChanged: (v) => _onChanged(v));
+
+  void _onChanged(PhoneNumber value) {
+    delegate.provider?.setData(delegate.name, value.completeNumber);
   }
 }
