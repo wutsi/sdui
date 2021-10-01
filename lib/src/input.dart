@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,16 +18,20 @@ import 'widget.dart';
 /// Attributes
 /// - name: REQUIRED. This should be the name of the input field
 /// - type: Type of input field. The possible values are:
-///    - `text`: Free text
+///    - `text`: Free text (Default)
+///    - `url`
+///    - `email`
+///    - `number`
 ///    - `phone`: Phone number
 ///    - `date`: Date
 ///    - `time`: Time
 /// - value: Default value.
 ///    - When `type=date`, the format should be `yyyy-MM-dd` (Ex: 2020-07-30)
 ///    - When `type=time`, the format should be `HH:mm` (Ex: 23:30)
+///    - When `type=time`, the format should be in E.164 format (Ex: +442087712924)
 /// - hideText: if `true`, the input text will be hide. (Default: `false`)
 /// - caption: Title of the input
-/// - hint: Help test for user
+/// - hint: Help test for users
 /// - required: if `true`, validation will be fired to ensure that the field has a value
 /// - readOnly: if `true`, the field will not be editable (Default: `false`)
 /// - maxLength: Maximum length of the field
@@ -92,11 +97,22 @@ class SDUIInput extends SDUIWidget implements SDUIFormField {
   }
 
   String? _onValidate(String? value) {
-    if (required && (value == null || value.isEmpty)) {
+    bool empty = (value == null || value.isEmpty);
+    if (required && empty) {
       return "This field is required";
     }
-    if (value!.length < minLength) {
+    if (minLength > 0 && (empty || value.length < minLength)) {
       return "This field must have at least $minLength characters";
+    }
+    if (type == 'email' && !empty && !EmailValidator.validate(value)) {
+      return "Invalid email address";
+    }
+    if (type == 'url' && !empty) {
+      try {
+        Uri.parse(value);
+      } catch (e) {
+        return "Invalid URL address";
+      }
     }
     return null;
   }
@@ -140,8 +156,21 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
       readOnly: delegate.readOnly,
       maxLength: delegate.maxLength,
       maxLines: delegate.maxLines,
+      keyboardType: _toKeyboardType(),
       onChanged: (String value) => _onChanged(value),
       validator: (String? value) => _onValidate(value));
+
+  TextInputType? _toKeyboardType() {
+    switch (delegate.type.toLowerCase()) {
+      case 'email':
+        return TextInputType.emailAddress;
+      case 'number':
+        return TextInputType.number;
+      case 'url':
+        return TextInputType.url;
+    }
+    return TextInputType.text;
+  }
 
   InputDecoration? _toInputDecoration() => InputDecoration(
       hintText: delegate.hint,
@@ -150,9 +179,6 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
   String? _onValidate(String? value) => delegate._onValidate(value);
 
   void _onChanged(String value) {
-    setState(() {
-      state = value;
-    });
     delegate.provider?.setData(delegate.name, value);
   }
 }
@@ -388,16 +414,22 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
 
   @override
   Widget build(BuildContext context) => IntlPhoneField(
-      readOnly: delegate.readOnly,
-      enabled: delegate.enabled,
-      initialCountryCode: state.countryISOCode,
-      controller: TextEditingController(text: state.number),
-      decoration: InputDecoration(
-        labelText: delegate.caption,
-      ),
-      onChanged: (v) => _onChanged(v));
+        readOnly: delegate.readOnly,
+        enabled: delegate.enabled,
+        initialCountryCode: state.countryISOCode,
+        controller: TextEditingController(text: state.number),
+        decoration: InputDecoration(
+          labelText: delegate.caption,
+        ),
+        onChanged: (v) => _onChanged(v),
+        validator: (s) => _onValidate(s),
+      );
 
   void _onChanged(PhoneNumber value) {
     delegate.provider?.setData(delegate.name, value.completeNumber);
+  }
+
+  String? _onValidate(String? value) {
+    return delegate._onValidate(value);
   }
 }

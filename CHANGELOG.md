@@ -1,3 +1,7 @@
+## [0.0.5] 2021-10-01
+### Changed
+- Add support in `SDUIInput` for `url`, `email` and `number`
+
 ## [0.0.4] 2021-09-30
 ### Changed
 - Renamed `SDUInput` to `SDUIInput`
