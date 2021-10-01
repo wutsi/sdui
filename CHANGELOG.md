@@ -1,4 +1,4 @@
-## [0.0.2] 2021-09-30
+## [0.0.3] 2021-09-30
 ### Added
 - Add date and time pickers
 
