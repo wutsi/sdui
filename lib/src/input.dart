@@ -28,7 +28,7 @@ import 'widget.dart';
 /// - value: Default value.
 ///    - When `type=date`, the format should be `yyyy-MM-dd` (Ex: 2020-07-30)
 ///    - When `type=time`, the format should be `HH:mm` (Ex: 23:30)
-///    - When `type=time`, the format should be in E.164 format (Ex: +442087712924)
+///    - When `type=phone`, the format should be in E.164 format (Ex: +442087712924)
 /// - hideText: if `true`, the input text will be hide. (Default: `false`)
 /// - caption: Title of the input
 /// - hint: Help test for users

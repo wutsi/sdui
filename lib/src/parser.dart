@@ -19,6 +19,7 @@ import 'text.dart';
 import 'widget.dart';
 
 //-- Core ------------------------------------
+/// Parser that convert JSON to flutter [Widget]
 class SDUIParser {
   static Widget parseJson(String json, BuildContext context) {
     var data = jsonDecode(json);

@@ -3,7 +3,23 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-/// Interface for returning the data of a form
+/// Descriptor of [Form]
+class SDUIForm extends SDUIWidget {
+  /// Padding to apply to each child of the form
+  double? padding;
+
+  @override
+  Widget toWidget(BuildContext context) => _FormWidgetStateful(this);
+
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    super.fromJson(json);
+    padding = json?["padding"];
+    return this;
+  }
+}
+
+/// Interface for managing the state of a form.
 abstract class SDUIFormDataProvider {
   Map<String, String> getData();
 
@@ -15,38 +31,22 @@ abstract class SDUIFormField {
   void attach(GlobalKey<FormState> formKey, SDUIFormDataProvider provider);
 }
 
-/// Descriptor of [Form]
-class SDUIForm extends SDUIWidget {
-  /// Padding to apply to each child of the form
-  double? padding;
-
-  @override
-  Widget toWidget(BuildContext context) => FormWidgetStateful(this);
-
-  @override
-  SDUIWidget fromJson(Map<String, dynamic>? json) {
-    super.fromJson(json);
-    padding = json?["padding"];
-    return this;
-  }
-}
-
-class FormWidgetStateful extends StatefulWidget {
+class _FormWidgetStateful extends StatefulWidget {
   final SDUIForm delegate;
 
-  const FormWidgetStateful(this.delegate, {Key? key}) : super(key: key);
+  const _FormWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => FormWidgetState(delegate);
+  State<StatefulWidget> createState() => _FormWidgetState(delegate);
 }
 
-class FormWidgetState extends State<FormWidgetStateful>
+class _FormWidgetState extends State<_FormWidgetStateful>
     implements SDUIFormDataProvider {
   SDUIForm delegate;
   Map<String, String> data = <String, String>{};
   final key = GlobalKey<FormState>();
 
-  FormWidgetState(this.delegate);
+  _FormWidgetState(this.delegate);
 
   @override
   Map<String, String> getData() => data;
