@@ -8,6 +8,7 @@ export 'src/icon.dart';
 export 'src/image.dart';
 export 'src/input.dart';
 export 'src/listview.dart';
+export 'src/pageview.dart';
 export 'src/parser.dart';
 export 'src/radio.dart';
 export 'src/route.dart';

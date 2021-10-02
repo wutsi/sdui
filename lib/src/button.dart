@@ -11,7 +11,7 @@ class SDUIButton extends SDUIWidget {
   Widget toWidget(BuildContext context) => ElevatedButton(
         child: Text(caption ?? "<NONE>"),
         onPressed: () {
-          super.action.execute(context, null);
+          action.execute(context, null);
         },
       );
 

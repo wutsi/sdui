@@ -15,9 +15,9 @@ import 'widget.dart';
 
 /// Descriptor of a form Input
 ///
-/// Attributes
-/// - name: REQUIRED. This should be the name of the input field
-/// - type: Type of input field. The possible values are:
+/// ### JSON Attributes
+/// - **name**: REQUIRED. This should be the name of the input field
+/// - **type**: Type of input field. The possible values are:
 ///    - `text`: Free text (Default)
 ///    - `url`
 ///    - `email`
@@ -25,18 +25,18 @@ import 'widget.dart';
 ///    - `phone`: Phone number
 ///    - `date`: Date
 ///    - `time`: Time
-/// - value: Default value.
+/// - **value**: Default value.
 ///    - When `type=date`, the format should be `yyyy-MM-dd` (Ex: 2020-07-30)
 ///    - When `type=time`, the format should be `HH:mm` (Ex: 23:30)
 ///    - When `type=phone`, the format should be in E.164 format (Ex: +442087712924)
-/// - hideText: if `true`, the input text will be hide. (Default: `false`)
-/// - caption: Title of the input
-/// - hint: Help test for users
-/// - required: if `true`, validation will be fired to ensure that the field has a value
-/// - readOnly: if `true`, the field will not be editable (Default: `false`)
-/// - maxLength: Maximum length of the field
-/// - maxLine: Maximum number of line  (for multi-line input)
-/// - minLength: Minimum length of the field (Default: 0)
+/// - **hideText**: if `true`, the input text will be hide. (Default: `false`)
+/// - **caption**: Title of the input
+/// - **hint**: Help test for users
+/// - **required**: if `true`, validation will be fired to ensure that the field has a value
+/// - **readOnly**: if `true`, the field will not be editable (Default: `false`)
+/// - **maxLength**: Maximum length of the field
+/// - **maxLine**: Maximum number of line  (for multi-line input)
+/// - **minLength**: Minimum length of the field (Default: 0)
 class SDUIInput extends SDUIWidget implements SDUIFormField {
   String name = '_no_name_';
   String? value;
@@ -238,7 +238,9 @@ class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
 
     var json = jsonDecode(result);
     if (json is Map<String, dynamic>) {
-      SDUIAction().fromJson(json).execute(context, json);
+      var action = SDUIAction().fromJson(json);
+      action.pageController = delegate.action.pageController;
+      action.execute(context, json);
     }
   }
 

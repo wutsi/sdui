@@ -12,6 +12,7 @@ import 'icon.dart';
 import 'image.dart';
 import 'input.dart';
 import 'listview.dart';
+import 'pageview.dart';
 import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
@@ -60,6 +61,9 @@ class SDUIParser {
         break;
       case "listitem":
         widget = SDUIListItem().fromJson(json);
+        break;
+      case "pageview":
+        widget = SDUIPageView().fromJson(json);
         break;
       case "radio":
         widget = SDUIRadio();

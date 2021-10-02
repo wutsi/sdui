@@ -10,25 +10,31 @@ import 'route.dart';
 /// Descriptor of a widget behavior.
 /// This class can be used to:
 /// - Handle the screen navigation
+/// - Handle the page navigation
 /// - Execute commands
+///
+/// ### JSON Attributes
+/// - **type**: Type of action. The supported values are:
+///   - `screen`: To redirect to another screen
+///   - `page`: To redirect to another page, in the context of [PageView]
+///   - `command`: To execute a command on the server
+/// - **url**: Action URL
+///   - ``route:/..``: redirect users to previous route
+///   - ``page:/<PAGE_NUMBER>``: redirect users to a given page. `<PAGE_NUMBER>` is the page index (starting with `0`).
+///   - URL starting with ``route:/<ROUTE_NAME>`` redirect user the a named route. (Ex: ``route:/checkout``)
+///   - URL starting with ``http://`` or ``https`` redirect user to a server driven page
 class SDUIAction {
   static final Logger _logger = Logger(
     printer: LogfmtPrinter(),
   );
 
-  /// Type of action.
-  ///
-  /// The supported values:
-  /// - `screen`: To redirect to another screen
-  /// - `command`: To execute a command on the server
-  String type = '';
+  static final Future<String> _emptyFuture = Future(() => "{}");
 
-  /// Action URL.
-  ///
-  /// - ``route:/..``: redirects users to previous route
-  /// - URL starting with ``route:/<ROUTE_NAME>`` redirect user the a named route. (Ex: ``route:/checkout``)
-  /// - URL starting with ``http://`` or ``https`` redirect user to a server driven page
+  String type = '';
   String url = '';
+
+  /// controller associated with the action
+  PageController? pageController;
 
   SDUIAction fromJson(Map<String, dynamic>? attributes) {
     url = attributes?["url"] ?? '';
@@ -40,17 +46,34 @@ class SDUIAction {
       BuildContext context, Map<String, dynamic>? data) async {
     switch (type.toLowerCase()) {
       case 'screen':
-        return _navigate(context, data);
+        return _gotoRoute(context, data);
+      case 'page':
+        return _gotoPage(context, data);
       case 'command':
-        return _command(context, data);
+        return _execute(context, data);
       default:
-        return Future(() => "{}");
+        return _emptyFuture;
     }
   }
 
-  Future<String> _navigate(BuildContext context, Map<String, dynamic>? data) {
+  Future<String> _gotoPage(BuildContext context, Map<String, dynamic>? data) {
+    _logger.i('Navigating to page $url');
+
+    int page = -1;
+    try {
+      page = int.parse(url.substring(6));
+    } catch (e) {
+      page = 0;
+    }
+
+    pageController?.animateToPage(page,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    return _emptyFuture;
+  }
+
+  Future<String> _gotoRoute(BuildContext context, Map<String, dynamic>? data) {
     if (_isRoute()) {
-      _logger.i('Navigating to route to $url');
+      _logger.i('Navigating to route $url');
       var route = url.substring(6);
       if (route == '/..') {
         Navigator.pop(context);
@@ -66,12 +89,12 @@ class SDUIAction {
                 DynamicRoute(provider: HttpRouteContentProvider(url))),
       );
     }
-    return Future(() => "{}");
+    return _emptyFuture;
   }
 
-  Future<String> _command(
+  Future<String> _execute(
       BuildContext context, Map<String, dynamic>? data) async {
-    _logger.i('Executing Command $url $data');
+    _logger.i('Executing command $url $data');
     final response = await http.post(Uri.parse(url),
         body: jsonEncode(data), headers: {"Content-Type": "application/json"});
 
