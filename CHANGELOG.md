@@ -1,3 +1,7 @@
+## [0.0.6] 2021-10-04
+### Added
+- Add support for `Page`
+
 ## [0.0.5] 2021-10-01
 ### Added
 - Add support for `PageView`

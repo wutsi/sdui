@@ -28,7 +28,7 @@ abstract class SDUIFormDataProvider {
 
 /// Interface for attaching a form with its fields
 abstract class SDUIFormField {
-  void attach(GlobalKey<FormState> formKey, SDUIFormDataProvider provider);
+  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider);
 }
 
 class _FormWidgetStateful extends StatefulWidget {
@@ -61,7 +61,7 @@ class _FormWidgetState extends State<_FormWidgetStateful>
     super.initState();
     delegate.children.forEach((element) {
       if (element is SDUIFormField) {
-        (element as SDUIFormField).attach(key, this);
+        (element as SDUIFormField).attachForm(key, this);
       }
     });
   }

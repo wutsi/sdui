@@ -22,6 +22,26 @@ class SDUIPageView extends SDUIWidget {
   }
 }
 
+/// Descriptor of the children of [SDUIPageView]
+///
+/// ### JSON Attributes
+/// - **url**: URL of the page content.
+class SDUIPage extends SDUIWidget {
+  String? url;
+
+  @override
+  Widget toWidget(BuildContext context) => DynamicRoute(
+      provider: HttpRouteContentProvider(url ?? ''),
+      pageController: action.pageController);
+
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    super.fromJson(json);
+    url = json?['url'];
+    return this;
+  }
+}
+
 class _PageViewWidgetStateful extends StatefulWidget {
   final SDUIPageView delegate;
 
@@ -41,16 +61,15 @@ class _PageViewWidgetState extends State<_PageViewWidgetStateful> {
   void initState() {
     super.initState();
 
-    for (var i = 0; i < delegate.children.length; i++) {
-      _attach(delegate.children[i]);
-    }
+    delegate.attachPageController(controller);
   }
 
   @override
-  Widget build(BuildContext context) => PageView(
+  Widget build(BuildContext context) => PageView.builder(
         scrollDirection: _toScrollDirection(),
         controller: controller,
-        children: delegate.childrenWidgets(context),
+        itemBuilder: (context, index) =>
+            delegate.children[index].toWidget(context),
       );
 
   Axis _toScrollDirection() {
@@ -59,13 +78,6 @@ class _PageViewWidgetState extends State<_PageViewWidgetStateful> {
         return Axis.vertical;
       default:
         return Axis.horizontal;
-    }
-  }
-
-  void _attach(SDUIWidget widget) {
-    widget.action.pageController = controller;
-    for (var i = 0; i < widget.children.length; i++) {
-      _attach(widget.children[i]);
     }
   }
 }

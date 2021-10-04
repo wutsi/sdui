@@ -46,7 +46,7 @@ class SDUIAction {
       BuildContext context, Map<String, dynamic>? data) async {
     switch (type.toLowerCase()) {
       case 'screen':
-        return _gotoRoute(context, data);
+        return _gotoScreen(context, data);
       case 'page':
         return _gotoPage(context, data);
       case 'command':
@@ -71,7 +71,7 @@ class SDUIAction {
     return _emptyFuture;
   }
 
-  Future<String> _gotoRoute(BuildContext context, Map<String, dynamic>? data) {
+  Future<String> _gotoScreen(BuildContext context, Map<String, dynamic>? data) {
     if (_isRoute()) {
       _logger.i('Navigating to route $url');
       var route = url.substring(6);

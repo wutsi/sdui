@@ -54,7 +54,7 @@ class SDUIInput extends SDUIWidget implements SDUIFormField {
   SDUIFormDataProvider? provider;
 
   @override
-  void attach(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
+  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
     this.formKey = formKey;
     this.provider = provider;
   }

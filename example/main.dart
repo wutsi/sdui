@@ -47,6 +47,23 @@ const String home = '''
       {
         "type": "Container",
         "attributes":{
+          "alignment": "center",
+          "padding": 10
+        },
+        "child":{
+          "type": "Button",
+          "attributes": {
+            "caption": "Onboard"
+          },
+          "action": {
+            "type": "screen",
+            "url": "http://localhost:8080/app/demo/onboard"
+          }
+        }
+      },
+      {
+        "type": "Container",
+        "attributes":{
           "padding": 10,
           "margin": 10,
           "border": 1,

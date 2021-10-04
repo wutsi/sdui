@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:sdui/sdui.dart';
 
 import 'parser.dart';
 
@@ -48,18 +51,22 @@ class HttpRouteContentProvider implements RouteContentProvider {
 /// Dynamic Route
 class DynamicRoute extends StatefulWidget {
   final RouteContentProvider provider;
+  final PageController? pageController;
 
-  const DynamicRoute({Key? key, required this.provider}) : super(key: key);
+  const DynamicRoute({Key? key, this.pageController, required this.provider})
+      : super(key: key);
 
   @override
-  DynamicRouteState createState() => DynamicRouteState(provider);
+  DynamicRouteState createState() =>
+      DynamicRouteState(provider, pageController);
 }
 
 class DynamicRouteState extends State<DynamicRoute> {
   final RouteContentProvider provider;
+  final PageController? pageController;
   late Future<String> content;
 
-  DynamicRouteState(this.provider);
+  DynamicRouteState(this.provider, this.pageController);
 
   @override
   void initState() {
@@ -73,7 +80,10 @@ class DynamicRouteState extends State<DynamicRoute> {
           future: content,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return SDUIParser.parseJson(snapshot.data!, context);
+              SDUIWidget widget =
+                  SDUIParser.fromJson(jsonDecode(snapshot.data!));
+              widget.attachPageController(pageController);
+              return widget.toWidget(context);
             } else if (snapshot.hasError) {
               return const Icon(Icons.error);
             }

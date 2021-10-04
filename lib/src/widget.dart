@@ -44,4 +44,11 @@ abstract class SDUIWidget {
 
     return IconData(int.parse(hexCode, radix: 16), fontFamily: 'MaterialIcons');
   }
+
+  void attachPageController(PageController? controller) {
+    action.pageController = controller;
+    for (var i = 0; i < children.length; i++) {
+      children[i].attachPageController(controller);
+    }
+  }
 }

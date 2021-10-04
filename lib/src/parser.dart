@@ -25,10 +25,10 @@ import 'widget.dart';
 class SDUIParser {
   static Widget parseJson(String json, BuildContext context) {
     var data = jsonDecode(json);
-    return _fromJson(data).toWidget(context);
+    return fromJson(data).toWidget(context);
   }
 
-  static SDUIWidget _fromJson(Map<String, dynamic>? json) {
+  static SDUIWidget fromJson(Map<String, dynamic>? json) {
     // Widget
     var type = json?["type"].toString().toLowerCase();
     SDUIWidget? widget;
@@ -62,6 +62,9 @@ class SDUIParser {
         break;
       case "listitem":
         widget = SDUIListItem().fromJson(json);
+        break;
+      case "page":
+        widget = SDUIPage().fromJson(json);
         break;
       case "pageview":
         widget = SDUIPageView().fromJson(json);
@@ -107,11 +110,11 @@ class SDUIParser {
     // Children
     var child = json?["child"];
     if (child is Map<String, dynamic>) {
-      widget.children = [_fromJson(child)];
+      widget.children = [fromJson(child)];
     } else {
       var children = json?["children"];
       if (children is List<dynamic>) {
-        widget.children = children.map((e) => _fromJson(e)).toList();
+        widget.children = children.map((e) => fromJson(e)).toList();
       }
     }
 
