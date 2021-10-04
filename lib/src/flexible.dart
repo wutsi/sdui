@@ -28,8 +28,8 @@ class SDUIFlexible extends SDUIWidget {
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
-    fit = json?["fit"] ?? 0;
-    flex = json?["flex"] ?? 'tight';
+    fit = json?["flex"] ?? 1;
+    flex = json?["fit"] ?? 'tight';
     return this;
   }
 }

@@ -1,3 +1,7 @@
+## [0.0.7] 2021-10-04
+### Fixed
+- `Flexible` serialization
+
 ## [0.0.6] 2021-10-04
 ### Added
 - Add support for `Page`
