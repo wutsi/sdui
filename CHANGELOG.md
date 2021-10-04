@@ -1,6 +1,7 @@
 ## [0.0.5] 2021-10-01
 ### Added
 - Add support for `PageView`
+- Add Support for `Spacer`
 ### Changed
 - Add support in `SDUIInput` for `url`, `email` and `number`
 

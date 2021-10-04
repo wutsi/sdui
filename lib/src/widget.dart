@@ -13,7 +13,7 @@ abstract class SDUIWidget {
   List<SDUIWidget> children = <SDUIWidget>[];
 
   /// Return the first child
-  SDUIWidget child() => children.first;
+  SDUIWidget? child() => children.isEmpty ? null : children.first;
 
   /// Return the list of children [Widget]
   List<Widget> childrenWidgets(BuildContext context) =>

@@ -15,7 +15,7 @@ class SDUIScreen extends SDUIWidget {
         appBar: AppBar(
           title: Text(title ?? ''),
         ),
-        body: child().toWidget(context));
+        body: child()?.toWidget(context));
   }
 
   @override

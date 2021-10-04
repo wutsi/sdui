@@ -12,8 +12,10 @@ class SDUIFlexible extends SDUIWidget {
   String fit = 'tight';
 
   @override
-  Widget toWidget(context) =>
-      Flexible(child: child().toWidget(context), flex: flex, fit: _toFlexFit());
+  Widget toWidget(context) => children.isEmpty
+      ? Container()
+      : Flexible(
+          child: child()!.toWidget(context), flex: flex, fit: _toFlexFit());
 
   FlexFit _toFlexFit() {
     switch (fit.toLowerCase()) {

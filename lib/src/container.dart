@@ -24,7 +24,7 @@ class SDUIContainer extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => Container(
-        child: child().toWidget(context),
+        child: child()?.toWidget(context),
         margin: margin == null ? null : EdgeInsets.all(margin!),
         padding: padding == null ? null : EdgeInsets.all(padding!),
         alignment: _toAlignment(),

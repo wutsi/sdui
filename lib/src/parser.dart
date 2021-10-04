@@ -16,6 +16,7 @@ import 'pageview.dart';
 import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
+import 'spacer.dart';
 import 'text.dart';
 import 'widget.dart';
 
@@ -76,6 +77,9 @@ class SDUIParser {
         break;
       case "screen":
         widget = SDUIScreen();
+        break;
+      case "spacer":
+        widget = SDUISpacer();
         break;
       case "row":
         widget = SDUIRow();
