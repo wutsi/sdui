@@ -6,7 +6,7 @@ import 'widget.dart';
 /// Descriptor of a [Flexible]
 class SDUIFlexible extends SDUIWidget {
   /// see [Flexible.flex]
-  int flex = 0;
+  int flex = 1;
 
   /// see [Flexible.fit]
   String fit = 'tight';
