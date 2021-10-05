@@ -8,8 +8,10 @@ import 'package:uuid/uuid.dart';
 class Http {
   static const String _HEADER_DEVICE_ID = 'X-Device-ID';
   static const String _HEADER_TRACE_ID = 'X-Trace-ID';
-
+  static const String _HEADER_CLIENT_ID = 'X-Client-ID';
   static final Http _singleton = Http._internal();
+
+  String clientId = 'unknown-client';
 
   Http._internal();
 
@@ -35,7 +37,8 @@ class Http {
         'Accept': 'application/json',
         'Accept-Language': _language(),
         _HEADER_TRACE_ID: _traceId(),
-        _HEADER_DEVICE_ID: await _deviceId()
+        _HEADER_DEVICE_ID: await _deviceId(),
+        _HEADER_CLIENT_ID: clientId
       };
 
   String _language() =>

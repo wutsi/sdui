@@ -5,6 +5,7 @@ export 'src/container.dart';
 export 'src/expanded.dart';
 export 'src/flexible.dart';
 export 'src/form.dart';
+export 'src/http.dart';
 export 'src/icon.dart';
 export 'src/image.dart';
 export 'src/input.dart';

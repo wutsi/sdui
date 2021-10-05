@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
+import 'package:sdui/src/http.dart';
 
 const String home = '''
 {
@@ -97,6 +98,7 @@ const String home = '''
 ''';
 
 void main() {
+  Http.getInstance().clientId = 'sdui-example';
   runApp(const MyApp());
 }
 
