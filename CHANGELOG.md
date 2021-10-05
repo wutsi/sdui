@@ -3,6 +3,7 @@
 ## [0.0.9] 2021-10-05
 ### Added
 - Button padding
+- Http.clientId
 ### Changed
 - All HTTP interactions used POST
 
