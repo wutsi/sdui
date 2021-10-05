@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
 
+import 'http.dart';
 import 'parser.dart';
 
 /// Returns the content of a route
@@ -27,25 +27,12 @@ class StaticRouteContentProvider implements RouteContentProvider {
 
 /// Static implementation of RouteContentProvider with static content
 class HttpRouteContentProvider implements RouteContentProvider {
-  static final Logger _logger = Logger(
-    printer: LogfmtPrinter(),
-  );
-
   String url;
 
   HttpRouteContentProvider(this.url);
 
   @override
-  Future<String> getContent() async {
-    _logger.i('Loading content from $url');
-    final response = await http.get(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('FAILED: $url - ${response.statusCode}');
-    }
-  }
+  Future<String> getContent() async => Http.getInstance().post(url, null);
 }
 
 /// Dynamic Route
@@ -62,6 +49,9 @@ class DynamicRoute extends StatefulWidget {
 }
 
 class DynamicRouteState extends State<DynamicRoute> {
+  static final Logger _logger = Logger(
+    printer: LogfmtPrinter(),
+  );
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
@@ -85,6 +75,7 @@ class DynamicRouteState extends State<DynamicRoute> {
               widget.attachPageController(pageController);
               return widget.toWidget(context);
             } else if (snapshot.hasError) {
+              _logger.e('Unable to get content - $snapshot.error');
               return const Icon(Icons.error);
             }
 

@@ -35,11 +35,13 @@ dependencies:
     cupertino_icons: ^1.0.2
 
     cached_network_image: ^3.1.0
-    logger: ^1.1.0
+    email_validator: ^2.0.1
     http: ^0.13.3
     intl: ^0.17.0
     intl_phone_field: ^2.1.0
-    email_validator: ^2.0.1
+    logger: ^1.1.0
+    shared_preferences: ^2.0.8
+    uuid: ^3.0.5
 
 dev_dependencies:
     flutter_test:

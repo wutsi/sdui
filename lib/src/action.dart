@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
+import 'http.dart';
 import 'route.dart';
 
 /// Descriptor of a widget behavior.
@@ -92,18 +90,8 @@ class SDUIAction {
     return _emptyFuture;
   }
 
-  Future<String> _execute(
-      BuildContext context, Map<String, dynamic>? data) async {
-    _logger.i('Executing command $url $data');
-    final response = await http.post(Uri.parse(url),
-        body: jsonEncode(data), headers: {"Content-Type": "application/json"});
-
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception('FAILED: $url - ${response.statusCode}');
-    }
-  }
+  Future<String> _execute(BuildContext context, Map<String, dynamic>? data) =>
+      Http.getInstance().post(url, data);
 
   bool _isRoute() => url.startsWith('route:') == true;
 
