@@ -2,16 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class Http {
   static const String _HEADER_DEVICE_ID = 'X-Device-ID';
   static const String _HEADER_TRACE_ID = 'X-Trace-ID';
-  static final Logger _logger = Logger(
-    printer: LogfmtPrinter(),
-  );
 
   static final Http _singleton = Http._internal();
 
@@ -24,7 +20,6 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
-    _logger.i('POST $url ' + (data?.toString() ?? ''));
     var response = await http.post(Uri.parse(url),
         body: data == null ? '{}' : jsonEncode(data),
         headers: await _headers());

@@ -71,7 +71,7 @@ class DynamicRouteState extends State<DynamicRoute> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               SDUIWidget widget =
-                  SDUIParser.fromJson(jsonDecode(snapshot.data!));
+                  SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
               widget.attachPageController(pageController);
               return widget.toWidget(context);
             } else if (snapshot.hasError) {

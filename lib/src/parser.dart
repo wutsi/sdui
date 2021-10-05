@@ -24,12 +24,22 @@ import 'widget.dart';
 //-- Core ------------------------------------
 /// Parser that convert JSON to flutter [Widget]
 class SDUIParser {
-  static Widget parseJson(String json, BuildContext context) {
+  static final SDUIParser _singleton = SDUIParser._internal();
+
+  SDUIParser._internal();
+
+  factory SDUIParser() {
+    return _singleton;
+  }
+
+  static SDUIParser getInstance() => _singleton;
+
+  Widget parseJson(String json, BuildContext context) {
     var data = jsonDecode(json);
     return fromJson(data).toWidget(context);
   }
 
-  static SDUIWidget fromJson(Map<String, dynamic>? json) {
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
     // Widget
     var type = json?["type"].toString().toLowerCase();
     SDUIWidget? widget;
