@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'widget.dart';
 
 /// Descriptor of a [Flexible]
+///
+/// ### JSON Attributes
 class SDUIFlexible extends SDUIWidget {
   /// see [Flexible.flex]
   int flex = 1;
@@ -28,8 +30,8 @@ class SDUIFlexible extends SDUIWidget {
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
-    fit = json?["flex"] ?? 1;
-    flex = json?["fit"] ?? 'tight';
+    flex = json?["flex"] ?? 1;
+    fit = json?["fit"] ?? 'tight';
     return this;
   }
 }

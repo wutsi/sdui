@@ -416,7 +416,10 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
             number: completeNumber.substring(1 + dialCodeLength));
       }
     }
-    return PhoneNumber(countryISOCode: 'US', countryCode: '', number: '');
+
+    String? countryCode = WidgetsBinding.instance?.window.locale.countryCode;
+    return PhoneNumber(
+        countryISOCode: countryCode ?? 'US', countryCode: '', number: '');
   }
 
   @override

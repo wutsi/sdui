@@ -1,6 +1,8 @@
-## [0.0.7] 2021-10-04
+## [0.0.7] 2021-10-05
 ### Fixed
 - `Flexible` serialization
+### Changed
+- Initialize the phone input with current country code
 
 ## [0.0.6] 2021-10-04
 ### Added
