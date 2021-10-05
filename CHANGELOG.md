@@ -1,4 +1,8 @@
-## [0.0.7] 2021-10-05
+## [0.0.9] 2021-10-05
+### Added
+- Button padding
+
+## [0.0.8] 2021-10-05
 ### Fixed
 - `Flexible` serialization
 ### Changed
