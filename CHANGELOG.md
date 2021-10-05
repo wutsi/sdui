@@ -3,6 +3,8 @@
 - `Flexible` serialization
 ### Changed
 - Initialize the phone input with current country code
+- Always expand buttons on X axis.
+- Support `ElevatedButton`, `TextButton` and `OutlinedButton`
 
 ## [0.0.6] 2021-10-04
 ### Added

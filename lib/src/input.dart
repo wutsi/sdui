@@ -214,9 +214,11 @@ class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
   }
 
   @override
-  Widget build(BuildContext context) => ElevatedButton(
-      child: Text(delegate.caption ?? "Submit"),
-      onPressed: () => _onSubmit(context));
+  Widget build(BuildContext context) => SizedBox(
+      width: double.maxFinite,
+      child: ElevatedButton(
+          child: Text(delegate.caption ?? "Submit"),
+          onPressed: () => _onSubmit(context)));
 
   void _onSubmit(BuildContext context) {
     if (!enabled) {

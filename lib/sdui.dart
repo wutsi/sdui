@@ -2,6 +2,7 @@ export 'src/action.dart';
 export 'src/button.dart';
 export 'src/column.dart';
 export 'src/container.dart';
+export 'src/expanded.dart';
 export 'src/flexible.dart';
 export 'src/form.dart';
 export 'src/icon.dart';

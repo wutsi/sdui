@@ -59,11 +59,10 @@ class _FormWidgetState extends State<_FormWidgetStateful>
   @override
   void initState() {
     super.initState();
-    delegate.children.forEach((element) {
-      if (element is SDUIFormField) {
-        (element as SDUIFormField).attachForm(key, this);
-      }
-    });
+
+    for (int i = 0; i < delegate.children.length; i++) {
+      _attachForm(delegate.children[i]);
+    }
   }
 
   @override
@@ -81,4 +80,14 @@ class _FormWidgetState extends State<_FormWidgetStateful>
   Widget _decorate(Widget widget) => delegate.padding == null
       ? widget
       : Container(padding: EdgeInsets.all(delegate.padding!), child: widget);
+
+  void _attachForm(SDUIWidget child) {
+    if (child is SDUIFormField) {
+      (child as SDUIFormField).attachForm(key, this);
+    } else {
+      for (int i = 0; i < child.children.length; i++) {
+        _attachForm(child.children[i]);
+      }
+    }
+  }
 }
