@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.10] 2021-10-06
+## [0.0.11] 2021-10-06
 ### Added
 - Support for dialog
 
