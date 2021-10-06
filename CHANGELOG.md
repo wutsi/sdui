@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.10] 2021-10-05
+### Changed
+- Container alignment constants
+
 ## [0.0.9] 2021-10-05
 ### Added
 - Button padding
