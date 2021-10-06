@@ -17,9 +17,11 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1.2
+        with:
+          sdk: stable
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.0.5'
+          flutter-version: 2.5.2
 
       - name: Install dependencies
         run: |
@@ -33,4 +35,7 @@ jobs:
 
       - name: Dry Run
         run: dart pub publish --dry-run
+
+      - name: Dry Run
+        run: dart pub publish -f
 
