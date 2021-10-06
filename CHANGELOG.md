@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.10] 2021-10-06
+### Added
+- Support for dialog
+
 ## [0.0.10] 2021-10-05
 ### Changed
 - Container alignment constants

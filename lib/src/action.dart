@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
+import 'dialog.dart';
 import 'http.dart';
 import 'route.dart';
 
@@ -28,30 +29,56 @@ class SDUIAction {
 
   static final Future<String> _emptyFuture = Future(() => "{}");
 
-  String type = '';
+  String? type;
   String url = '';
+  SDUIDialog? prompt;
 
   /// controller associated with the action
   PageController? pageController;
 
   SDUIAction fromJson(Map<String, dynamic>? attributes) {
     url = attributes?["url"] ?? '';
-    type = attributes?["type"] ?? '';
+    type = attributes?["type"];
+
+    var prompt = attributes?["prompt"];
+    if (prompt is Map<String, dynamic>) {
+      this.prompt = SDUIDialog().fromJson(prompt) as SDUIDialog;
+    }
     return this;
   }
 
   Future<String> execute(
-      BuildContext context, Map<String, dynamic>? data) async {
-    switch (type.toLowerCase()) {
+          BuildContext context, Map<String, dynamic>? data) async =>
+      _prompt(context).then((value) => _execute(value, context, data));
+
+  Future<String> _execute(
+      String? result, BuildContext context, Map<String, dynamic>? data) async {
+    if (result == null) {
+      return _emptyFuture;
+    }
+
+    switch (type?.toLowerCase()) {
       case 'screen':
         return _gotoScreen(context, data);
+
       case 'page':
         return _gotoPage(context, data);
+
       case 'command':
-        return _execute(context, data);
+        return _executeCommand(context, data);
+
       default:
         return _emptyFuture;
     }
+  }
+
+  Future<String?> _prompt(BuildContext context) {
+    if (prompt == null) {
+      return Future.value("ok");
+    }
+
+    return showDialog(
+        context: context, builder: (context) => prompt!.toWidget(context));
   }
 
   Future<String> _gotoPage(BuildContext context, Map<String, dynamic>? data) {
@@ -72,7 +99,7 @@ class SDUIAction {
   Future<String> _gotoScreen(BuildContext context, Map<String, dynamic>? data) {
     if (_isRoute()) {
       _logger.i('Navigating to route $url');
-      var route = url.substring(6);
+      var route = url!.substring(6);
       if (route == '/..') {
         Navigator.pop(context);
       } else {
@@ -90,7 +117,8 @@ class SDUIAction {
     return _emptyFuture;
   }
 
-  Future<String> _execute(BuildContext context, Map<String, dynamic>? data) =>
+  Future<String> _executeCommand(
+          BuildContext context, Map<String, dynamic>? data) =>
       Http.getInstance().post(url, data);
 
   bool _isRoute() => url.startsWith('route:') == true;

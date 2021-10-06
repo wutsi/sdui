@@ -6,6 +6,7 @@ import 'action.dart';
 import 'button.dart';
 import 'column.dart';
 import 'container.dart';
+import 'dialog.dart';
 import 'expanded.dart';
 import 'flexible.dart';
 import 'form.dart';
@@ -52,6 +53,9 @@ class SDUIParser {
         break;
       case "container":
         widget = SDUIContainer();
+        break;
+      case "dialog":
+        widget = SDUIDialog();
         break;
       case "expanded":
         widget = SDUIExpanded();
