@@ -5,6 +5,15 @@ import 'package:flutter/painting.dart';
 import 'widget.dart';
 
 /// Descriptor of a [Container].
+///
+/// ### JSON Attributes
+/// - **alignment**: Alignment of the child in the container
+/// - **padding**: Padding of the container
+/// - **margin**: Margin of the container
+/// - **background**: Background color code
+/// - **border**: Border size
+/// - **borderRadius**: Radius of the border
+/// - **borderColor**: Color of the border
 class SDUIContainer extends SDUIWidget {
   String? alignment;
   double? padding;
@@ -34,22 +43,38 @@ class SDUIContainer extends SDUIWidget {
   Alignment? _toAlignment() {
     switch (alignment) {
       case 'bottom-center':
+      case 'bottomcenter':
         return Alignment.bottomCenter;
+
       case 'bottom-left':
+      case 'bottomleft':
         return Alignment.bottomLeft;
+
       case 'bottom-right':
+      case 'bottomright':
         return Alignment.bottomRight;
+
       case 'center':
         return Alignment.center;
+
       case 'center-left':
+      case 'centerleft':
         return Alignment.centerLeft;
+
       case 'center-right':
+      case 'centerright':
         return Alignment.centerRight;
+
       case 'top-center':
+      case 'topcenter':
         return Alignment.topCenter;
+
       case 'top-left':
+      case 'topleft':
         return Alignment.topLeft;
+
       case 'top-right':
+      case 'topright':
         return Alignment.topRight;
     }
     return null;
