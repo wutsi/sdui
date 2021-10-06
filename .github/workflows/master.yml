@@ -31,7 +31,7 @@ jobs:
       - name: Setup credentials
         run: |
           mkdir -p ~/.pub-cache
-          cat <<EOF > ~/.pub-cache/credentials.json ${DART_CREDENTIALS}
+          cat <<EOF > ~/.pub-cache/credentials.json ${PUB_CREDENTIALS_JSON}
 
       - name: Dry Run
         run: dart pub publish --dry-run
