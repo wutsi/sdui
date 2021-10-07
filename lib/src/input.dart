@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,6 @@ import 'package:intl_phone_field/phone_number.dart';
 import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
 
-import 'action.dart';
 import 'button.dart';
 import 'form.dart';
 import 'widget.dart';
@@ -200,68 +197,23 @@ class _SubmitWidgetStateful extends StatefulWidget {
 }
 
 class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
-  static final Logger _logger = Logger(
-    printer: LogfmtPrinter(),
-  );
-
-  bool enabled = false;
+  bool busy = false;
   SDUIInput delegate;
+  SDUIButton button = SDUIButton();
 
   _SubmitWidgetState(this.delegate);
 
   @override
   void initState() {
     super.initState();
-    enabled = delegate.enabled;
+
+    button = SDUIButton(
+        caption: delegate.caption,
+        onPressed: (context) => delegate._onSubmit(context));
+    button.action.pageController = delegate.action.pageController;
   }
 
-  @override
-  Widget build(BuildContext context) => SDUIButton.createWidget(
-      caption: delegate.caption ?? 'Submit',
-      context: context,
-      onPressed: () => _onSubmit(context));
-
-  void _onSubmit(BuildContext context) {
-    if (!enabled) {
-      return;
-    }
-
-    _disable();
-    delegate
-        ._onSubmit(context)
-        .then((value) => _handleResult(value))
-        .onError((error, stackTrace) => _handleError(error, stackTrace))
-        .whenComplete(() => _enable());
-  }
-
-  void _handleResult(String? result) {
-    if (result == null) {
-      return;
-    }
-
-    var json = jsonDecode(result);
-    if (json is Map<String, dynamic>) {
-      var action = SDUIAction().fromJson(json);
-      action.pageController = delegate.action.pageController;
-      action.execute(context, json);
-    }
-  }
-
-  void _handleError(error, stackTrace) {
-    _logger.e(error, stackTrace);
-  }
-
-  void _enable() {
-    setState(() {
-      enabled = true;
-    });
-  }
-
-  void _disable() {
-    setState(() {
-      enabled = false;
-    });
-  }
+  Widget build(BuildContext context) => button.toWidget(context);
 }
 
 class _DateTimeWidgetStateful extends StatefulWidget {

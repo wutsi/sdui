@@ -6,6 +6,8 @@ import 'dialog.dart';
 import 'http.dart';
 import 'route.dart';
 
+typedef ActionCallback = Future<String?> Function(BuildContext context);
+
 /// Descriptor of a widget behavior.
 /// This class can be used to:
 /// - Handle the screen navigation
@@ -47,7 +49,7 @@ class SDUIAction {
     return this;
   }
 
-  Future<String> execute(
+  Future<String?> execute(
           BuildContext context, Map<String, dynamic>? data) async =>
       _prompt(context).then((value) => _execute(value, context, data));
 
@@ -99,7 +101,7 @@ class SDUIAction {
   Future<String> _gotoScreen(BuildContext context, Map<String, dynamic>? data) {
     if (_isRoute()) {
       _logger.i('Navigating to route $url');
-      var route = url!.substring(6);
+      var route = url.substring(6);
       if (route == '/..') {
         Navigator.pop(context);
       } else {

@@ -9,6 +9,9 @@ import 'widget.dart';
 /// - **title**: Title of the dialog
 /// - **message**: Message to display
 /// - **type**: Type of alert dialog:
+///    - `error`: Show an error message
+///    - `warning`: Show an warning message
+///    - `information`: Show an information message
 ///    - `alert`: Alert dialog with `OK` button. (default)
 ///    - `config`: Confirm dialog with `OK` and `Cancel` buttons.
 class SDUIDialog extends SDUIWidget {
@@ -19,6 +22,15 @@ class SDUIDialog extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) {
     switch (type?.toLowerCase()) {
+      case 'error':
+        return _message(context, Icons.error, Colors.red);
+
+      case 'warning':
+        return _message(context, Icons.warning, Colors.yellow);
+
+      case 'information':
+        return _message(context, Icons.info, Colors.blueAccent);
+
       case 'confirm':
         return _confirm(context);
 
@@ -45,6 +57,28 @@ class SDUIDialog extends SDUIWidget {
   Widget _alert(BuildContext context) => AlertDialog(
         title: title == null ? null : Text(title!),
         content: message == null ? null : Text(message!),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'ok'),
+            child: const Text('OK'),
+          )
+        ],
+      );
+
+  Widget _message(BuildContext context, IconData iconData, Color color) =>
+      AlertDialog(
+        title: title == null ? null : Text(title!),
+        content: message == null
+            ? null
+            : Row(
+                children: [
+                  Icon(iconData, color: color),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(message!),
+                  )
+                ],
+              ),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'ok'),

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.12] 2021-10-067
+### Added
+- Show icons in dialog
+
 ## [0.0.11] 2021-10-06
 ### Added
 - Support for dialog

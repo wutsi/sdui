@@ -112,13 +112,19 @@ class MyApp extends StatelessWidget {
   }
 
   Map<String, WidgetBuilder> _routes() => {
-        '/': (context) =>
-            DynamicRoute(provider: StaticRouteContentProvider(home)),
-        '/wutsi/settings': (context) => DynamicRoute(
+        '/': (context) => DynamicRoute(
             provider: HttpRouteContentProvider(
-                'http://localhost:8080/app/demo/settings')),
-        '/wutsi/checkout': (context) => DynamicRoute(
-            provider: HttpRouteContentProvider(
-                'http://localhost:8080/app/demo/checkout'))
+                'http://localhost:8080/app/onboard/screens/home')),
       };
+
+// Map<String, WidgetBuilder> _routes() => {
+//       '/': (context) =>
+//           DynamicRoute(provider: StaticRouteContentProvider(home)),
+//       '/wutsi/settings': (context) => DynamicRoute(
+//           provider: HttpRouteContentProvider(
+//               'http://localhost:8080/app/demo/settings')),
+//       '/wutsi/checkout': (context) => DynamicRoute(
+//           provider: HttpRouteContentProvider(
+//               'http://localhost:8080/app/demo/checkout'))
+//     };
 }
