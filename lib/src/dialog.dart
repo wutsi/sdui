@@ -41,7 +41,7 @@ class SDUIDialog extends SDUIWidget {
 
   Widget _confirm(BuildContext context) => AlertDialog(
         title: title == null ? null : Text(title!),
-        content: message == null ? null : Text(message!),
+        content: _content(message),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'ok'),
@@ -56,7 +56,7 @@ class SDUIDialog extends SDUIWidget {
 
   Widget _alert(BuildContext context) => AlertDialog(
         title: title == null ? null : Text(title!),
-        content: message == null ? null : Text(message!),
+        content: _content(message),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'ok'),
@@ -75,7 +75,7 @@ class SDUIDialog extends SDUIWidget {
                   Icon(iconData, color: color),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: Text(message!),
+                    child: _content(message),
                   )
                 ],
               ),
@@ -86,6 +86,14 @@ class SDUIDialog extends SDUIWidget {
           )
         ],
       );
+
+  Widget? _content(String? text) => text == null
+      ? null
+      : Text(
+          text,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+        );
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
