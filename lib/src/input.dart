@@ -135,6 +135,7 @@ class _TextFieldWidgetStateful extends StatefulWidget {
   const _TextFieldWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _TextFieldWidgetState(delegate);
 }
 
@@ -193,6 +194,7 @@ class _SubmitWidgetStateful extends StatefulWidget {
   const _SubmitWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _SubmitWidgetState(delegate);
 }
 
@@ -213,6 +215,7 @@ class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
     button.action.pageController = delegate.action.pageController;
   }
 
+  @override
   Widget build(BuildContext context) => button.toWidget(context);
 }
 
@@ -222,6 +225,7 @@ class _DateTimeWidgetStateful extends StatefulWidget {
   const _DateTimeWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _DateTimeWidgetState(delegate);
 }
 
@@ -339,6 +343,7 @@ class _PhoneWidgetStateful extends StatefulWidget {
   const _PhoneWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _PhoneWidgetState(delegate);
 }
 

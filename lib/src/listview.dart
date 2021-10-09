@@ -100,6 +100,7 @@ class _ListItemSwitchWidget extends StatefulWidget {
   const _ListItemSwitchWidget(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   _ListItemSwitchState createState() => _ListItemSwitchState(delegate);
 }
 

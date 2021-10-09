@@ -48,6 +48,7 @@ class _PageViewWidgetStateful extends StatefulWidget {
   const _PageViewWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   _PageViewWidgetState createState() => _PageViewWidgetState(delegate);
 }
 

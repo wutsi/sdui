@@ -45,6 +45,7 @@ class DynamicRoute extends StatefulWidget {
 
   @override
   DynamicRouteState createState() =>
+      // ignore: no_logic_in_create_state
       DynamicRouteState(provider, pageController);
 }
 

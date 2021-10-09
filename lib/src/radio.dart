@@ -52,6 +52,7 @@ class RadioGroupWidget extends StatefulWidget {
   const RadioGroupWidget(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   RadioGroupState createState() => RadioGroupState(delegate);
 }
 

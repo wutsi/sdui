@@ -45,6 +45,7 @@ class _ButtonWidgetStateful extends StatefulWidget {
   const _ButtonWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _ButtonWidgetState(delegate);
 }
 

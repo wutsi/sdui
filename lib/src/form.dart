@@ -37,6 +37,7 @@ class _FormWidgetStateful extends StatefulWidget {
   const _FormWidgetStateful(this.delegate, {Key? key}) : super(key: key);
 
   @override
+  // ignore: no_logic_in_create_state
   State<StatefulWidget> createState() => _FormWidgetState(delegate);
 }
 

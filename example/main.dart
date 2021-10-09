@@ -14,24 +14,24 @@ void main() async {
   ];
 
   onboarded = (await SharedPreferences.getInstance())
-      .getBool(HttpOnboardingInterceptor.HEADER_ONBOARDED);
-  runApp(MyApp(baseUrl: 'http://localhost:8080'));
+      .getBool(HttpOnboardingInterceptor.headerOnboarded);
+  runApp(const MyApp(baseUrl: 'http://localhost:8080'));
 }
 
 Future<String> _deviceId() async {
   final prefs = await SharedPreferences.getInstance();
-  var deviceId = prefs.getString(HttpTracingInterceptor.HEADER_DEVICE_ID);
+  var deviceId = prefs.getString(HttpTracingInterceptor.headerDeviceId);
   if (deviceId == null || deviceId.isEmpty) {
     deviceId = const Uuid().v1();
-    prefs.setString(HttpTracingInterceptor.HEADER_DEVICE_ID, deviceId);
+    prefs.setString(HttpTracingInterceptor.headerDeviceId, deviceId);
   }
   return deviceId;
 }
 
 class MyApp extends StatelessWidget {
-  String baseUrl = '';
+  final String baseUrl;
 
-  MyApp({Key? key, required this.baseUrl}) : super(key: key);
+  const MyApp({this.baseUrl = '', Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -84,40 +84,38 @@ class ErrorScreen extends StatelessWidget {
 /// - `X-Trace-ID`: ID that represent the interfaction trace
 /// - `X-Client-ID`: Identification of the client application
 class HttpTracingInterceptor extends HttpInterceptor {
-  static const String HEADER_DEVICE_ID = 'X-Device-ID';
-  static const String HEADER_TRACE_ID = 'X-Trace-ID';
-  static const String HEADER_CLIENT_ID = 'X-Client-ID';
+  static const String headerDeviceId = 'X-Device-ID';
+  static const String headerTraceId = 'X-Trace-ID';
+  static const String headerClientId = 'X-Client-ID';
 
-  String clientId = 'unknown';
+  String clientId = '';
   String deviceId = '';
 
   HttpTracingInterceptor(this.clientId, this.deviceId);
 
   @override
   void onRequest(RequestTemplate request) async {
-    request.headers[HEADER_CLIENT_ID] = clientId;
-    request.headers[HEADER_TRACE_ID] = _traceId();
-    request.headers[HEADER_DEVICE_ID] = deviceId;
+    request.headers[headerClientId] = clientId;
+    request.headers[headerTraceId] = const Uuid().v1();
+    request.headers[headerDeviceId] = deviceId;
   }
 
   @override
   void onResponse(ResponseTemplate response) {}
-
-  String _traceId() => const Uuid().v1();
 }
 
 /// HTTP interceptor that stored into the share preferences the response header `x-onboarded`,
 /// to indicate that the user has been onboarded.
 class HttpOnboardingInterceptor extends HttpInterceptor {
-  static const String HEADER_ONBOARDED = 'x-onboarded';
+  static const String headerOnboarded = 'x-onboarded';
 
   @override
   void onRequest(RequestTemplate request) {}
 
   @override
   void onResponse(ResponseTemplate response) async {
-    if (response.headers[HEADER_ONBOARDED] != null) {
-      (await SharedPreferences.getInstance()).setBool(HEADER_ONBOARDED, true);
+    if (response.headers[headerOnboarded] != null) {
+      (await SharedPreferences.getInstance()).setBool(headerOnboarded, true);
     }
   }
 }
