@@ -128,7 +128,7 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
   }
 
   void _handleError(
-      BuildContext context, String? error, StackTrace stackTrace) {
+      BuildContext context, Object? error, StackTrace stackTrace) {
     _logger.e(
         'Execution completed with FAILURE - $error\n${stackTrace.toString()}');
   }
