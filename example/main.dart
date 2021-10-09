@@ -10,12 +10,22 @@ void main() async {
   Http.getInstance().interceptors = [
     HttpJsonInterceptor(),
     HttpInternationalizationInterceptor(),
-    HttpTracingInterceptor("demo")
+    HttpTracingInterceptor("demo", await _deviceId())
   ];
 
   onboarded = (await SharedPreferences.getInstance())
       .getBool(HttpOnboardingInterceptor.HEADER_ONBOARDED);
   runApp(MyApp(baseUrl: 'http://localhost:8080'));
+}
+
+Future<String> _deviceId() async {
+  final prefs = await SharedPreferences.getInstance();
+  var deviceId = prefs.getString(HttpTracingInterceptor.HEADER_DEVICE_ID);
+  if (deviceId == null || deviceId.isEmpty) {
+    deviceId = const Uuid().v1();
+    prefs.setString(HttpTracingInterceptor.HEADER_DEVICE_ID, deviceId);
+  }
+  return deviceId;
 }
 
 class MyApp extends StatelessWidget {
@@ -79,30 +89,21 @@ class HttpTracingInterceptor extends HttpInterceptor {
   static const String HEADER_CLIENT_ID = 'X-Client-ID';
 
   String clientId = 'unknown';
+  String deviceId = '';
 
-  HttpTracingInterceptor(this.clientId);
+  HttpTracingInterceptor(this.clientId, this.deviceId);
 
   @override
   void onRequest(RequestTemplate request) async {
     request.headers[HEADER_CLIENT_ID] = clientId;
     request.headers[HEADER_TRACE_ID] = _traceId();
-    request.headers[HEADER_DEVICE_ID] = await _deviceId();
+    request.headers[HEADER_DEVICE_ID] = deviceId;
   }
 
   @override
   void onResponse(ResponseTemplate response) {}
 
   String _traceId() => const Uuid().v1();
-
-  Future<String> _deviceId() async {
-    final prefs = await SharedPreferences.getInstance();
-    var deviceId = prefs.getString(HEADER_DEVICE_ID);
-    if (deviceId == null || deviceId.isEmpty) {
-      deviceId = const Uuid().v1();
-      prefs.setString(HEADER_DEVICE_ID, deviceId);
-    }
-    return deviceId;
-  }
 }
 
 /// HTTP interceptor that stored into the share preferences the response header `x-onboarded`,
@@ -129,7 +130,7 @@ class HttpInternationalizationInterceptor extends HttpInterceptor {
   }
 
   @override
-  void onResponse(ResponseTemplate response) async {}
+  void onResponse(ResponseTemplate response) {}
 
   String _language() =>
       WidgetsBinding.instance?.window.locale.languageCode ?? 'en';

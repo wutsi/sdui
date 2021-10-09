@@ -127,8 +127,10 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     }
   }
 
-  void _handleError(BuildContext context, error, stackTrace) {
-    Navigator.pushNamed(context, '/error');
+  void _handleError(
+      BuildContext context, String? error, StackTrace stackTrace) {
+    _logger.e(
+        'Execution completed with FAILURE - $error\n${stackTrace.toString()}');
   }
 
   void _busy(bool value) {

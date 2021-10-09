@@ -4,12 +4,12 @@ import 'package:http/http.dart' as http;
 
 class RequestTemplate {
   Map<String, String> headers = <String, String>{};
-  String? method;
-  String? url;
+  String method;
+  String url = '';
   Object? body;
   Encoding? encoding;
 
-  RequestTemplate({this.url, this.method, this.body, this.encoding});
+  RequestTemplate(this.url, {this.method = '', this.body, this.encoding});
 }
 
 class ResponseTemplate {
@@ -30,7 +30,7 @@ abstract class HttpInterceptor {
 
 class HttpJsonInterceptor extends HttpInterceptor {
   @override
-  void onRequest(RequestTemplate request) async {
+  void onRequest(RequestTemplate request) {
     request.headers['Content-Type'] = 'application/json';
     request.headers['Accept'] = 'application/json';
 
@@ -62,10 +62,11 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
-    var request = await _pre('POST', url, data);
-    var resp = await http.post(Uri.parse(request.url!),
-        body: request.body, headers: request.headers);
-    var response = _post(request, resp);
+    var request = _pre('POST', url, data);
+    var response = _post(
+        request,
+        await http.post(Uri.parse(request.url),
+            body: request.body, headers: request.headers));
 
     if (response.statusCode / 100 == 2) {
       return response.body;
@@ -74,10 +75,8 @@ class Http {
     }
   }
 
-  Future<RequestTemplate> _pre(
-      String method, String url, Map<String, dynamic>? data) async {
-    RequestTemplate request =
-        RequestTemplate(url: url, body: data, method: method);
+  RequestTemplate _pre(String method, String url, Map<String, dynamic>? data) {
+    RequestTemplate request = RequestTemplate(url, method: method, body: data);
     for (var i = 0; i < interceptors.length; i++) {
       interceptors[i].onRequest(request);
     }
