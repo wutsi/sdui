@@ -1,17 +1,57 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uuid/uuid.dart';
+
+class RequestTemplate {
+  Map<String, String> headers = <String, String>{};
+  String? method;
+  String? url;
+  Object? body;
+  Encoding? encoding;
+
+  RequestTemplate({this.url, this.method, this.body, this.encoding});
+}
+
+class ResponseTemplate {
+  RequestTemplate? request;
+  Map<String, String> headers = <String, String>{};
+  String body;
+  int statusCode = 200;
+
+  ResponseTemplate({this.request, this.body = '', this.statusCode = 200});
+}
+
+/// HttpRequestInterceptor is invoked for each HTTP request.
+abstract class HttpInterceptor {
+  void onRequest(RequestTemplate request);
+
+  void onResponse(ResponseTemplate response);
+}
+
+class HttpJsonInterceptor extends HttpInterceptor {
+  @override
+  void onRequest(RequestTemplate request) async {
+    request.headers['Content-Type'] = 'application/json';
+    request.headers['Accept'] = 'application/json';
+
+    request.body = request.body is Map<String, dynamic>?
+        ? jsonEncode(request.body)
+        : request.body;
+  }
+
+  @override
+  void onResponse(ResponseTemplate response) {}
+}
+
+/// HttpRequestResponse is invoked for each HTTP response.
+abstract class HttpRequestResponse {
+  void apply(http.Response response);
+}
 
 class Http {
-  static const String _HEADER_DEVICE_ID = 'X-Device-ID';
-  static const String _HEADER_TRACE_ID = 'X-Trace-ID';
-  static const String _HEADER_CLIENT_ID = 'X-Client-ID';
   static final Http _singleton = Http._internal();
 
-  String clientId = 'unknown-client';
+  List<HttpInterceptor> interceptors = [HttpJsonInterceptor()];
 
   Http._internal();
 
@@ -22,9 +62,11 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
-    var response = await http.post(Uri.parse(url),
-        body: data == null ? '{}' : jsonEncode(data),
-        headers: await _headers());
+    var request = await _pre('POST', url, data);
+    var resp = await http.post(Uri.parse(request.url!),
+        body: request.body, headers: request.headers);
+    var response = _post(request, resp);
+
     if (response.statusCode / 100 == 2) {
       return response.body;
     } else {
@@ -32,27 +74,22 @@ class Http {
     }
   }
 
-  Future<Map<String, String>> _headers() async => {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Accept-Language': _language(),
-        _HEADER_TRACE_ID: _traceId(),
-        _HEADER_DEVICE_ID: await _deviceId(),
-        _HEADER_CLIENT_ID: clientId
-      };
-
-  String _language() =>
-      WidgetsBinding.instance?.window.locale.languageCode ?? 'en';
-
-  String _traceId() => const Uuid().v1();
-
-  Future<String> _deviceId() async {
-    final prefs = await SharedPreferences.getInstance();
-    var deviceId = prefs.getString(_HEADER_TRACE_ID);
-    if (deviceId == null || deviceId.isEmpty) {
-      deviceId = const Uuid().v1();
-      prefs.setString(_HEADER_TRACE_ID, deviceId);
+  Future<RequestTemplate> _pre(
+      String method, String url, Map<String, dynamic>? data) async {
+    RequestTemplate request =
+        RequestTemplate(url: url, body: data, method: method);
+    for (var i = 0; i < interceptors.length; i++) {
+      interceptors[i].onRequest(request);
     }
-    return deviceId;
+    return request;
+  }
+
+  ResponseTemplate _post(RequestTemplate request, http.Response response) {
+    ResponseTemplate resp = ResponseTemplate(
+        request: request, body: response.body, statusCode: response.statusCode);
+    for (var i = 0; i < interceptors.length; i++) {
+      interceptors[i].onResponse(resp);
+    }
+    return resp;
   }
 }

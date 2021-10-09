@@ -12,6 +12,8 @@ abstract class SDUIWidget {
   SDUIAction action = SDUIAction();
   List<SDUIWidget> children = <SDUIWidget>[];
 
+  bool hasChildren() => children.isNotEmpty;
+
   /// Return the first child
   SDUIWidget? child() => children.isEmpty ? null : children.first;
 

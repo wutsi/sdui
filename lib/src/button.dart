@@ -30,54 +30,6 @@ class SDUIButton extends SDUIWidget {
   Future<String?> _onSubmit(BuildContext context) =>
       onPressed == null ? action.execute(context, null) : onPressed!(context);
 
-  static Widget createWidget(
-          {required String caption,
-          required bool busy,
-          String? type,
-          double? padding,
-          required BuildContext context,
-          required VoidCallback? onPressed}) =>
-      SizedBox(
-          width: double.maxFinite,
-          child:
-              _createWidget(caption, busy, type, padding, context, onPressed));
-
-  static Widget _createWidget(String caption, bool busy, String? type,
-      double? padding, BuildContext context, VoidCallback? onPressed) {
-    switch (type?.toLowerCase()) {
-      case 'text':
-        return TextButton(
-          child: _createText(caption, busy, padding),
-          onPressed: onPressed,
-        );
-
-      case 'outlined':
-        return OutlinedButton(
-          child: _createText(caption, busy, padding),
-          onPressed: onPressed,
-        );
-
-      default:
-        return ElevatedButton(
-          child: _createText(caption, busy, padding),
-          onPressed: onPressed,
-        );
-    }
-  }
-
-  static Widget _createText(String caption, bool busy, double? padding) =>
-      Padding(
-          padding: EdgeInsets.all(padding ?? 15),
-          child: busy
-              ? const SizedBox(
-                  width: 13,
-                  height: 13,
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 2,
-                  ))
-              : Text(caption));
-
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     caption = json?["caption"];
@@ -157,7 +109,8 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     delegate
         ._onSubmit(context)
         .then((value) => _handleResult(value))
-        .onError((error, stackTrace) => _handleError(error, stackTrace))
+        .onError(
+            (error, stackTrace) => _handleError(context, error, stackTrace))
         .whenComplete(() => _busy(false));
   }
 
@@ -174,8 +127,8 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     }
   }
 
-  void _handleError(error, stackTrace) {
-    _logger.e('Execution completed with FAILURE - $error');
+  void _handleError(BuildContext context, error, stackTrace) {
+    Navigator.pushNamed(context, '/error');
   }
 
   void _busy(bool value) {

@@ -1,6 +1,11 @@
 # CHANGELOG
 
-## [0.0.12] 2021-10-067
+## [0.0.13] 2021-10-00
+### Added
+- Add HttpInterceptor to provide functionality to intercept all http transactions
+- Add support for SafeArea
+
+## [0.0.12] 2021-10-06
 ### Added
 - Show icons in dialog
 
