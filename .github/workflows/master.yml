@@ -31,6 +31,7 @@ jobs:
           {
             "accessToken":"${{ secrets.PUB_ACCESS_TOKEN }}",
             "refreshToken":"${{ secrets.PUB_REFRESH_TOKEN }}",
+            "idToken":"${{ secrets.PUB_ID_TOKEN }}",
             "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
             "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
             "expiration": 1633859335782
