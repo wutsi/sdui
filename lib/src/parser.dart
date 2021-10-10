@@ -81,6 +81,9 @@ class SDUIParser {
       case "listitem":
         widget = SDUIListItem().fromJson(json);
         break;
+      case "listitemswitch":
+        widget = SDUIListItemSwitch().fromJson(json);
+        break;
       case "page":
         widget = SDUIPage().fromJson(json);
         break;
@@ -92,9 +95,6 @@ class SDUIParser {
         break;
       case "radiogroup":
         widget = SDUIRadioGroup();
-        break;
-      case "listitemswitch":
-        widget = SDUIListItemSwitch().fromJson(json);
         break;
       case "screen":
         widget = SDUIScreen();

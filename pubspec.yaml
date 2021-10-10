@@ -15,7 +15,7 @@ description: Flutter Server Driven UI Library
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.13
+version: 0.0.14
 
 environment:
     sdk: ">=2.12.0 <3.0.0"
@@ -40,8 +40,6 @@ dependencies:
     intl: ^0.17.0
     intl_phone_field: ^2.1.0
     logger: ^1.1.0
-    shared_preferences: ^2.0.8
-    uuid: ^3.0.5
 
 dev_dependencies:
     flutter_test:

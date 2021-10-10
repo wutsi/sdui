@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [0.0.13] 2021-10-00
+## [0.0.14] 2021-10-10
+### Changed
+- Update documentation in README
+
+## [0.0.13] 2021-10-09
 ### Added
 - Add HttpInterceptor to provide functionality to intercept all http transactions
 - Add support for SafeArea
