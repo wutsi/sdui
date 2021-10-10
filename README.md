@@ -111,7 +111,7 @@ class MyApp extends StatelessWidget {
 ```
 
 ### The screenshot
-![](docs/images/screenshot.png)
+![](doc/images/screenshot.png)
 
 ## Widgets
 In Flutter, UI is composed of a hierarchy of Widgets.
