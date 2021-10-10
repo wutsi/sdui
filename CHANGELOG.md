@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.15] 2021-10-10
+### Changed
+- Deployment with Github Actions
+
 ## [0.0.14] 2021-10-10
 ### Changed
 - Update documentation in README

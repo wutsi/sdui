@@ -36,6 +36,6 @@ jobs:
       - name: Dry Run
         run: dart pub publish --dry-run
 
-#      - name: Deployment
-#        run: dart pub publish -f
+      - name: Deployment
+        run: dart pub publish --force
 
