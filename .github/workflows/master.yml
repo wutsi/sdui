@@ -27,7 +27,9 @@ jobs:
       - name: Setup credentials
         run: |
           mkdir -p ~/.pub-cache
-          cat <<EOF > ~/.pub-cache/credentials.json ${{ secrets.PUB_CREDENTIALS_JSON }}
+          cat <<EOF > ~/.pub-cache/credentials.json
+          ${{ secrets.PUB_CREDENTIALS_JSON }}
+          EOF
 
       - name: Analyse
         run: flutter analyze
