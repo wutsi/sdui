@@ -15,9 +15,8 @@ class MyApp extends StatelessWidget {
 
   Map<String, WidgetBuilder> _routes() => {
         '/': (context) => Scaffold(
-            appBar: AppBar(title: const Text('Home')),
-            body: Container(
-              child: Column(children: [
+              appBar: AppBar(title: const Text('Home')),
+              body: Column(children: [
                 ElevatedButton(
                     child: const Text('Remote'),
                     onPressed: () => Navigator.pushNamed(context, '/remote')),
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
                     child: const Text('Static'),
                     onPressed: () => Navigator.pushNamed(context, '/static')),
               ]),
-            )),
+            ),
         '/remote': (context) => DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://localhost:8080/app/onboard/screens/home')),
