@@ -28,7 +28,13 @@ jobs:
         run: |
           mkdir -p ~/.pub-cache
           cat <<EOF > ~/.pub-cache/credentials.json
-          ${{ secrets.PUB_CREDENTIALS_JSON }}
+          {
+            "accessToken":"${{ secrets.PUB_ACCESS_TOKEN }}",
+            "refreshToken":"${{ secrets.PUB_REFRESH_TOKEN }}",
+            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+            "expiration": 1633859335782
+          }
           EOF
 
       - name: Analyse
