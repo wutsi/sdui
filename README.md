@@ -50,18 +50,16 @@ Here is an example of JSON returned by the URL `POST http://myapp.herokuapp.com/
         "attributes": {
           "name": "email",
           "value": "ray.sponsible@gmail.com",
-          "caption": "Email",
+          "caption": "Email *",
           "required": true
         }
       },
       {
         "type": "Input",
         "attributes": {
-          "type": "Email",
-          "name": "email",
-          "value": "ray.sponsible@gmail.com",
-          "caption": "Email",
-          "required": true
+          "type": "date",
+          "name": "birth_date",
+          "caption": "Date of Birth"
         }
       },
       {
@@ -111,8 +109,10 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-### The screenshot
-![](doc/images/screenshot.png)
+### Screenshots
+| Screen | Date Picker  | Alert Dialog |
+|--------|--------------|--------------|
+|![](doc/images/screenshot-01.png)|![](doc/images/screenshot-02.png)|![](doc/images/screenshot-03.png)
 
 ## Widgets
 In Flutter, UI is composed of a hierarchy of Widgets.

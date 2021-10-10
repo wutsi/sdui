@@ -72,16 +72,14 @@ var json = '''
 					"required": true
 				}
 			},
-			{
-				"type": "Input",
-				"attributes": {
-					"type": "Email",
-					"name": "email",
-					"value": "ray.sponsible@gmail.com",
-					"caption": "Email",
-					"required": true
-				}
-			},
+      {
+        "type": "Input",
+        "attributes": {
+          "type": "date",
+          "name": "birth_date",
+          "caption": "Date of Birth"
+        }
+      },
 			{
 				"type": "Input",
 				"attributes": {
