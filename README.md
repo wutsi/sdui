@@ -1,6 +1,7 @@
 [![](https://github.com/wutsi/sdui/actions/workflows/master.yml/badge.svg)](https://github.com/wutsi/sdui/actions/workflows/master.yml)
-![](https://img.shields.io/badge/language-dart-blue.svg)
-![](https://img.shields.io/badge/licence-MIT-blue.svg)
+![](https://img.shields.io/badge/licence-MIT-yellow.svg)
+![](https://img.shields.io/badge/language-dart-darkblue.svg)
+[![https://img.shields.io/badge/package-pub.dev-darkblue.svg]()](https://pub.dev/packages/sdui)
 
 # SDUI
 
@@ -118,7 +119,7 @@ In Flutter, UI is composed of a hierarchy of Widgets.
 A widget is a visual element on a screen.
 
 *SDUI* described widgets with the following json structure:
-```json
+```
 {
     "type": "...",
     "attributes": {
@@ -126,7 +127,7 @@ A widget is a visual element on a screen.
       "color": "#ff0000",
       ...
     },
-    children": [
+    "children": [
       ...
     ]
 }
@@ -169,14 +170,14 @@ With actions, you can:
 - Prompt a message to user.
 
 *SDUI* described actions with the following json structure:
-```json
+```
 {
     "type": "...",
     "attributes": {
       ...
     },
     ...
-    action": {
+    "action": {
       "type": "...",
       "url": "...",
       "prompt": {
