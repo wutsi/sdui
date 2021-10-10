@@ -42,8 +42,8 @@ jobs:
         run: flutter analyze
 
       - name: Dry Run
-        run: pub publish --dry-run
+        run: dart pub publish --dry-run
 
       - name: Deployment
-        run: pub publish -f
+        run: dart pub publish -f
 
