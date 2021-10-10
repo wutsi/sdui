@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.16] 2021-10-10
+### Changed
+- Deployment with Github Actions
+
 ## [0.0.15] 2021-10-10
 ### Changed
 - Deployment with Github Actions

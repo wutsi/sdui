@@ -44,5 +44,5 @@ jobs:
         run: pub publish --dry-run
 
       - name: Deployment
-        run: pub publish --force
+        run: pub publish -f
 
