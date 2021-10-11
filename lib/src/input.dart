@@ -36,6 +36,7 @@ import 'widget.dart';
 /// - **maxLength**: Maximum length of the field
 /// - **maxLine**: Maximum number of line  (for multi-line input)
 /// - **minLength**: Minimum length of the field (Default: 0)
+/// - *action***: [SDUIAction] to execute when the input is clicked
 class SDUIInput extends SDUIWidget implements SDUIFormField {
   String name = '_no_name_';
   String? value;

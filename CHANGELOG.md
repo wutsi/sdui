@@ -1,6 +1,9 @@
 # CHANGELOG
 
 ## [0.0.17] 2021-10-11
+### Added
+- IconButton
+- AppBar
 ### Changed
 - Improved logging when unable to load a route content
 

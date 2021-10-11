@@ -10,7 +10,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Demo', initialRoute: '/', routes: _routes());
+    return MaterialApp(
+      title: 'Demo',
+      initialRoute: '/',
+      routes: _routes(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 
   Map<String, WidgetBuilder> _routes() => {
@@ -37,8 +42,26 @@ class MyApp extends StatelessWidget {
 var json = '''
 {
 	"type": "Screen",
-	"attributes": {
-		"title": "Profile"
+	"appBar": {
+	  "type": "AppBar",
+	  "attributes":{
+	    "title": "Title"
+	  },
+	  "children": [
+	    {
+	      "type": "IconButton",
+	      "attributes": {
+	        "icon": "e166"
+	      },
+	      "action":{
+	        "type": "Prompt",
+	        "prompt":{
+	          "title": "Yo",
+	          "message": "Man"
+	        }
+	      }
+	    }
+	  ]
 	},
 	"child": {
 		"type": "Form",

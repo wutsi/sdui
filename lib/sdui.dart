@@ -1,4 +1,5 @@
 export 'src/action.dart';
+export 'src/appbar.dart';
 export 'src/button.dart';
 export 'src/column.dart';
 export 'src/container.dart';
@@ -8,6 +9,7 @@ export 'src/flexible.dart';
 export 'src/form.dart';
 export 'src/http.dart';
 export 'src/icon.dart';
+export 'src/iconbutton.dart';
 export 'src/image.dart';
 export 'src/input.dart';
 export 'src/listview.dart';

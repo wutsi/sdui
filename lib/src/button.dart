@@ -16,6 +16,7 @@ import 'widget.dart';
 ///     - `elevated` for [ElevatedButton] (default)
 ///     - `text` for [TextButton]
 ///     - `outlined` for [OutlinedButton]
+/// - *action***: [SDUIAction] to execute when the button is clicked
 class SDUIButton extends SDUIWidget {
   String? caption;
   String? type;

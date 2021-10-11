@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 import 'action.dart';
+import 'appbar.dart';
 import 'button.dart';
 import 'column.dart';
 import 'container.dart';
@@ -11,6 +12,7 @@ import 'expanded.dart';
 import 'flexible.dart';
 import 'form.dart';
 import 'icon.dart';
+import 'iconbutton.dart';
 import 'image.dart';
 import 'input.dart';
 import 'listview.dart';
@@ -45,6 +47,9 @@ class SDUIParser {
     var type = json?["type"].toString().toLowerCase();
     SDUIWidget? widget;
     switch (type) {
+      case "appbar":
+        widget = SDUIAppBar();
+        break;
       case "button":
         widget = SDUIButton();
         break;
@@ -68,6 +73,9 @@ class SDUIParser {
         break;
       case "icon":
         widget = SDUIIcon();
+        break;
+      case "iconbutton":
+        widget = SDUIIconButton();
         break;
       case "image":
         widget = SDUIImage();
@@ -110,7 +118,7 @@ class SDUIParser {
         break;
 
       default:
-        throw Exception("Unsupported node: $type");
+        throw Exception("Unsupported node: ${json?["type"]}");
     }
 
     // Attributes
@@ -133,6 +141,14 @@ class SDUIParser {
       var children = json?["children"];
       if (children is List<dynamic>) {
         widget.children = children.map((e) => fromJson(e)).toList();
+      }
+    }
+
+    // AppBar
+    if (widget is SDUIScreen) {
+      var appBar = SDUIParser.getInstance().fromJson(json?["appBar"]);
+      if (appBar is SDUIAppBar) {
+        widget.appBar = appBar;
       }
     }
 

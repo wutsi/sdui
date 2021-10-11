@@ -19,8 +19,11 @@ Here is an example of JSON returned by the URL `POST http://myapp.herokuapp.com/
 ```json
 {
   "type": "Screen",
-  "attributes": {
-    "title": "Profile"
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "title": "Profile"
+    }
   },
   "child": {
     "type": "Form",
@@ -140,10 +143,11 @@ A widget is a visual element on a screen.
 
 ### Widget Library
 - Navigation widgets
-    - [Screen](https://pub.dev/documentation/sdui/latest/sdui/SDUIScreen-class.html)
-    - [PageView](https://pub.dev/documentation/sdui/latest/sdui/SDUIPageView-class.html)
-    - [Page](https://pub.dev/documentation/sdui/latest/sdui/SDUIPage-class.html)
     - [Dialog](https://pub.dev/documentation/sdui/latest/sdui/SDUIDialog-class.html)
+    - [AppBar](https://pub.dev/documentation/sdui/latest/sdui/SDUIAppBar-class.html)
+    - [Page](https://pub.dev/documentation/sdui/latest/sdui/SDUIPage-class.html)
+    - [PageView](https://pub.dev/documentation/sdui/latest/sdui/SDUIPageView-class.html)
+    - [Screen](https://pub.dev/documentation/sdui/latest/sdui/SDUIScreen-class.html)
 - Layout widgets
     - [Column](https://pub.dev/documentation/sdui/latest/sdui/SDUIColumn-class.html)
     - [Container](https://pub.dev/documentation/sdui/latest/sdui/SDUIContainer-class.html)
@@ -155,6 +159,7 @@ A widget is a visual element on a screen.
     - [Button](https://pub.dev/documentation/sdui/latest/sdui/SDUIButton-class.html)
     - [Form](https://pub.dev/documentation/sdui/latest/sdui/SDUIForm-class.html)
     - [Icon](https://pub.dev/documentation/sdui/latest/sdui/SDUIIcon-class.html)
+    - [IconButton](https://pub.dev/documentation/sdui/latest/sdui/SDUIIconButton-class.html)
     - [Image](https://pub.dev/documentation/sdui/latest/sdui/SDUIImage-class.html)
     - [Input](https://pub.dev/documentation/sdui/latest/sdui/SDUIInput-class.html)
     - [ListView](https://pub.dev/documentation/sdui/latest/sdui/SDUIListView-class.html)

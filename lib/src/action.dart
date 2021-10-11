@@ -25,9 +25,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 ///   - URL starting with ``route:/<ROUTE_NAME>`` redirect user the a named route. (Ex: ``route:/checkout``)
 ///   - URL starting with ``http://`` or ``https`` redirect user to a server driven page
 class SDUIAction {
-  static final Logger _logger = Logger(
-    printer: LogfmtPrinter(),
-  );
+  static final Logger _logger = Logger();
 
   static final Future<String> _emptyFuture = Future(() => "{}");
 

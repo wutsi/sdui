@@ -1,38 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sdui/sdui.dart';
+import 'package:sdui/src/appbar.dart';
 
 import 'widget.dart';
 
 /// Descriptor of a screen, implemented as [Scaffold]
 ///
-/// ### JSon Attribute
-/// - *title*: Title to display in the application bar
+/// ### JSON Attribute
 /// - *safe*: if `true`, the content of the scafold will be enclosed in a [SafeArea]. Default=`false`
-/// - *showAppBar*: if `true`, application bar will be visible. Default=`true`
+/// - *appBar***: description of the [SDUIAppBar]
 class SDUIScreen extends SDUIWidget {
-  String? title;
-  bool safe = false;
-  bool showAppBar = true;
+  bool? safe;
+  SDUIAppBar? appBar;
 
   @override
-  Widget toWidget(BuildContext context) {
-    return Scaffold(
-        appBar: showAppBar
-            ? AppBar(
-                title: title == null ? null : Text(title!),
-              )
-            : null,
-        body: safe ? SafeArea(child: _child(context)) : _child(context));
-  }
+  Widget toWidget(BuildContext context) => Scaffold(
+      appBar: appBar == null ? null : (appBar!.toWidget(context) as AppBar),
+      body: safe == true ? SafeArea(child: _child(context)) : _child(context));
 
   Widget _child(BuildContext context) =>
       hasChildren() ? child()!.toWidget(context) : Container();
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
-    title = json?['title'];
-    safe = json?['safe'] ?? false;
-    showAppBar = json?['showAppBar'] ?? true;
+    safe = json?['safe'];
     return this;
   }
 }
