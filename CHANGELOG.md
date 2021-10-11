@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.17] 2021-10-11
+### Changed
+- Improved logging when unable to load a route content
+
 ## [0.0.16] 2021-10-10
 ### Changed
 - Deployment with Github Actions

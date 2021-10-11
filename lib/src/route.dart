@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
 
@@ -50,9 +51,7 @@ class DynamicRoute extends StatefulWidget {
 }
 
 class DynamicRouteState extends State<DynamicRoute> {
-  static final Logger _logger = Logger(
-    printer: LogfmtPrinter(),
-  );
+  static final Logger _logger = Logger();
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
@@ -76,7 +75,14 @@ class DynamicRouteState extends State<DynamicRoute> {
               widget.attachPageController(pageController);
               return widget.toWidget(context);
             } else if (snapshot.hasError) {
-              _logger.e('Unable to get content - $snapshot.error');
+              var error = snapshot.error;
+              if (error is ClientException) {
+                _logger.e('${error.uri} - ${error.message}', error,
+                    snapshot.stackTrace);
+              } else {
+                _logger.e(
+                    'Unable to download content', error, snapshot.stackTrace);
+              }
               return const Icon(Icons.error);
             }
 

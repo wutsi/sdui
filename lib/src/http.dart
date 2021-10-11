@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class RequestTemplate {
   Map<String, String> headers = <String, String>{};
@@ -50,6 +51,7 @@ abstract class HttpRequestResponse {
 
 class Http {
   static final Http _singleton = Http._internal();
+  final Logger _logger = Logger();
 
   List<HttpInterceptor> interceptors = [HttpJsonInterceptor()];
 
@@ -71,7 +73,8 @@ class Http {
     if (response.statusCode / 100 == 2) {
       return response.body;
     } else {
-      throw Exception('FAILED: $url - ${response.statusCode}');
+      throw http.ClientException(
+          '${response.statusCode}', Uri.parse(request.url));
     }
   }
 

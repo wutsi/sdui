@@ -50,9 +50,7 @@ class _ButtonWidgetStateful extends StatefulWidget {
 }
 
 class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
-  static final Logger _logger = Logger(
-    printer: LogfmtPrinter(),
-  );
+  static final Logger _logger = Logger();
   bool busy = false;
   SDUIButton delegate;
 
@@ -130,8 +128,7 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
 
   void _handleError(
       BuildContext context, Object? error, StackTrace stackTrace) {
-    _logger.e(
-        'Execution completed with FAILURE - $error\n${stackTrace.toString()}');
+    _logger.e('FAILURE', error, stackTrace);
   }
 
   void _busy(bool value) {
