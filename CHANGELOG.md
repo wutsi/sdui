@@ -6,6 +6,8 @@
 - AppBar
 ### Changed
 - Improved logging when unable to load a route content
+- Make ListItemSwitch a form field
+- Make RadioGroup a form field
 
 ## [0.0.16] 2021-10-10
 ### Changed

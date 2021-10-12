@@ -6,10 +6,10 @@ import 'widget.dart';
 /// Descriptor of an [IconButton]
 ///
 /// ### JSON Attributes
-/// - **icon**: Icon code point
+/// - **icon**: Icon code point. See [IconData]
 /// - **tooltip**: Tooltip
 /// - **size**: Icon size
-/// - **color**: Icon color
+/// - **color**: Icon color in hexadecimal
 /// - *action***: [SDUIAction] to execute when the button is clicked
 class SDUIIconButton extends SDUIWidget {
   String? icon;

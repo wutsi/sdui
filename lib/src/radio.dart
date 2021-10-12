@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'form.dart';
 import 'widget.dart';
 
 /// Descriptor of a [RadioListTile]
@@ -30,9 +31,17 @@ class SDUIRadio extends SDUIWidget {
 }
 
 /// Descriptor of a radio group
-class SDUIRadioGroup extends SDUIWidget {
-  String? name;
+class SDUIRadioGroup extends SDUIWidget implements SDUIFormField {
+  String name = '<no-name>';
   String? value;
+  GlobalKey<FormState>? formKey;
+  SDUIFormDataProvider? provider;
+
+  @override
+  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
+    this.formKey = formKey;
+    this.provider = provider;
+  }
 
   @override
   Widget toWidget(BuildContext context) => RadioGroupWidget(this);
@@ -40,7 +49,7 @@ class SDUIRadioGroup extends SDUIWidget {
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     super.fromJson(json);
-    name = json?["name"];
+    name = json?["name"] ?? '<no-name>';
     value = json?["value"];
     return this;
   }
@@ -66,6 +75,7 @@ class RadioGroupState extends State<RadioGroupWidget> {
   void initState() {
     super.initState();
     state = delegate.value ?? '';
+    delegate.provider?.setData(delegate.name, state.toString());
   }
 
   @override
@@ -91,7 +101,8 @@ class RadioGroupState extends State<RadioGroupWidget> {
     });
 
     var data = <String, String>{};
-    data[(delegate.name ?? '_no_name')] = val;
+    data[(delegate.name)] = val;
     delegate.action.execute(context, data);
+    delegate.provider?.setData(delegate.name, state.toString());
   }
 }

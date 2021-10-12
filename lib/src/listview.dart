@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
+import 'form.dart';
 import 'widget.dart';
 
 /// Descriptor of a [ListView]
@@ -67,12 +68,20 @@ class SDUIListItem extends SDUIWidget {
 }
 
 /// Descriptor of a [SwitchListTile]
-class SDUIListItemSwitch extends SDUIWidget {
+class SDUIListItemSwitch extends SDUIWidget implements SDUIFormField {
   bool selected = false;
   String name = '';
   String? caption;
   String? subCaption;
   String? icon;
+  GlobalKey<FormState>? formKey;
+  SDUIFormDataProvider? provider;
+
+  @override
+  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
+    this.formKey = formKey;
+    this.provider = provider;
+  }
 
   @override
   Widget toWidget(BuildContext context) => _ListItemSwitchWidget(this);
@@ -114,6 +123,7 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   void initState() {
     super.initState();
     state = delegate.selected;
+    delegate.provider?.setData(delegate.name, state.toString());
   }
 
   @override
@@ -129,5 +139,6 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   void _changeState(bool value) {
     setState(() => state = value);
     delegate.submit(context, value.toString());
+    delegate.provider?.setData(delegate.name, value.toString());
   }
 }
