@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.18] 2021-10-12
+### Fixed
+- NPE on parsing AppBar
+
 ## [0.0.17] 2021-10-11
 ### Added
 - IconButton

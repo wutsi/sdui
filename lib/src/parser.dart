@@ -42,9 +42,9 @@ class SDUIParser {
     return fromJson(data).toWidget(context);
   }
 
-  SDUIWidget fromJson(Map<String, dynamic>? json) {
+  SDUIWidget fromJson(Map<String, dynamic> json) {
     // Widget
-    var type = json?["type"].toString().toLowerCase();
+    var type = json["type"].toString().toLowerCase();
     SDUIWidget? widget;
     switch (type) {
       case "appbar":
@@ -118,27 +118,27 @@ class SDUIParser {
         break;
 
       default:
-        throw Exception("Unsupported node: ${json?["type"]}");
+        throw Exception("Unsupported node: ${json["type"]}");
     }
 
     // Attributes
-    var attributes = json?["attributes"];
+    var attributes = json["attributes"];
     if (attributes is Map<String, dynamic>) {
       widget.fromJson(attributes);
     }
 
     // Action
-    var action = json?["action"];
+    var action = json["action"];
     if (action is Map<String, dynamic>) {
       widget.action = SDUIAction().fromJson(action);
     }
 
     // Children
-    var child = json?["child"];
+    var child = json["child"];
     if (child is Map<String, dynamic>) {
       widget.children = [fromJson(child)];
     } else {
-      var children = json?["children"];
+      var children = json["children"];
       if (children is List<dynamic>) {
         widget.children = children.map((e) => fromJson(e)).toList();
       }
@@ -146,9 +146,12 @@ class SDUIParser {
 
     // AppBar
     if (widget is SDUIScreen) {
-      var appBar = SDUIParser.getInstance().fromJson(json?["appBar"]);
-      if (appBar is SDUIAppBar) {
-        widget.appBar = appBar;
+      var appBar = json["appBar"];
+      if (appBar is Map<String, dynamic>) {
+        var item = fromJson(appBar);
+        if (item is SDUIAppBar) {
+          widget.appBar = item;
+        }
       }
     }
 
