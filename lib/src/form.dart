@@ -28,7 +28,14 @@ abstract class SDUIFormDataProvider {
 
 /// Interface for attaching a form with its fields
 abstract class SDUIFormField {
-  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider);
+  GlobalKey<FormState>? formKey;
+  SDUIFormDataProvider? provider;
+
+  @override
+  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
+    this.formKey = formKey;
+    this.provider = provider;
+  }
 }
 
 class _FormWidgetStateful extends StatefulWidget {

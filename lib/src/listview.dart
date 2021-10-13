@@ -68,20 +68,12 @@ class SDUIListItem extends SDUIWidget {
 }
 
 /// Descriptor of a [SwitchListTile]
-class SDUIListItemSwitch extends SDUIWidget implements SDUIFormField {
+class SDUIListItemSwitch extends SDUIWidget with SDUIFormField {
   bool selected = false;
   String name = '';
   String? caption;
   String? subCaption;
   String? icon;
-  GlobalKey<FormState>? formKey;
-  SDUIFormDataProvider? provider;
-
-  @override
-  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
-    this.formKey = formKey;
-    this.provider = provider;
-  }
 
   @override
   Widget toWidget(BuildContext context) => _ListItemSwitchWidget(this);

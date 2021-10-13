@@ -37,7 +37,7 @@ import 'widget.dart';
 /// - **maxLine**: Maximum number of line  (for multi-line input)
 /// - **minLength**: Minimum length of the field (Default: 0)
 /// - *action***: [SDUIAction] to execute when the input is clicked
-class SDUIInput extends SDUIWidget implements SDUIFormField {
+class SDUIInput extends SDUIWidget with SDUIFormField {
   String name = '_no_name_';
   String? value;
   bool hideText = false;
@@ -50,14 +50,6 @@ class SDUIInput extends SDUIWidget implements SDUIFormField {
   int? maxLines;
   int? maxLength;
   int minLength = 0;
-  GlobalKey<FormState>? formKey;
-  SDUIFormDataProvider? provider;
-
-  @override
-  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
-    this.formKey = formKey;
-    this.provider = provider;
-  }
 
   @override
   Widget toWidget(BuildContext context) => _createWidget(context);
@@ -105,13 +97,13 @@ class SDUIInput extends SDUIWidget implements SDUIFormField {
       return "This field must have at least $minLength characters";
     }
     if (type == 'email' && !empty && !EmailValidator.validate(value)) {
-      return "Invalid email address";
+      return "Malformed email address";
     }
     if (type == 'url' && !empty) {
       try {
         Uri.parse(value);
       } catch (e) {
-        return "Invalid URL address";
+        return "Malformed URL address";
       }
     }
     if (type == 'number' && !empty) {

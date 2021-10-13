@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class RequestTemplate {
   Map<String, String> headers = <String, String>{};
@@ -50,6 +51,7 @@ abstract class HttpRequestResponse {
 
 class Http {
   static final Http _singleton = Http._internal();
+  static final Logger _logger = Logger();
 
   List<HttpInterceptor> interceptors = [HttpJsonInterceptor()];
 
@@ -62,6 +64,8 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
+    _logger.i('POST $url - $data');
+
     var request = _pre('POST', url, data);
     var response = _post(
         request,

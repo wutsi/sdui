@@ -103,6 +103,37 @@ var json = '''
           "caption": "Date of Birth"
         }
       },
+      {
+        "type": "DropdownButton",
+        "attributes": {
+          "name": "payment_method",
+          "hint": "Select your Payment Method",
+          "required": true
+        },
+        "children":[
+          {
+            "type": "DropdownMenuItem",
+            "attributes": {
+              "caption": "MTN",
+              "value": "MTN"
+            }
+          },
+          {
+            "type": "DropdownMenuItem",
+            "attributes": {
+              "caption": "Orange",
+              "value": "ORANGE"
+            }
+          },
+          {
+            "type": "DropdownMenuItem",
+            "attributes": {
+              "caption": "Nexttel",
+              "value": "NEXTTEL"
+            }
+          }
+        ]
+      },
 			{
 				"type": "Input",
 				"attributes": {
@@ -112,7 +143,7 @@ var json = '''
 				},
 				"action": {
 					"type": "Command",
-					"url": "http://myapp.herokuapp.com/commands/save-profile",
+					"url": "http://localhost:8080/actuator/health",
 					"prompt": {
 						"type": "Confirm",
 						"title": "Confirmation",

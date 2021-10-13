@@ -8,6 +8,7 @@ import 'button.dart';
 import 'column.dart';
 import 'container.dart';
 import 'dialog.dart';
+import 'dropdown.dart';
 import 'expanded.dart';
 import 'flexible.dart';
 import 'form.dart';
@@ -43,7 +44,6 @@ class SDUIParser {
   }
 
   SDUIWidget fromJson(Map<String, dynamic> json) {
-    // Widget
     var type = json["type"].toString().toLowerCase();
     SDUIWidget? widget;
     switch (type) {
@@ -61,6 +61,12 @@ class SDUIParser {
         break;
       case "dialog":
         widget = SDUIDialog();
+        break;
+      case "dropdownbutton":
+        widget = SDUIDropdownButton();
+        break;
+      case "dropdownmenuitem":
+        widget = SDUIDropdownMenuItem();
         break;
       case "expanded":
         widget = SDUIExpanded();

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
 import 'action.dart';
@@ -129,7 +130,11 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
 
   void _handleError(
       BuildContext context, Object? error, StackTrace stackTrace) {
-    _logger.e('FAILURE', error, stackTrace);
+    if (error is ClientException) {
+      _logger.e('FAILURE - POST ${error.uri}', error, stackTrace);
+    } else {
+      _logger.e('FAILURE', error, stackTrace);
+    }
   }
 
   void _busy(bool value) {

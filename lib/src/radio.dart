@@ -31,17 +31,9 @@ class SDUIRadio extends SDUIWidget {
 }
 
 /// Descriptor of a radio group
-class SDUIRadioGroup extends SDUIWidget implements SDUIFormField {
+class SDUIRadioGroup extends SDUIWidget with SDUIFormField {
   String name = '<no-name>';
   String? value;
-  GlobalKey<FormState>? formKey;
-  SDUIFormDataProvider? provider;
-
-  @override
-  void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
-    this.formKey = formKey;
-    this.provider = provider;
-  }
 
   @override
   Widget toWidget(BuildContext context) => RadioGroupWidget(this);

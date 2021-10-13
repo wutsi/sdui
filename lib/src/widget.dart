@@ -29,7 +29,8 @@ abstract class SDUIWidget {
     return this;
   }
 
-  Widget? toIcon(String? code) => Icon(toIconData(code));
+  Widget? toIcon(String? code, {double size = 16.0}) =>
+      Icon(toIconData(code), size: size);
 
   Color? toColor(String? hexColor) {
     if (hexColor == null) {
