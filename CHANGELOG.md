@@ -3,6 +3,7 @@
 ## [0.0.19] 2021-10-13
 ### Fixed
 - Add Dropdown
+- Remove logs
 
 ## [0.0.18] 2021-10-12
 ### Fixed
