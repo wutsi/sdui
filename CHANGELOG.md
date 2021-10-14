@@ -3,7 +3,7 @@
 ## [0.0.20] 2021-10-14
 ### Changed
 - Remove log pollution
-- Add support for image icon
+- Add support for URL icon
 
 ## [0.0.19] 2021-10-13
 ### Fixed
