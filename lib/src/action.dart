@@ -82,8 +82,6 @@ class SDUIAction {
   }
 
   Future<String> _gotoPage(BuildContext context, Map<String, dynamic>? data) {
-    _logger.i('Navigating to page $url');
-
     int page = -1;
     try {
       page = int.parse(url.substring(6));

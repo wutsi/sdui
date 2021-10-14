@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-/// Descriptor of an [Icon]
+/// Descriptor of an [Icon] or [ImageIcon]
 ///
 /// ### JSON Attributes
-/// - **code**: Icon code point. See [IconData]
+/// - **code**: Icon code point (See [IconData]) or icon URL.
 /// - **size**: Icon size
 /// - **color**: color code in hexadecimal
 class SDUIIcon extends SDUIWidget {
@@ -18,7 +18,7 @@ class SDUIIcon extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) =>
-      Icon(toIconData(code), size: size, color: toColor(color));
+      toIcon(code, size: size, color: color) ?? const Icon(Icons.error);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {

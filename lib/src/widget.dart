@@ -29,22 +29,29 @@ abstract class SDUIWidget {
     return this;
   }
 
-  Widget? toIcon(String? code, {double size = 16.0}) =>
-      Icon(toIconData(code), size: size);
+  Widget? toIcon(String? code, {double? size = 16.0, String? color}) {
+    if (code?.startsWith("http://") == true ||
+        code?.startsWith("https://") == true) {
+      return Image.network(code!);
+    } else {
+      return Icon(toIconData(code), size: size, color: toColor(color));
+    }
+  }
 
   Color? toColor(String? hexColor) {
     if (hexColor == null) {
       return null;
     }
-    final hexCode = hexColor.replaceAll('#', '');
+    final hexCode = hexColor.replaceFirst('#', '');
     return Color(int.parse('FF$hexCode', radix: 16));
   }
 
-  IconData? toIconData(String? hexCode) {
-    if (hexCode == null) {
+  IconData? toIconData(String? code) {
+    if (code == null) {
       return null;
     }
 
+    final hexCode = code.replaceFirst('0x', '');
     return IconData(int.parse(hexCode, radix: 16), fontFamily: 'MaterialIcons');
   }
 

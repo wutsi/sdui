@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.0.20] 2021-10-14
+### Changed
+- Remove log pollution
+- Add support for image icon
+
 ## [0.0.19] 2021-10-13
 ### Fixed
 - Add Dropdown

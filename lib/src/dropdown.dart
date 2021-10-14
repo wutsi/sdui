@@ -24,7 +24,16 @@ class SDUIDropdownMenuItem extends SDUIWidget {
       alignment: Alignment.centerLeft,
       child: icon == null
           ? Text(caption)
-          : Row(children: [toIcon(icon!, size: 16)!, Text(caption)]));
+          : Row(children: [
+              Container(
+                  width: 24,
+                  height: 24,
+                  child: FittedBox(child: toIcon(icon!, size: 24)!)),
+              Container(
+                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Text(caption),
+              )
+            ]));
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
