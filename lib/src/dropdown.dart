@@ -25,7 +25,7 @@ class SDUIDropdownMenuItem extends SDUIWidget {
       child: icon == null
           ? Text(caption)
           : Row(children: [
-              Container(
+              SizedBox(
                   width: 24,
                   height: 24,
                   child: FittedBox(child: toIcon(icon!, size: 24)!)),
