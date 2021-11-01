@@ -18,7 +18,7 @@ import 'image.dart';
 import 'input.dart';
 import 'list_view.dart';
 import 'page_view.dart';
-import 'pin_input.dart';
+import 'pin_with_keyboard.dart';
 import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
