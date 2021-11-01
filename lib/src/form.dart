@@ -31,7 +31,6 @@ abstract class SDUIFormField {
   GlobalKey<FormState>? formKey;
   SDUIFormDataProvider? provider;
 
-  @override
   void attachForm(GlobalKey<FormState> formKey, SDUIFormDataProvider provider) {
     this.formKey = formKey;
     this.provider = provider;
