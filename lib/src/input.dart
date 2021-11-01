@@ -122,6 +122,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   }
 }
 
+/// Text
 class _TextFieldWidgetStateful extends StatefulWidget {
   final SDUIInput delegate;
 
@@ -181,6 +182,7 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
   }
 }
 
+/// Submit
 class _SubmitWidgetStateful extends StatefulWidget {
   final SDUIInput delegate;
 
@@ -212,6 +214,7 @@ class _SubmitWidgetState extends State<_SubmitWidgetStateful> {
   Widget build(BuildContext context) => button.toWidget(context);
 }
 
+/// Date Time
 class _DateTimeWidgetStateful extends StatefulWidget {
   final SDUIInput delegate;
 
@@ -330,6 +333,7 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
   }
 }
 
+/// Phone
 class _PhoneWidgetStateful extends StatefulWidget {
   final SDUIInput delegate;
 

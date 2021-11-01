@@ -10,7 +10,7 @@ import 'widget.dart';
 /// - **tooltip**: Tooltip
 /// - **size**: Icon size
 /// - **color**: Icon color in hexadecimal
-/// - *action***: [SDUIAction] to execute when the button is clicked
+/// - **action**: [SDUIAction] to execute when the button is clicked
 class SDUIIconButton extends SDUIWidget {
   String? icon;
   String? tooltip;

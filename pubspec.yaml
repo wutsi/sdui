@@ -40,6 +40,7 @@ dependencies:
     intl: ^0.17.0
     intl_phone_field: ^2.1.0
     logger: ^1.1.0
+    pin_code_text_field: ^1.8.0
 
 dev_dependencies:
     flutter_test:

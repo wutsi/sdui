@@ -54,14 +54,14 @@ class RadioGroupWidget extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  RadioGroupState createState() => RadioGroupState(delegate);
+  _RadioGroupState createState() => _RadioGroupState(delegate);
 }
 
-class RadioGroupState extends State<RadioGroupWidget> {
+class _RadioGroupState extends State<RadioGroupWidget> {
   String state = '';
   SDUIRadioGroup delegate;
 
-  RadioGroupState(this.delegate);
+  _RadioGroupState(this.delegate);
 
   @override
   void initState() {

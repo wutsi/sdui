@@ -13,11 +13,12 @@ import 'expanded.dart';
 import 'flexible.dart';
 import 'form.dart';
 import 'icon.dart';
-import 'iconbutton.dart';
+import 'icon_button.dart';
 import 'image.dart';
 import 'input.dart';
-import 'listview.dart';
-import 'pageview.dart';
+import 'list_view.dart';
+import 'page_view.dart';
+import 'pin_input.dart';
 import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
@@ -103,6 +104,9 @@ class SDUIParser {
         break;
       case "pageview":
         widget = SDUIPageView().fromJson(json);
+        break;
+      case 'pinwithkeyboard':
+        widget = SDUIPinWidthKeyboard().fromJson(json);
         break;
       case "radio":
         widget = SDUIRadio();

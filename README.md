@@ -166,6 +166,7 @@ A widget is a visual element on a screen.
     - [ListView](https://pub.dev/documentation/sdui/latest/sdui/SDUIListView-class.html)
     - [ListItem](https://pub.dev/documentation/sdui/latest/sdui/SDUIListItem-class.html)
     - [ListItemSwitch](https://pub.dev/documentation/sdui/latest/sdui/SDUIListItemSwitch-class.html)
+    - [PinWidthKeyboard](https://pub.dev/documentation/sdui/latest/sdui/SDUIPinWidthKeyboard-class.html)    - [Form](https://pub.dev/documentation/sdui/latest/sdui/SDUIForm-class.html)
     - [Radio](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadio-class.html)
     - [RadioGroup](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadioGroup-class.html)
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)

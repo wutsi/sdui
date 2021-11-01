@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.21] 2021-11-01
+### Added
+- SDUIPinWidthKeyboard
+
 ## [0.0.20] 2021-10-14
 ### Changed
 - Remove log pollution
