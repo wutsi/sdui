@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## [0.0.21] 2021-11-01
-### Added
+## [0.0.21] 2021-11-02
+### Updated
+- SDUIInput support countries for phone input
 - SDUIPinWidthKeyboard
 
 ## [0.0.20] 2021-10-14

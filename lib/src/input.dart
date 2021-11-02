@@ -36,6 +36,7 @@ import 'widget.dart';
 /// - **maxLength**: Maximum length of the field
 /// - **maxLine**: Maximum number of line  (for multi-line input)
 /// - **minLength**: Minimum length of the field (Default: 0)
+/// - **countries**: List of country codes - for `type=phone`
 /// - *action***: [SDUIAction] to execute when the input is clicked
 class SDUIInput extends SDUIWidget with SDUIFormField {
   String name = '_no_name_';
@@ -50,6 +51,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   int? maxLines;
   int? maxLength;
   int minLength = 0;
+  List<String>? countries;
 
   @override
   Widget toWidget(BuildContext context) => _createWidget(context);
@@ -68,6 +70,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     maxLines = json?["maxLines"];
     maxLength = json?["maxLength"];
     minLength = json?["minLength"] ?? 0;
+    countries = json?["countries"];
     return this;
   }
 
@@ -384,6 +387,7 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
         readOnly: delegate.readOnly,
         enabled: delegate.enabled,
         initialCountryCode: state.countryISOCode,
+        countries: delegate.countries,
         controller: TextEditingController(text: state.number),
         decoration: InputDecoration(
           labelText: delegate.caption,
