@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.22] 2021-11-02
+### Fixed
+- countries list
+
 ## [0.0.21] 2021-11-02
 ### Updated
 - SDUIInput support countries for phone input

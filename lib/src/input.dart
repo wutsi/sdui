@@ -70,7 +70,11 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     maxLines = json?["maxLines"];
     maxLength = json?["maxLength"];
     minLength = json?["minLength"] ?? 0;
-    countries = json?["countries"];
+
+    var nodes = json?["countries"];
+    if (nodes is List<dynamic>) {
+      countries = nodes.map((e) => e.toString()).toList();
+    }
     return this;
   }
 
