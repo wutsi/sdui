@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.24] 2021-11-04
+### Added
+- Log all HTTP transactions
+
 ## [0.0.23] 2021-11-02
 ### Added
 - Add `Action.replacement`
