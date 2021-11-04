@@ -25,8 +25,8 @@ class NumericKeyboard extends StatefulWidget {
   /// Callback when an item is pressed
   final KeyboardTapCallback onKeyboardTap;
 
-  /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
-  final MainAxisAlignment mainAxisAlignment;
+  // Button width
+  final double buttonSize;
 
   const NumericKeyboard(
       {Key? key,
@@ -37,7 +37,7 @@ class NumericKeyboard extends StatefulWidget {
       this.rightButton,
       this.leftButtonFn,
       this.leftButton,
-      this.mainAxisAlignment = MainAxisAlignment.spaceEvenly})
+      this.buttonSize = 90.0})
       : super(key: key);
 
   @override
@@ -54,6 +54,8 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
       child: Column(
         children: <Widget>[
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _calcButton('1'),
               _calcButton('2'),
@@ -61,6 +63,8 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
             ],
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _calcButton('4'),
               _calcButton('5'),
@@ -68,6 +72,8 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
             ],
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _calcButton('7'),
               _calcButton('8'),
@@ -75,6 +81,8 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
             ],
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _button(widget.leftButton, widget.leftButtonFn),
               _calcButton('0'),
@@ -86,9 +94,14 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
     );
   }
 
-  Widget _calcButton(String value) => Expanded(
-      child: Container(
-          padding: const EdgeInsets.all(7),
+  Widget _calcButton(String value) => Container(
+      width: widget.buttonSize,
+      height: widget.buttonSize,
+      alignment: Alignment.center,
+      margin: const EdgeInsets.all(1),
+      child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
           child: TextButton(
               onPressed: () => widget.onKeyboardTap(value),
               child: Text(value,
@@ -104,11 +117,14 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
           onPressed: callback);
     } else if (button is Text) {
       child = TextButton(onPressed: callback, child: button);
-    } else {
-      child = null;
     }
 
-    return Expanded(
-        child: Container(padding: const EdgeInsets.all(10), child: child));
+    return Container(
+        width: widget.buttonSize,
+        height: widget.buttonSize,
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(1),
+        child: SizedBox(
+            width: double.infinity, height: double.infinity, child: child));
   }
 }

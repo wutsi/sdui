@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:pinput/pin_put/pin_put.dart';
+import 'package:sdui/sdui.dart';
 
+import 'form.dart';
 import 'numeric_keyboard.dart';
 import 'widget.dart';
 
@@ -10,11 +14,19 @@ import 'widget.dart';
 /// ### JSON Attributes
 /// - **name**: Name of the field. (default: `value`)
 /// - **color**: Text color (default: black)
-/// - **hidText**: Hide the text (default: false)
-class SDUIPinWidthKeyboard extends SDUIWidget {
+/// - **hideText**: Hide the text (default: false)
+/// - **maxLength**: Max length of the code to enter (default: 6)
+/// - **deleteText**: Text of delete button (default: 'Delete')
+/// - **pinSize**: Size of each pin input (default=20)
+/// - **keyboardButtonSize**: Size of each keyboard button (default=90)
+class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
   String name = 'value';
   Color color = Colors.black;
   bool hideText = false;
+  int maxLength = 6;
+  String deleteText = 'Delete';
+  double pinSize = 20.0;
+  double keyboardButtonSize = 90.0;
 
   @override
   Widget toWidget(BuildContext context) => _PinWidthKeyboard(this);
@@ -23,7 +35,11 @@ class SDUIPinWidthKeyboard extends SDUIWidget {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     name = json?["name"] ?? 'value';
     color = toColor(json?["color"]) ?? Colors.black;
-    hideText = json?["hideText"];
+    hideText = json?["hideText"] ?? false;
+    maxLength = json?["maxLength"] ?? 6;
+    deleteText = json?['deleteText'] ?? 'Delete';
+    pinSize = json?['pinSize'] ?? 20.0;
+    keyboardButtonSize = json?['keyboardButtonSize'] ?? 90.0;
     return this;
   }
 }
@@ -40,8 +56,15 @@ class _PinWidthKeyboard extends StatefulWidget {
 
 class _PinWithKeyboardState extends State<_PinWidthKeyboard> {
   SDUIPinWidthKeyboard delegate;
-  String text = '';
+  bool buzy = false;
   TextEditingController controller = TextEditingController();
+
+  BoxDecoration get _pinPutDecoration {
+    return BoxDecoration(
+      border: Border.all(color: delegate.color),
+      borderRadius: BorderRadius.circular(20.0),
+    );
+  }
 
   _PinWithKeyboardState(this.delegate);
 
@@ -51,44 +74,87 @@ class _PinWithKeyboardState extends State<_PinWidthKeyboard> {
         children: [
           Container(
             alignment: Alignment.center,
-            child: PinCodeTextField(
+            width: (delegate.pinSize + 20) * delegate.maxLength,
+            padding: const EdgeInsets.all(10),
+            child: PinPut(
+              fieldsCount: delegate.maxLength,
               controller: controller,
-              maxLength: 6,
-              pinBoxWidth: 40,
-              pinBoxHeight: 40,
-              pinBoxBorderWidth: 1.0,
-              pinBoxRadius: 20,
-              pinBoxOuterPadding: const EdgeInsets.all(4.0),
-              hideCharacter: delegate.hideText,
-              onDone: (value) =>
-                  delegate.action.execute(context, {delegate.name: value}),
+              separator: const SizedBox(width: 5.0),
+              eachFieldConstraints:
+                  const BoxConstraints(minHeight: 10.0, minWidth: 10.0),
+              eachFieldWidth: delegate.pinSize,
+              eachFieldPadding: const EdgeInsets.all(2),
+              eachFieldMargin: const EdgeInsets.all(2),
+              submittedFieldDecoration: _pinPutDecoration,
+              selectedFieldDecoration: _pinPutDecoration,
+              followingFieldDecoration: _pinPutDecoration,
+              obscureText: delegate.hideText ? '●' : null,
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(10),
             alignment: Alignment.bottomCenter,
-            child: NumericKeyboard(
-              textColor: delegate.color,
-              onKeyboardTap: _onKeyboardTap,
-              rightButtonFn: () => _onBack(),
-              rightButton: const Text('Delete'),
-            ),
+            child: buzy
+                ? SizedBox(
+                    width: 13,
+                    height: 13,
+                    child: CircularProgressIndicator(
+                      color: delegate.color,
+                      strokeWidth: 2,
+                    ))
+                : NumericKeyboard(
+                    textColor: delegate.color,
+                    onKeyboardTap: (value) => _onKeyboardTap(context, value),
+                    rightButtonFn: () => _onBack(context),
+                    rightButton: Text(delegate.deleteText),
+                  ),
           ),
         ],
       );
 
-  void _onKeyboardTap(String value) {
-    _changeText(text + value);
+  void _onKeyboardTap(BuildContext context, String value) {
+    String text = controller.text;
+    if (text.length < delegate.maxLength) {
+      _changeText(context, text + value);
+    }
   }
 
-  void _onBack() {
-    _changeText(text.substring(0, text.length - 1));
+  void _onBack(BuildContext context) {
+    String text = controller.text;
+    _changeText(context, text.substring(0, text.length - 1));
   }
 
-  void _changeText(String value) {
+  void _changeText(BuildContext context, String value) {
     setState(() {
-      text = value;
+      buzy = (value.length == delegate.maxLength);
       controller.text = value;
+    });
+    delegate.provider?.setData(delegate.name, value);
+
+    if (buzy) {
+      delegate.action
+          .execute(context, {delegate.name: value})
+          .then((value) => _onResult(value))
+          .whenComplete(() => _onComplete());
+    }
+  }
+
+  void _onResult(String? result) {
+    if (result == null) {
+      return;
+    }
+
+    var json = jsonDecode(result);
+    if (json is Map<String, dynamic>) {
+      var action = SDUIAction().fromJson(json);
+      action.pageController = delegate.action.pageController;
+      action.execute(context, json);
+    }
+  }
+
+  void _onComplete() {
+    setState(() {
+      buzy = false;
+      controller.text = '';
     });
   }
 }

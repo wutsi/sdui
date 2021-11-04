@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [0.0.23] 2021-11-02
+### Added
+- Add `Action.replacement`
+### Updated
+- Replace action type `Screen` to `Route`
+- Improvement of keyboard layout
+
 ## [0.0.22] 2021-11-02
 ### Fixed
 - countries list

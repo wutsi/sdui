@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
               ]),
             ),
         '/remote': (context) => DynamicRoute(
-            provider: HttpRouteContentProvider(
-                'http://localhost:8080/app/onboard/screens/home')),
+            provider:
+                HttpRouteContentProvider('http://localhost:8080/screens/home')),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(json))
       };

@@ -5,16 +5,12 @@ import 'widget.dart';
 
 /// Descriptor of [Form]
 class SDUIForm extends SDUIWidget {
-  /// Padding to apply to each child of the form
-  double? padding;
-
   @override
   Widget toWidget(BuildContext context) => _FormWidgetStateful(this);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     super.fromJson(json);
-    padding = json?["padding"];
     return this;
   }
 }
@@ -75,18 +71,8 @@ class _FormWidgetState extends State<_FormWidgetStateful>
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: key,
-        child: Column(
-          children: delegate
-              .childrenWidgets(context)
-              .map((e) => _decorate(e))
-              .toList(),
-        ));
+        key: key, child: Column(children: delegate.childrenWidgets(context)));
   }
-
-  Widget _decorate(Widget widget) => delegate.padding == null
-      ? widget
-      : Container(padding: EdgeInsets.all(delegate.padding!), child: widget);
 
   void _attachForm(SDUIWidget child) {
     if (child is SDUIFormField) {
