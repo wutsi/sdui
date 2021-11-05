@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.25] 2021-11-05
+### Fixed
+- Prevent overflow when keyboard appear
+
 ## [0.0.24] 2021-11-04
 ### Added
 - Log all HTTP transactions

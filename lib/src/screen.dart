@@ -16,6 +16,7 @@ class SDUIScreen extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBar == null ? null : (appBar!.toWidget(context) as AppBar),
       body: safe == true ? SafeArea(child: _child(context)) : _child(context));
 

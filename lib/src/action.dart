@@ -61,7 +61,6 @@ class SDUIAction {
     }
 
     _logger.i('Executing: type=$type url=$url');
-
     switch (type?.toLowerCase()) {
       case 'route':
         return _gotoRoute(context, data);
@@ -101,7 +100,6 @@ class SDUIAction {
 
   Future<String> _gotoRoute(BuildContext context, Map<String, dynamic>? data) {
     if (_isRoute()) {
-      _logger.i('Navigating to route $url');
       var route = url.substring(6);
       if (route == '/..') {
         Navigator.pop(context);
@@ -113,7 +111,6 @@ class SDUIAction {
         }
       }
     } else if (_isNetwork()) {
-      _logger.i('Navigating to screen $url');
       if (replacement) {
         Navigator.pushReplacement(
           context,

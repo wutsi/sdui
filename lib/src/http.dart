@@ -53,7 +53,7 @@ class Http {
   static final Http _singleton = Http._internal();
 
   List<HttpInterceptor> interceptors = [HttpJsonInterceptor()];
-  Logger _logger = Logger();
+  final Logger _logger = Logger();
 
   Http._internal();
 
