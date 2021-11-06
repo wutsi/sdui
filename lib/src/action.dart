@@ -25,6 +25,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 ///   - URL starting with `http://` or `https` redirect user to a server driven page
 ///   - `page:/<PAGE_NUMBER>`: redirect users to a given page. `<PAGE_NUMBER>` is the page index (starting with `0`).
 /// - **replacement**: For `type=route`, this indicate if we replace the current view or navigate.
+/// - **parameters**: Parameters to add to the URL where to redirect to
 class SDUIAction {
   static final Logger _logger = Logger();
 
@@ -34,6 +35,7 @@ class SDUIAction {
   String url = '';
   bool replacement = false;
   SDUIDialog? prompt;
+  Map<String, dynamic>? parameters;
 
   /// controller associated with the action
   PageController? pageController;
@@ -46,6 +48,11 @@ class SDUIAction {
     var prompt = attributes?["prompt"];
     if (prompt is Map<String, dynamic>) {
       this.prompt = SDUIDialog().fromJson(prompt) as SDUIDialog;
+    }
+
+    var parameters = attributes?["parameters"];
+    if (parameters is Map<String, dynamic>) {
+      this.parameters = parameters;
     }
     return this;
   }
@@ -66,7 +73,7 @@ class SDUIAction {
         return _gotoRoute(context, data);
 
       case 'page':
-        return _gotoPage(context, data);
+        return _gotoPage(context);
 
       case 'command':
         return _executeCommand(context, data);
@@ -85,7 +92,7 @@ class SDUIAction {
         context: context, builder: (context) => prompt!.toWidget(context));
   }
 
-  Future<String> _gotoPage(BuildContext context, Map<String, dynamic>? data) {
+  Future<String> _gotoPage(BuildContext context) {
     int page = -1;
     try {
       page = int.parse(url.substring(6));
@@ -105,9 +112,9 @@ class SDUIAction {
         Navigator.pop(context);
       } else {
         if (replacement) {
-          Navigator.pushReplacementNamed(context, route);
+          Navigator.pushReplacementNamed(context, route, arguments: parameters);
         } else {
-          Navigator.pushNamed(context, route);
+          Navigator.pushNamed(context, route, arguments: parameters);
         }
       }
     } else if (_isNetwork()) {
@@ -115,15 +122,15 @@ class SDUIAction {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  DynamicRoute(provider: HttpRouteContentProvider(url))),
+              builder: (context) => DynamicRoute(
+                  provider: HttpRouteContentProvider(_urlWithParameters()))),
         );
       } else {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  DynamicRoute(provider: HttpRouteContentProvider(url))),
+              builder: (context) => DynamicRoute(
+                  provider: HttpRouteContentProvider(_urlWithParameters()))),
         );
       }
     }
@@ -132,9 +139,24 @@ class SDUIAction {
 
   Future<String> _executeCommand(
           BuildContext context, Map<String, dynamic>? data) =>
-      Http.getInstance().post(url, data);
+      Http.getInstance().post(_urlWithParameters(), data);
 
   bool _isRoute() => url.startsWith('route:') == true;
 
   bool _isNetwork() => url.startsWith('http://') || url.startsWith('https://');
+
+  String _urlWithParameters() {
+    String result = url;
+    if (parameters != null) {
+      String query = "";
+      parameters?.keys.forEach((key) {
+        String? value = parameters?[key]?.toString();
+        if (value != null) {
+          query = "$key=$value&";
+        }
+        result = "$url?$query";
+      });
+    }
+    return result;
+  }
 }

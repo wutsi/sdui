@@ -48,51 +48,25 @@ class NumericKeyboard extends StatefulWidget {
 
 class _NumericKeyboardState extends State<NumericKeyboard> {
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       alignment: Alignment.center,
-      child: Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _calcButton('1'),
-              _calcButton('2'),
-              _calcButton('3'),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _calcButton('4'),
-              _calcButton('5'),
-              _calcButton('6'),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _calcButton('7'),
-              _calcButton('8'),
-              _calcButton('9'),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _button(widget.leftButton, widget.leftButtonFn),
-              _calcButton('0'),
-              _button(widget.rightButton, widget.rightButtonFn),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+      width: 4 * (widget.buttonSize + 10),
+      height: 4 * (widget.buttonSize + 10),
+      child: GridView.builder(
+          itemCount: 12,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3),
+          itemBuilder: (BuildContext context, int index) {
+            if (index == 10) {
+              return _button(widget.leftButton, widget.leftButtonFn);
+            } else if (index == 12) {
+              return _button(widget.rightButton, widget.rightButtonFn);
+            } else {
+              return _calcButton(index.toString());
+            }
+          }));
 
   Widget _calcButton(String value) => Container(
       width: widget.buttonSize,

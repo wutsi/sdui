@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.26] 2021-11-06
+### Added
+- parameters to actions
+
 ## [0.0.25] 2021-11-05
 ### Fixed
 - Prevent overflow when keyboard appear
