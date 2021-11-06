@@ -154,7 +154,7 @@ class SDUIAction {
         if (value != null) {
           query = "$key=$value&";
         }
-        result = "$url?$query";
+        result = Uri.encodeFull("$url?$query");
       });
     }
     return result;

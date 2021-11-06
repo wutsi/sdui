@@ -37,7 +37,7 @@ class NumericKeyboard extends StatefulWidget {
       this.rightButton,
       this.leftButtonFn,
       this.leftButton,
-      this.buttonSize = 90.0})
+      this.buttonSize = 80.0})
       : super(key: key);
 
   @override
@@ -50,7 +50,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
   @override
   Widget build(BuildContext context) => Container(
       alignment: Alignment.center,
-      width: 4 * (widget.buttonSize + 10),
+      width: 3 * (widget.buttonSize + 10),
       height: 4 * (widget.buttonSize + 10),
       child: GridView.builder(
           itemCount: 12,
