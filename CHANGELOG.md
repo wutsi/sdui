@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.28] 2021-11-06
+### Fixed
+- numeric keyboard buttons
+
 ## [0.0.26] 2021-11-06
 ### Added
 - parameters to actions

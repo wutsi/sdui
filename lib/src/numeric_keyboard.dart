@@ -59,12 +59,12 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3),
           itemBuilder: (BuildContext context, int index) {
-            if (index == 10) {
+            if (index == 9) {
               return _button(widget.leftButton, widget.leftButtonFn);
-            } else if (index == 12) {
+            } else if (index == 11) {
               return _button(widget.rightButton, widget.rightButtonFn);
             } else {
-              return _calcButton(index.toString());
+              return _calcButton((index + 1).toString());
             }
           }));
 
