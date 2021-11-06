@@ -3,6 +3,8 @@
 ## [0.0.26] 2021-11-06
 ### Added
 - parameters to actions
+### Updated
+- fix dimension of numeric keyboard based on button width
 
 ## [0.0.25] 2021-11-05
 ### Fixed
