@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:sdui/src/logger.dart';
 
 import 'dialog.dart';
 import 'http.dart';
@@ -27,7 +28,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 /// - **replacement**: For `type=route`, this indicate if we replace the current view or navigate.
 /// - **parameters**: Parameters to add to the URL where to redirect to
 class SDUIAction {
-  static final Logger _logger = Logger();
+  static final Logger _logger = LoggerFactory.create('SDUIAction');
 
   static final Future<String> _emptyFuture = Future(() => "{}");
 

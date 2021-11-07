@@ -7,6 +7,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
+import 'package:sdui/src/logger.dart';
 
 import 'button.dart';
 import 'form.dart';
@@ -233,9 +234,7 @@ class _DateTimeWidgetStateful extends StatefulWidget {
 }
 
 class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
-  static final Logger _logger = Logger(
-    printer: LogfmtPrinter(),
-  );
+  static final Logger _logger = LoggerFactory.create('_DateTimeWidgetState');
 
   DateTime state = DateTime.now();
   DateFormat displayDateFormat = DateFormat("yyyy-MM-dd");

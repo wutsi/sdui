@@ -4,6 +4,13 @@
 ### Fixed
 - Fix response headers
 
+## [0.0.30] 2021-11-07
+### Add
+- LoggerFactory for improving logging output
+### Fixed
+- send request headers
+- add more logs
+
 ## [0.0.29] 2021-11-06
 ### Fixed
 - Use `Uri.encodeComponent` insteald of `Uri.encodeFull`

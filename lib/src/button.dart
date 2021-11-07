@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
+import 'package:sdui/src/logger.dart';
 
 import 'action.dart';
 import 'widget.dart';
@@ -52,7 +53,8 @@ class _ButtonWidgetStateful extends StatefulWidget {
 }
 
 class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
-  static final Logger _logger = Logger();
+  static final Logger _logger = LoggerFactory.create('_ButtonWidgetState');
+
   bool busy = false;
   SDUIButton delegate;
 

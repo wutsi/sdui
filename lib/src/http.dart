@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:sdui/src/logger.dart';
 
 class RequestTemplate {
   Map<String, String> headers = {};
@@ -58,7 +59,7 @@ class Http {
   static final Http _singleton = Http._internal();
 
   List<HttpInterceptor> interceptors = [HttpJsonInterceptor()];
-  final Logger _logger = Logger();
+  final Logger _logger = LoggerFactory.create('Http');
 
   Http._internal();
 
@@ -69,23 +70,37 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
-    var request = _pre('POST', url, data);
-    var response = _post(
-        request,
-        await http.post(Uri.parse(request.url),
-            body: request.body, headers: request.headers));
+    RequestTemplate request = _pre('POST', url, data);
+    ResponseTemplate? response;
+    Exception? ex;
+    try {
+      response = _post(
+          request,
+          await http.post(Uri.parse(request.url),
+              body: request.body, headers: request.headers));
 
-    if (response.statusCode / 100 == 2) {
-      return response.body;
-    } else {
-      throw http.ClientException(
-          '${response.statusCode}', Uri.parse(request.url));
+      if (response.statusCode / 100 == 2) {
+        return response.body;
+      } else {
+        ex = http.ClientException(
+            '${response.statusCode}', Uri.parse(request.url));
+        throw ex;
+      }
+    } finally {
+      String line = 'POST $url';
+      line += ' request_headers=${request.headers}';
+      if (data != null) {
+        line += ' request_payload=$data';
+      }
+      if (response != null) {
+        line += ' response_state=${response.statusCode}';
+        line += ' response_headers=${response.headers}';
+      }
+      _logger.i(line);
     }
   }
 
   RequestTemplate _pre(String method, String url, Map<String, dynamic>? data) {
-    _logger.i('$method $url $data');
-
     RequestTemplate request = RequestTemplate(url, method: method, body: data);
     for (var i = 0; i < interceptors.length; i++) {
       interceptors[i].onRequest(request);

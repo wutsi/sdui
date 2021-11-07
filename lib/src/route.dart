@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
+import 'package:sdui/src/logger.dart';
 
 import 'http.dart';
 import 'parser.dart';
@@ -51,7 +52,7 @@ class DynamicRoute extends StatefulWidget {
 }
 
 class DynamicRouteState extends State<DynamicRoute> {
-  static final Logger _logger = Logger();
+  static final Logger _logger = LoggerFactory.create('DynamicRouteState');
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
