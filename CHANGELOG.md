@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.30] 2021-11-06
+### Fixed
+- Fix response headers
+
 ## [0.0.29] 2021-11-06
 ### Fixed
 - Use `Uri.encodeComponent` insteald of `Uri.encodeFull`

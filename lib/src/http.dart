@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class RequestTemplate {
-  Map<String, String> headers = <String, String>{};
+  Map<String, String> headers = {};
   String method;
   String url = '';
   Object? body;
@@ -14,12 +14,17 @@ class RequestTemplate {
 }
 
 class ResponseTemplate {
-  RequestTemplate? request;
-  Map<String, String> headers = <String, String>{};
+  RequestTemplate request;
+  Map<String, String> headers;
   String body;
   int statusCode = 200;
 
-  ResponseTemplate({this.request, this.body = '', this.statusCode = 200});
+  ResponseTemplate({
+    required this.request,
+    required this.headers,
+    this.body = '',
+    this.statusCode = 200,
+  });
 }
 
 /// HttpRequestInterceptor is invoked for each HTTP request.
@@ -90,7 +95,10 @@ class Http {
 
   ResponseTemplate _post(RequestTemplate request, http.Response response) {
     ResponseTemplate resp = ResponseTemplate(
-        request: request, body: response.body, statusCode: response.statusCode);
+        request: request,
+        body: response.body,
+        statusCode: response.statusCode,
+        headers: response.headers);
     for (var i = 0; i < interceptors.length; i++) {
       interceptors[i].onResponse(resp);
     }
