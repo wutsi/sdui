@@ -149,13 +149,15 @@ class SDUIAction {
     String result = url;
     if (parameters != null) {
       String query = "";
-      parameters?.keys.forEach((key) {
+      var keys = parameters!.keys.toList();
+      for (var i = 0; i < keys.length; i++) {
+        String key = keys[i];
         String? value = parameters?[key]?.toString();
         if (value != null) {
           query = "$key=$value&";
         }
         result = Uri.encodeComponent("$url?$query");
-      });
+      }
     }
     return result;
   }
