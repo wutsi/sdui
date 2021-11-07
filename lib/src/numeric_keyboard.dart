@@ -61,6 +61,8 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
           itemBuilder: (BuildContext context, int index) {
             if (index == 9) {
               return _button(widget.leftButton, widget.leftButtonFn);
+            } else if (index == 10) {
+              return _calcButton('0');
             } else if (index == 11) {
               return _button(widget.rightButton, widget.rightButtonFn);
             } else {
