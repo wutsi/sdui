@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.30] 2021-11-06
+## [0.0.31] 2021-11-06
 ### Fixed
 - Fix response headers
 
