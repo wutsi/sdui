@@ -17,6 +17,7 @@ import 'icon_button.dart';
 import 'image.dart';
 import 'input.dart';
 import 'list_view.dart';
+import 'money.dart';
 import 'page_view.dart';
 import 'pin_with_keyboard.dart';
 import 'radio.dart';
@@ -98,6 +99,9 @@ class SDUIParser {
         break;
       case "listitemswitch":
         widget = SDUIListItemSwitch().fromJson(json);
+        break;
+      case "moneytext":
+        widget = SDUIMoneyText().fromJson(json);
         break;
       case "page":
         widget = SDUIPage().fromJson(json);

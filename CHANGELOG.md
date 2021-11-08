@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.31] 2021-11-07
+### Added
+- Added `MoneyText`
+
 ## [0.0.31] 2021-11-06
 ### Fixed
 - Fix response headers

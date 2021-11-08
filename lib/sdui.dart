@@ -15,6 +15,7 @@ export 'src/image.dart';
 export 'src/input.dart';
 export 'src/list_view.dart';
 export 'src/logger.dart';
+export 'src/money.dart';
 export 'src/page_view.dart';
 export 'src/parser.dart';
 export 'src/pin_with_keyboard.dart';
