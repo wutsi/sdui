@@ -6,18 +6,47 @@ import 'package:sdui/sdui.dart';
 ///
 /// ### JSON Attributes
 /// - **title**: Title
+/// - **elevation**: Elevation
+/// - **foregroundColor**: Foreground color
+/// - **backgroundColor**: Backgroupnd color
+/// - **leading**: action on LHS
+/// - **actions**: List of actions to add on RHS
 class SDUIAppBar extends SDUIWidget {
   String? title;
+  double? elevation;
+  String? foregroundColor;
+  String? backgroundColor;
+  List<SDUIWidget>? actions;
+  SDUIWidget? leading;
 
   @override
   Widget toWidget(BuildContext context) => AppBar(
-        title: title == null ? null : Text(title!),
-        actions: childrenWidgets(context),
-      );
+      title: title == null ? null : Text(title!),
+      elevation: elevation,
+      foregroundColor: toColor(foregroundColor),
+      backgroundColor: toColor(backgroundColor),
+      leading: leading?.toWidget(context),
+      actions: actions?.map((e) => e.toWidget(context)).toList());
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     title = json?["title"];
-    return super.fromJson(json);
+    elevation = json?["elevation"];
+    foregroundColor = json?["foregroundColor"];
+    backgroundColor = json?["backgroundColor"];
+    leading = _parse(json?["leading"]);
+
+    var actions = json?["actions"];
+    if (actions is List<dynamic>) {
+      this.actions = actions
+          .map((it) => _parse(it))
+          .where((it) => it != null)
+          .toList() as List<SDUIWidget>?;
+    }
+
+    return this;
   }
+
+  SDUIWidget? _parse(dynamic it) =>
+      it is Map<String, dynamic> ? SDUIParser.getInstance().fromJson(it) : null;
 }

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.33] 2021-11-07
+### Modify
+- Add more properties to AppBar
+
 ## [0.0.32] 2021-11-07
 ### Added
 - Added `MoneyText`
