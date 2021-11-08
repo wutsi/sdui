@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [0.0.34] 2021-11-09
+## [0.0.35] 2021-11-08
+### Fixed
+- Fix deserialization of AppBar actions
+
+## [0.0.34] 2021-11-08
 ### Modify
 - Log status code
 

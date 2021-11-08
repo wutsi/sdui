@@ -38,10 +38,12 @@ class SDUIAppBar extends SDUIWidget {
 
     var actions = json?["actions"];
     if (actions is List<dynamic>) {
-      this.actions = actions
-          .map((it) => _parse(it))
-          .where((it) => it != null)
-          .toList() as List<SDUIWidget>?;
+      this.actions = [];
+      actions.map((it) => _parse(it)).forEach((it) {
+        if (it != null) {
+          this.actions?.add(it);
+        }
+      });
     }
 
     return this;
