@@ -32,8 +32,7 @@ class MyApp extends StatelessWidget {
               ]),
             ),
         '/remote': (context) => DynamicRoute(
-            provider: HttpRouteContentProvider(
-                'https://wutsi-onboard-bff-test.herokuapp.com')),
+            provider: HttpRouteContentProvider('http://localhost:8080')),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(json))
       };

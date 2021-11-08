@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.0.36] 2021-11-08
+### Modified
+- Add into Row/Column properties: `mainAxisAlignment` `crossAxisAlignment`and `mainAxisSize`
+- Add support for `Scaffold.backgroundColor`
+- Improve HTTP status logging
+
 ## [0.0.35] 2021-11-08
 ### Fixed
 - Fix deserialization of AppBar actions

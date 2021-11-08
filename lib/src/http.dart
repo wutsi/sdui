@@ -71,14 +71,12 @@ class Http {
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
     RequestTemplate request = _pre('POST', url, data);
-    ResponseTemplate? response;
+    http.Response? response;
     Exception? ex;
     try {
-      response = _post(
-          request,
-          await http.post(Uri.parse(request.url),
-              body: request.body, headers: request.headers));
-
+      response = await http.post(Uri.parse(request.url),
+          body: request.body, headers: request.headers);
+      _post(request, response);
       if (response.statusCode / 100 == 2) {
         return response.body;
       } else {
@@ -94,7 +92,7 @@ class Http {
       }
       if (response != null) {
         line +=
-            ' response_status_code=${response.statusCode} response_state=${response.statusCode} response_headers=${response.headers}';
+            ' response_status=${response.statusCode} response_headers=${response.headers}';
       }
       _logger.i(line);
     }

@@ -55,6 +55,44 @@ abstract class SDUIWidget {
     return IconData(int.parse(hexCode, radix: 16), fontFamily: 'MaterialIcons');
   }
 
+  MainAxisSize toMainAxisSize(String? value) {
+    switch (value?.toLowerCase()) {
+      case "min":
+        return MainAxisSize.min;
+    }
+    return MainAxisSize.max;
+  }
+
+  CrossAxisAlignment toCrossAxisAlignment(String? value) {
+    switch (value?.toLowerCase()) {
+      case "end":
+        return CrossAxisAlignment.end;
+      case "start":
+        return CrossAxisAlignment.start;
+      case "baseline":
+        return CrossAxisAlignment.baseline;
+      case "stretch":
+        return CrossAxisAlignment.stretch;
+    }
+    return CrossAxisAlignment.center;
+  }
+
+  MainAxisAlignment toMainAxisAlignment(String? value) {
+    switch (value?.toLowerCase()) {
+      case "end":
+        return MainAxisAlignment.end;
+      case "center":
+        return MainAxisAlignment.center;
+      case "spaceAround":
+        return MainAxisAlignment.spaceAround;
+      case "spaceEvenly":
+        return MainAxisAlignment.spaceEvenly;
+      case "spaceBetween":
+        return MainAxisAlignment.spaceBetween;
+    }
+    return MainAxisAlignment.start;
+  }
+
   void attachPageController(PageController? controller) {
     action.pageController = controller;
     for (var i = 0; i < children.length; i++) {
