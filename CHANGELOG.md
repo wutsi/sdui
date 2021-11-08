@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.37] 2021-11-08
+### Added
+- Add `Divider`
+
 ## [0.0.36] 2021-11-08
 ### Modified
 - Add into Row/Column properties: `mainAxisAlignment` `crossAxisAlignment`and `mainAxisSize`

@@ -83,11 +83,11 @@ abstract class SDUIWidget {
         return MainAxisAlignment.end;
       case "center":
         return MainAxisAlignment.center;
-      case "spaceAround":
+      case "spacearound":
         return MainAxisAlignment.spaceAround;
-      case "spaceEvenly":
+      case "spaceevenly":
         return MainAxisAlignment.spaceEvenly;
-      case "spaceBetween":
+      case "spacebetween":
         return MainAxisAlignment.spaceBetween;
     }
     return MainAxisAlignment.start;

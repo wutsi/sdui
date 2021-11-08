@@ -8,6 +8,7 @@ import 'button.dart';
 import 'column.dart';
 import 'container.dart';
 import 'dialog.dart';
+import 'divider.dart';
 import 'dropdown.dart';
 import 'expanded.dart';
 import 'flexible.dart';
@@ -63,6 +64,9 @@ class SDUIParser {
         break;
       case "dialog":
         widget = SDUIDialog();
+        break;
+      case "divider":
+        widget = SDUIDivider();
         break;
       case "dropdownbutton":
         widget = SDUIDropdownButton();
