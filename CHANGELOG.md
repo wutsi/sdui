@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.34] 2021-11-09
+### Modify
+- Log status code
+
 ## [0.0.33] 2021-11-07
 ### Modify
 - Add more properties to AppBar

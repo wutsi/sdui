@@ -93,8 +93,8 @@ class Http {
         line += ' request_payload=$data';
       }
       if (response != null) {
-        line += ' response_state=${response.statusCode}';
-        line += ' response_headers=${response.headers}';
+        line +=
+            ' response_status_code=${response.statusCode} response_state=${response.statusCode} response_headers=${response.headers}';
       }
       _logger.i(line);
     }
