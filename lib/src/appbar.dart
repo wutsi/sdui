@@ -22,6 +22,7 @@ class SDUIAppBar extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) => AppBar(
       title: title == null ? null : Text(title!),
+      centerTitle: true,
       elevation: elevation,
       foregroundColor: toColor(foregroundColor),
       backgroundColor: toColor(backgroundColor),

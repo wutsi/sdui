@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Http.getInstance().interceptors = [
+    HttpJsonInterceptor(),
+    HttpAuthorizationInterceptor()
+  ];
+
   runApp(const MyApp());
 }
 
@@ -154,3 +161,18 @@ var json = '''
 	}
 }
 ''';
+
+/// HTTP interceptor that adds Authorization header
+class HttpAuthorizationInterceptor extends HttpInterceptor {
+  @override
+  void onRequest(RequestTemplate request) async {
+    String token =
+        'eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxNiIsInN1Yl90eXBlIjoiVVNFUiIsInNjb3BlIjpbInBheW1lbnQtbWFuYWdlIiwicGF5bWVudC1tZXRob2QtbWFuYWdlIiwicGF5bWVudC1tZXRob2QtcmVhZCIsInBheW1lbnQtcmVhZCIsInRlbmFudC1yZWFkIiwidXNlci1tYW5hZ2UiLCJ1c2VyLXJlYWQiXSwiaXNzIjoid3V0c2kuY29tIiwibmFtZSI6IkhlcnZlIFRjaGVwYW5ub3UiLCJhZG1pbiI6ZmFsc2UsInBob25lX251bWJlciI6IisxNTE0NzU4MDE5MSIsImV4cCI6MTYzNjU0NzEwNiwiaWF0IjoxNjM2NDYyNTA2LCJqdGkiOiIxIn0.B3c8umpS6o4tku9dTidVcnk_QYnRA-vPMejehrchSF5BAfcceg_u-Say9bPokJSgeK_nu0h2ouP3TAERV4FuN28i6oHEGkuPWQP8gnH0AouqSNw862APOMcOEP5Z0ve45kzC-LnHkLFhiF1Neaumt09BQLCfX7nK8RtKbZ0Mb2iZXaqoRz_6LYqbo9rn6UmC_GIFGMVdsepvh0pZuqw8L561IdvWe-Rx4DIoXCVMw37mJk29fjQPCon0q7SIluRfmpPw2x0bC_mY1kBGrF2-bEEM_VTdYjWoQDSD678TskcUBneqdNqNmLVJnoCuS0dnm-8s799rtP92kYpElDmNpg';
+    request.headers['Authorization'] = 'Bearer $token';
+  }
+
+  @override
+  void onResponse(ResponseTemplate response) {
+    // TODO: implement onResponse
+  }
+}

@@ -13,7 +13,8 @@ import 'widget.dart';
 ///
 /// ### JSON Attributes
 ///  - *caption*: Caption of the button
-///  - *padding*: Button padding.
+///  - *padding*: Button padding (default = 15).
+///  - *stretched*: if `true`, the button will be stretched (default = true)
 ///  - *type*: Type of button. The values are:
 ///     - `elevated` for [ElevatedButton] (default)
 ///     - `text` for [TextButton]
@@ -23,9 +24,11 @@ class SDUIButton extends SDUIWidget {
   String? caption;
   String? type;
   double? padding;
+  bool? stretched;
   ActionCallback? onPressed;
 
-  SDUIButton({this.caption, this.type, this.padding, this.onPressed});
+  SDUIButton(
+      {this.caption, this.type, this.padding, this.onPressed, this.stretched});
 
   @override
   Widget toWidget(BuildContext context) => _ButtonWidgetStateful(this);
@@ -38,6 +41,7 @@ class SDUIButton extends SDUIWidget {
     caption = json?["caption"];
     type = json?["type"];
     padding = json?["padding"];
+    stretched = json?["stretched"];
     return this;
   }
 }
@@ -66,8 +70,9 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      SizedBox(width: double.infinity, child: _createWidget());
+  Widget build(BuildContext context) => delegate.stretched == false
+      ? _createWidget()
+      : SizedBox(width: double.infinity, child: _createWidget());
 
   Widget _createWidget() {
     switch (delegate.type?.toLowerCase()) {

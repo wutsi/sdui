@@ -94,7 +94,12 @@ class Http {
         line +=
             ' response_status=${response.statusCode} response_headers=${response.headers}';
       }
-      _logger.i(line);
+
+      if (ex != null) {
+        _logger.e(line);
+      } else {
+        _logger.i(line);
+      }
     }
   }
 

@@ -1,6 +1,12 @@
 # CHANGELOG
 
 ## [0.0.37] 2021-11-08
+### Updated
+- Center app-bar header
+- Improve logging of HTTP errors
+- Add SDUIButton.stretched
+
+## [0.0.37] 2021-11-08
 ### Added
 - Add `Divider`
 
