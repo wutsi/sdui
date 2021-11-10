@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.37] 2021-11-08
+## [0.0.38] 2021-11-08
 ### Updated
 - Center app-bar header
 - Improve logging of HTTP errors
