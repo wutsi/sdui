@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.39] 2021-11-11
+### Updated
+- Replaced `intl_phone_field` by `intl_phone_number_input`
+
 ## [0.0.38] 2021-11-08
 ### Updated
 - Center app-bar header

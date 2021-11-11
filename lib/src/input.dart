@@ -2,9 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_field/countries.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:intl_phone_field/phone_number.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
 import 'package:sdui/src/logger.dart';
@@ -351,8 +349,7 @@ class _PhoneWidgetStateful extends StatefulWidget {
 }
 
 class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
-  PhoneNumber state =
-      PhoneNumber(countryISOCode: 'US', countryCode: '', number: '');
+  String state = '';
   SDUIInput delegate;
 
   _PhoneWidgetState(this.delegate);
@@ -362,48 +359,30 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
     super.initState();
 
     delegate.provider?.setData(delegate.name, delegate.value ?? '');
-    state = _toPhoneNumber(delegate.value ?? '');
-  }
-
-  PhoneNumber _toPhoneNumber(String completeNumber) {
-    for (int i = 0; i < countries.length; i++) {
-      var maxLength = countries[i]["max_length"] as int;
-      var dialCode = countries[i]["dial_code"] as int;
-      var dialCodeLength = "$dialCode".length;
-      if (completeNumber.startsWith("+$dialCode") &&
-          maxLength == completeNumber.length - dialCodeLength - 1) {
-        var code = countries[i]["code"] as String;
-        return PhoneNumber(
-            countryISOCode: code,
-            countryCode: "$dialCode",
-            number: completeNumber.substring(1 + dialCodeLength));
-      }
-    }
-
-    String? countryCode = WidgetsBinding.instance?.window.locale.countryCode;
-    return PhoneNumber(
-        countryISOCode: countryCode ?? 'US', countryCode: '', number: '');
+    state = delegate.value ?? '';
   }
 
   @override
-  Widget build(BuildContext context) => IntlPhoneField(
-        readOnly: delegate.readOnly,
-        enabled: delegate.enabled,
-        initialCountryCode: state.countryISOCode,
+  Widget build(BuildContext context) => InternationalPhoneNumberInput(
+        selectorConfig:
+            const SelectorConfig(selectorType: PhoneInputSelectorType.DIALOG),
+        ignoreBlank: true,
+        formatInput: false,
+        isEnabled: delegate.enabled,
         countries: delegate.countries,
-        controller: TextEditingController(text: state.number),
-        decoration: InputDecoration(
-          labelText: delegate.caption,
-        ),
-        onChanged: (v) => _onChanged(v),
+        textFieldController: TextEditingController(text: state),
+        hintText: delegate.caption,
+        onInputChanged: (v) => _onChanged(v),
         validator: (s) => _onValidate(s),
       );
 
   void _onChanged(PhoneNumber value) {
-    delegate.provider?.setData(delegate.name, value.completeNumber);
+    print('onChanged  ${value.phoneNumber}');
+    delegate.provider?.setData(delegate.name, value.phoneNumber ?? '');
   }
 
   String? _onValidate(String? value) {
+    print('onValidate  $value');
     return delegate._onValidate(value);
   }
 }
