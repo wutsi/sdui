@@ -377,12 +377,10 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
       );
 
   void _onChanged(PhoneNumber value) {
-    print('onChanged  ${value.phoneNumber}');
     delegate.provider?.setData(delegate.name, value.phoneNumber ?? '');
   }
 
   String? _onValidate(String? value) {
-    print('onValidate  $value');
     return delegate._onValidate(value);
   }
 }
