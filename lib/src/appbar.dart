@@ -18,7 +18,7 @@ class SDUIAppBar extends SDUIWidget {
   String? foregroundColor;
   String? backgroundColor;
   List<SDUIWidget>? actions;
-  bool automaticallyImplyLeading = true;
+  bool? automaticallyImplyLeading;
   SDUIWidget? leading;
 
   @override
@@ -29,7 +29,7 @@ class SDUIAppBar extends SDUIWidget {
       foregroundColor: toColor(foregroundColor),
       backgroundColor: toColor(backgroundColor),
       leading: leading?.toWidget(context),
-      automaticallyImplyLeading: automaticallyImplyLeading,
+      automaticallyImplyLeading: automaticallyImplyLeading ?? true,
       actions: actions?.map((e) => e.toWidget(context)).toList());
 
   @override
@@ -50,7 +50,7 @@ class SDUIAppBar extends SDUIWidget {
         }
       });
     }
-  
+
     return this;
   }
 

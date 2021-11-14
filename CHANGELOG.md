@@ -1,5 +1,10 @@
 # CHANGELOG
 
+
+## [0.0.41] 2021-11-14
+### Fixed
+Fix NPE with `AppBar.automaticallyImplyLeading`
+
 ## [0.0.40] 2021-11-13
 ### Added
 - component `MoneyWithKeyboard`
