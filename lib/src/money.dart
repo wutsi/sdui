@@ -16,12 +16,14 @@ class SDUIMoneyText extends SDUIWidget {
   double? value;
   String? currency;
   String? color;
+  String? numberFormat;
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     value = json?['value'];
     currency = json?['currency'];
     color = json?['color'];
+    numberFormat = json?['numberFormat'];
     return super.fromJson(json);
   }
 
@@ -29,7 +31,8 @@ class SDUIMoneyText extends SDUIWidget {
   Widget toWidget(BuildContext context) => MoneyText(
         value: value ?? 0,
         currency: currency ?? 'XAF',
-        color: toColor(color) ?? Colors.black,
+        color: toColor(color),
+        numberFormat: numberFormat,
       );
 }
 
@@ -40,8 +43,8 @@ class MoneyText extends StatelessWidget {
   final String? numberFormat;
   final double valueFontSize;
   final double currencyFontSize;
-  final Color color;
-  final bool bold;
+  final Color? color;
+  final bool? bold;
 
   const MoneyText(
       {Key? key,
@@ -50,7 +53,7 @@ class MoneyText extends StatelessWidget {
       this.numberFormat,
       this.valueFontSize = 50,
       this.currencyFontSize = 18,
-      this.color = Colors.black,
+      this.color,
       this.bold = true})
       : super(key: key);
 
@@ -61,7 +64,7 @@ class MoneyText extends StatelessWidget {
               : NumberFormat(numberFormat).format(value),
           style: TextStyle(
               color: color,
-              fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+              fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
               fontSize: valueFontSize),
           children: [
             WidgetSpan(
@@ -71,7 +74,8 @@ class MoneyText extends StatelessWidget {
                   currency,
                   style: TextStyle(
                       color: color,
-                      fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+                      fontWeight:
+                          bold == true ? FontWeight.bold : FontWeight.normal,
                       fontSize: currencyFontSize),
                 ),
               ),
@@ -100,7 +104,7 @@ class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
     maxLength = json?['maxLength'] ?? 7;
     deleteText = json?['deleteText'] ?? 'Delete';
     keyboardButtonSize = json?['keyboardButtonSize'] ?? 90.0;
-    numberFormat = json?['numberFormat'] ?? 90.0;
+    numberFormat = json?['numberFormat'];
 
     return this;
   }
@@ -140,7 +144,7 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard> {
           Container(
             alignment: Alignment.center,
             child: MoneyText(
-              color: delegate.toColor(delegate.moneyColor) ?? Colors.black,
+              color: delegate.toColor(delegate.moneyColor),
               value: state.toDouble(),
               currency: delegate.currency ?? 'XAF',
               numberFormat: delegate.numberFormat,
