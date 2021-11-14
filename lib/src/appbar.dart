@@ -9,6 +9,7 @@ import 'package:sdui/sdui.dart';
 /// - **elevation**: Elevation
 /// - **foregroundColor**: Foreground color
 /// - **backgroundColor**: Backgroupnd color
+/// - **automaticallyImplyLeading**: Imply leading widget (default=true)
 /// - **leading**: action on LHS
 /// - **actions**: List of actions to add on RHS
 class SDUIAppBar extends SDUIWidget {
@@ -17,6 +18,7 @@ class SDUIAppBar extends SDUIWidget {
   String? foregroundColor;
   String? backgroundColor;
   List<SDUIWidget>? actions;
+  bool automaticallyImplyLeading = true;
   SDUIWidget? leading;
 
   @override
@@ -27,6 +29,7 @@ class SDUIAppBar extends SDUIWidget {
       foregroundColor: toColor(foregroundColor),
       backgroundColor: toColor(backgroundColor),
       leading: leading?.toWidget(context),
+      automaticallyImplyLeading: automaticallyImplyLeading,
       actions: actions?.map((e) => e.toWidget(context)).toList());
 
   @override
@@ -36,6 +39,7 @@ class SDUIAppBar extends SDUIWidget {
     foregroundColor = json?["foregroundColor"];
     backgroundColor = json?["backgroundColor"];
     leading = _parse(json?["leading"]);
+    automaticallyImplyLeading = json?["automaticallyImplyLeading"];
 
     var actions = json?["actions"];
     if (actions is List<dynamic>) {
@@ -46,7 +50,7 @@ class SDUIAppBar extends SDUIWidget {
         }
       });
     }
-
+  
     return this;
   }
 

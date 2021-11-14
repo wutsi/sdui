@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.0.40] 2021-11-13
+### Added
+- component `MoneyWithKeyboard`
+### Updated
+- Changed border of DropdownButton
+
 ## [0.0.39] 2021-11-11
 ### Updated
 - Replaced `intl_phone_field` by `intl_phone_number_input`

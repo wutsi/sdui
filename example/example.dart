@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
               ]),
             ),
         '/remote': (context) => DynamicRoute(
-            provider: HttpRouteContentProvider('http://localhost:8080')),
+            provider: HttpRouteContentProvider(
+                'http://localhost:8080/cashin/pending')),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(json))
       };
@@ -47,118 +48,75 @@ class MyApp extends StatelessWidget {
 
 var json = '''
 {
-	"type": "Screen",
-	"appBar": {
-	  "type": "AppBar",
-	  "attributes":{
-	    "title": "Title"
-	  },
-	  "children": [
-	    {
-	      "type": "IconButton",
-	      "attributes": {
-	        "icon": "e166"
-	      },
-	      "action":{
-	        "type": "Prompt",
-	        "prompt":{
-	          "title": "Yo",
-	          "message": "Man"
-	        }
-	      }
-	    }
-	  ]
-	},
-	"child": {
-		"type": "Form",
-		"attributes": {
-			"padding": 10
-		},
-		"children": [{
-				"type": "Input",
-				"attributes": {
-					"name": "first_name",
-					"value": "Ray",
-					"caption": "First Name",
-					"maxLength": 30
-				}
-			},
-			{
-				"type": "Input",
-				"attributes": {
-					"name": "last_name",
-					"value": "Sponsible",
-					"caption": "Last Name",
-					"maxLength": 30
-				}
-			},
-			{
-				"type": "Input",
-				"attributes": {
-					"name": "email",
-					"value": "ray.sponsible@gmail.com",
-					"caption": "Email",
-					"required": true
-				}
-			},
-      {
-        "type": "Input",
-        "attributes": {
-          "type": "date",
-          "name": "birth_date",
-          "caption": "Date of Birth"
-        }
-      },
-      {
-        "type": "DropdownButton",
-        "attributes": {
-          "name": "payment_method",
-          "hint": "Select your Payment Method",
-          "required": true
-        },
-        "children":[
-          {
-            "type": "DropdownMenuItem",
-            "attributes": {
-              "caption": "MTN",
-              "value": "MTN"
-            }
+  "type" : "Screen",
+  "attributes" : {
+    "safe" : false
+  },
+  "children" : [ {
+    "type" : "Container",
+    "attributes" : {
+      "alignment" : "Center",
+      "padding" : 20.0
+    },
+    "children" : [ {
+      "type" : "Column",
+      "attributes" : { },
+      "children" : [ {
+        "type" : "Form",
+        "attributes" : { },
+        "children" : [ {
+          "type" : "Container",
+          "attributes" : {
+            "padding" : 10.0
           },
-          {
-            "type": "DropdownMenuItem",
-            "attributes": {
-              "caption": "Orange",
-              "value": "ORANGE"
-            }
+          "children" : [ {
+            "type" : "MoneyWithKeyboard",
+            "attributes" : {
+              "name" : "amount",
+              "moneyColor" : "#1D7EDF",
+              "deleteText" : "Delete",
+              "maxLength" : 10,
+              "currency" : "XAF"
+            },
+            "children" : [ ]
+          } ]
+        }, {
+          "type" : "Container",
+          "attributes" : {
+            "padding" : 10.0
           },
-          {
-            "type": "DropdownMenuItem",
-            "attributes": {
-              "caption": "Nexttel",
-              "value": "NEXTTEL"
+          "children" : [ {
+            "type" : "Input",
+            "attributes" : {
+              "name" : "command",
+              "hideText" : false,
+              "required" : false,
+              "caption" : "Add Cash",
+              "enabled" : true,
+              "readOnly" : false,
+              "type" : "Submit",
+              "minLength" : 0
+            },
+            "children" : [ ],
+            "action" : {
+              "type" : "Command",
+              "url" : "http://localhost:8080/commands/cashin"
             }
-          }
-        ]
-      },
-			{
-				"type": "Input",
-				"attributes": {
-					"type": "Submit",
-					"name": "submit",
-					"caption": "Create Profile"
-				},
-				"action": {
-					"type": "Command",
-					"url": "http://localhost:8080/actuator/health",
-					"prompt": {
-						"type": "Confirm",
-						"title": "Confirmation",
-						"message": "Are you sure you want to change your profile?"
-					}
-				}
-			}
-		]
-	}
+          } ]
+        } ]
+      } ]
+    } ]
+  } ],
+  "appBar" : {
+    "type" : "AppBar",
+    "attributes" : {
+      "title" : "Add Cash",
+      "elevation" : 0.0,
+      "backgroundColor" : "#FFFFFF",
+      "foregroundColor" : "#000000"
+    },
+    "children" : [ ]
+  }
 }
 ''';
 
@@ -167,8 +125,9 @@ class HttpAuthorizationInterceptor extends HttpInterceptor {
   @override
   void onRequest(RequestTemplate request) async {
     String token =
-        'eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxNiIsInN1Yl90eXBlIjoiVVNFUiIsInNjb3BlIjpbInBheW1lbnQtbWFuYWdlIiwicGF5bWVudC1tZXRob2QtbWFuYWdlIiwicGF5bWVudC1tZXRob2QtcmVhZCIsInBheW1lbnQtcmVhZCIsInRlbmFudC1yZWFkIiwidXNlci1tYW5hZ2UiLCJ1c2VyLXJlYWQiXSwiaXNzIjoid3V0c2kuY29tIiwibmFtZSI6IkhlcnZlIFRjaGVwYW5ub3UiLCJhZG1pbiI6ZmFsc2UsInBob25lX251bWJlciI6IisxNTE0NzU4MDE5MSIsImV4cCI6MTYzNjU0NzEwNiwiaWF0IjoxNjM2NDYyNTA2LCJqdGkiOiIxIn0.B3c8umpS6o4tku9dTidVcnk_QYnRA-vPMejehrchSF5BAfcceg_u-Say9bPokJSgeK_nu0h2ouP3TAERV4FuN28i6oHEGkuPWQP8gnH0AouqSNw862APOMcOEP5Z0ve45kzC-LnHkLFhiF1Neaumt09BQLCfX7nK8RtKbZ0Mb2iZXaqoRz_6LYqbo9rn6UmC_GIFGMVdsepvh0pZuqw8L561IdvWe-Rx4DIoXCVMw37mJk29fjQPCon0q7SIluRfmpPw2x0bC_mY1kBGrF2-bEEM_VTdYjWoQDSD678TskcUBneqdNqNmLVJnoCuS0dnm-8s799rtP92kYpElDmNpg';
+        'eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxNiIsInN1Yl90eXBlIjoiVVNFUiIsInNjb3BlIjpbInBheW1lbnQtbWFuYWdlIiwicGF5bWVudC1tYW5hZ2UiLCJwYXltZW50LW1ldGhvZC1tYW5hZ2UiLCJwYXltZW50LW1ldGhvZC1yZWFkIiwicGF5bWVudC1yZWFkIiwicGF5bWVudC1yZWFkIiwidGVuYW50LXJlYWQiLCJ1c2VyLW1hbmFnZSIsInVzZXItcmVhZCJdLCJpc3MiOiJ3dXRzaS5jb20iLCJuYW1lIjoiSGVydmUgVGNoZXBhbm5vdSIsImFkbWluIjpmYWxzZSwicGhvbmVfbnVtYmVyIjoiKzE1MTQ3NTgwMTkxIiwiZXhwIjoxNjM2ODQxMzk5LCJpYXQiOjE2MzY3NTY3OTksImp0aSI6IjEifQ.kqnN1e3cZG_XXzlC8HPnVWtnlDIDCi-rFH9uAum3GV994xw_LK4o5hjdb64MAOww9KFmg_IkYkHTIWfRZXjNJH_JSIzO_5AQF6Kh8U-zAxxJ_YIapGO10eFEu4iFY3XiDx00aYONUqe2YSMsLrMw_OZMll3T0plfQmIG7tFhEZ-hBvfQUWfTiqAUxutqH3SN_V2-_IslfB467rjFTI9IGvXo2EGvJTczUSZqBZpBLVkOKxOwQjFGL6Yr_E';
     request.headers['Authorization'] = 'Bearer $token';
+    request.headers['X-Tenant-ID'] = '1';
   }
 
   @override

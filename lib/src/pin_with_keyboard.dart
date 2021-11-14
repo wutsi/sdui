@@ -29,7 +29,7 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
   double keyboardButtonSize = 90.0;
 
   @override
-  Widget toWidget(BuildContext context) => _PinWidthKeyboard(this);
+  Widget toWidget(BuildContext context) => _PinWithKeyboard(this);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -44,17 +44,17 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
   }
 }
 
-class _PinWidthKeyboard extends StatefulWidget {
+class _PinWithKeyboard extends StatefulWidget {
   final SDUIPinWidthKeyboard delegate;
 
-  const _PinWidthKeyboard(this.delegate, {Key? key}) : super(key: key);
+  const _PinWithKeyboard(this.delegate, {Key? key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
   _PinWithKeyboardState createState() => _PinWithKeyboardState(delegate);
 }
 
-class _PinWithKeyboardState extends State<_PinWidthKeyboard> {
+class _PinWithKeyboardState extends State<_PinWithKeyboard> {
   SDUIPinWidthKeyboard delegate;
   bool buzy = false;
   TextEditingController controller = TextEditingController();

@@ -22,6 +22,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 ///   - `Command`: To execute a command on the server
 /// - **url**: Action URL. This URL represent either the route or a command to execute
 ///   - `route:/..`: redirect users to previous route
+///   - `route:/~`: redirect users to 1st route
 ///   - URL starting with `route:/<ROUTE_NAME>` redirect user the a named route. (Ex: ``route:/checkout``)
 ///   - URL starting with `http://` or `https` redirect user to a server driven page
 ///   - `page:/<PAGE_NUMBER>`: redirect users to a given page. `<PAGE_NUMBER>` is the page index (starting with `0`).
@@ -111,6 +112,8 @@ class SDUIAction {
       var route = url.substring(6);
       if (route == '/..') {
         Navigator.pop(context);
+      } else if (route == '/~') {
+        Navigator.popUntil(context, (route) => route.isFirst);
       } else {
         if (replacement) {
           Navigator.pushReplacementNamed(context, route, arguments: parameters);

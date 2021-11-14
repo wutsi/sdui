@@ -53,27 +53,7 @@ class SDUIDropdownButton extends SDUIWidget with SDUIFormField {
   bool? required;
 
   @override
-  Widget toWidget(BuildContext context) => SizedBox(
-      width: double.infinity,
-      child: DropdownButtonFormField<String>(
-        value: value,
-        hint: hint == null ? null : Text(hint!),
-        onChanged: (value) => _onChanged(value),
-        validator: (value) => _onValidate(value),
-        items: _toItems(context),
-      ));
-
-  List<DropdownMenuItem<String>> _toItems(BuildContext context) {
-    List<DropdownMenuItem<String>> items = <DropdownMenuItem<String>>[];
-    var children = childrenWidgets(context);
-    for (var i = 0; i < children.length; i++) {
-      var child = children[i];
-      if (child is DropdownMenuItem<String>) {
-        items.add(child);
-      }
-    }
-    return items;
-  }
+  Widget toWidget(BuildContext context) => _DropdownButtonWidget(this);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -83,15 +63,64 @@ class SDUIDropdownButton extends SDUIWidget with SDUIFormField {
     hint = json?["hint"];
     return super.fromJson(json);
   }
+}
+
+class _DropdownButtonWidget extends StatefulWidget {
+  final SDUIDropdownButton delegate;
+
+  const _DropdownButtonWidget(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<StatefulWidget> createState() => _DropdownButtonWidgetState(delegate);
+}
+
+class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
+  SDUIDropdownButton delegate;
+  String? state;
+
+  _DropdownButtonWidgetState(this.delegate);
+
+  @override
+  void initState() {
+    super.initState();
+
+    state = delegate.value;
+    delegate.provider?.setData(delegate.name, state ?? '');
+  }
 
   void _onChanged(String? value) {
-    provider?.setData(name, value ?? '');
+    delegate.provider?.setData(delegate.name, value ?? '');
   }
 
   String? _onValidate(String? value) {
-    if (required == true && (value == null || value.isEmpty)) {
+    if (delegate.required == true && (value == null || value.isEmpty)) {
       return 'This field is required';
     }
     return null;
+  }
+
+  @override
+  Widget build(BuildContext context) => SizedBox(
+      width: double.infinity,
+      child: DropdownButtonFormField<String>(
+        value: state,
+        hint: delegate.hint == null ? null : Text(delegate.hint!),
+        decoration: const InputDecoration(border: OutlineInputBorder()),
+        onChanged: (value) => _onChanged(value),
+        validator: (value) => _onValidate(value),
+        items: _toItems(context),
+      ));
+
+  List<DropdownMenuItem<String>> _toItems(BuildContext context) {
+    List<DropdownMenuItem<String>> items = <DropdownMenuItem<String>>[];
+    var children = delegate.childrenWidgets(context);
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child is DropdownMenuItem<String>) {
+        items.add(child);
+      }
+    }
+    return items;
   }
 }
