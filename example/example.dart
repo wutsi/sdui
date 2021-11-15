@@ -81,7 +81,6 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
 
   @override
   void didPopNext() {
-    print('didPopNext. state=$state');
     setState(() {
       state++;
     });
@@ -89,7 +88,6 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
 
   @override
   void didPush() {
-    print('didPush. state=$state');
     setState(() {
       state++;
     });
