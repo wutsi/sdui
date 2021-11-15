@@ -22,24 +22,24 @@ abstract class RouteContentProvider {
 
 /// Static implementation of RouteContentProvider with static content
 class StaticRouteContentProvider implements RouteContentProvider {
-  String json;
+  final String _json;
 
-  StaticRouteContentProvider(this.json);
+  const StaticRouteContentProvider(this._json);
 
   @override
   Future<String> getContent() {
-    return Future(() => json);
+    return Future(() => _json);
   }
 }
 
 /// Static implementation of RouteContentProvider with static content
 class HttpRouteContentProvider implements RouteContentProvider {
-  String url;
+  final String _url;
 
-  HttpRouteContentProvider(this.url);
+  const HttpRouteContentProvider(this._url);
 
   @override
-  Future<String> getContent() async => Http.getInstance().post(url, null);
+  Future<String> getContent() async => Http.getInstance().post(_url, null);
 }
 
 /// Dynamic Route
@@ -61,6 +61,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
+  String? id;
 
   DynamicRouteState(this.provider, this.pageController);
 
@@ -81,6 +82,12 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     super.dispose();
   }
 
+  void _reload() {
+    _logger.i('id=$id status=reloading');
+
+    content = provider.getContent();
+  }
+
   @override
   Widget build(BuildContext context) => Center(
       child: FutureBuilder<String>(
@@ -89,7 +96,10 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
             if (snapshot.hasData) {
               SDUIWidget widget =
                   SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
+              id = widget.id;
               widget.attachPageController(pageController);
+              _logger.i('id=$id status=loaded');
+
               return widget.toWidget(context);
             } else if (snapshot.hasError) {
               var error = snapshot.error;
@@ -112,6 +122,8 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     super.didPopNext();
 
     // Force refresh of the page
-    setState(() {});
+    setState(() {
+      _reload();
+    });
   }
 }

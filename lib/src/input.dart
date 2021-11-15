@@ -74,7 +74,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     if (nodes is List<dynamic>) {
       countries = nodes.map((e) => e.toString()).toList();
     }
-    return this;
+    return super.fromJson(json);
   }
 
   Widget _createWidget(BuildContext context) {

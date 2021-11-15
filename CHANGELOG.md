@@ -1,16 +1,20 @@
 # CHANGELOG
 
+## [0.0.44] 2021-11-14
+### Added
+- id to all widgets
+
 ## [0.0.43] 2021-11-14
 ### Fixed
-Reload screen on pop
+- Reload screen on pop
 
 ## [0.0.42] 2021-11-14
 ### Fixed
-Fix `Money.numberFormat`
+- Fix `Money.numberFormat`
 
 ## [0.0.41] 2021-11-14
 ### Fixed
-Fix NPE with `AppBar.automaticallyImplyLeading`
+- Fix NPE with `AppBar.automaticallyImplyLeading`
 
 ## [0.0.40] 2021-11-13
 ### Added

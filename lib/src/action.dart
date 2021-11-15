@@ -69,7 +69,6 @@ class SDUIAction {
       return _emptyFuture;
     }
 
-    _logger.i('Executing: type=$type url=$url');
     switch (type?.toLowerCase()) {
       case 'route':
         return _gotoRoute(context, data);

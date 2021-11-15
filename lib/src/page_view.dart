@@ -25,6 +25,7 @@ class SDUIPageView extends SDUIWidget {
 /// Descriptor of the children of [SDUIPageView]
 ///
 /// ### JSON Attributes
+/// - **id**: Unique ID of the page
 /// - **url**: URL of the page content.
 class SDUIPage extends SDUIWidget {
   String? url;
@@ -36,9 +37,8 @@ class SDUIPage extends SDUIWidget {
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
-    super.fromJson(json);
     url = json?['url'];
-    return this;
+    return super.fromJson(json);
   }
 }
 

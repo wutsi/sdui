@@ -42,7 +42,7 @@ class SDUIButton extends SDUIWidget {
     type = json?["type"];
     padding = json?["padding"];
     stretched = json?["stretched"];
-    return this;
+    return super.fromJson(json);
   }
 }
 

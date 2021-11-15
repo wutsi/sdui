@@ -9,6 +9,7 @@ import 'action.dart';
 /// - an action that contains information about the widget behavior
 /// - a list of children widget descriptors
 abstract class SDUIWidget {
+  String? id;
   SDUIAction action = SDUIAction();
   List<SDUIWidget> children = <SDUIWidget>[];
 
@@ -26,6 +27,7 @@ abstract class SDUIWidget {
 
   /// Load the attributes of the widget descriptor from
   SDUIWidget fromJson(Map<String, dynamic>? json) {
+    id = json?['id'];
     return this;
   }
 

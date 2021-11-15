@@ -31,6 +31,6 @@ class SDUIScreen extends SDUIWidget {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     safe = json?['safe'];
     backgroundColor = json?["backgroundColor"];
-    return this;
+    return super.fromJson(json);
   }
 }
