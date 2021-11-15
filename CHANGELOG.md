@@ -1,9 +1,12 @@
 # CHANGELOG
 
+## [0.0.43] 2021-11-14
+### Fixed
+Reload screen on pop
+
 ## [0.0.42] 2021-11-14
 ### Fixed
 Fix `Money.numberFormat`
-
 
 ## [0.0.41] 2021-11-14
 ### Fixed

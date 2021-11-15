@@ -22,28 +22,74 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: _routes(),
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [routeObserver],
     );
   }
 
   Map<String, WidgetBuilder> _routes() => {
-        '/': (context) => Scaffold(
-              appBar: AppBar(title: const Text('Home')),
-              body: Column(children: [
-                ElevatedButton(
-                    child: const Text('Remote'),
-                    onPressed: () => Navigator.pushNamed(context, '/remote')),
-                const Spacer(),
-                ElevatedButton(
-                    child: const Text('Static'),
-                    onPressed: () => Navigator.pushNamed(context, '/static')),
-              ]),
-            ),
+        '/': (context) => HomeScreen(),
         '/remote': (context) => DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://localhost:8080/cashin/pending')),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(json))
       };
+}
+
+class HomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> with RouteAware {
+  int state = 0;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: const Text('Home')),
+        body: Column(children: [
+          Text(state.toString()),
+          ElevatedButton(
+              child: const Text('Remote'),
+              onPressed: () => Navigator.pushNamed(context, '/remote')),
+          const Spacer(),
+          ElevatedButton(
+              child: const Text('Static'),
+              onPressed: () => Navigator.pushNamed(context, '/static')),
+        ]),
+      );
+
+  @override
+  void didPopNext() {
+    print('didPopNext. state=$state');
+    setState(() {
+      state++;
+    });
+  }
+
+  @override
+  void didPush() {
+    print('didPush. state=$state');
+    setState(() {
+      state++;
+    });
+  }
 }
 
 var json = '''

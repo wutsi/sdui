@@ -10,6 +10,11 @@ import 'package:sdui/src/logger.dart';
 import 'http.dart';
 import 'parser.dart';
 
+/// Route observer to track route navigation so that we can reload screens when poped.
+/// See DynamicRouteState.didPopNext().
+/// IMPORTANT: This route observer must be added to the application
+final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
+
 /// Returns the content of a route
 abstract class RouteContentProvider {
   Future<String> getContent();
@@ -51,7 +56,7 @@ class DynamicRoute extends StatefulWidget {
       DynamicRouteState(provider, pageController);
 }
 
-class DynamicRouteState extends State<DynamicRoute> {
+class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   static final Logger _logger = LoggerFactory.create('DynamicRouteState');
   final RouteContentProvider provider;
   final PageController? pageController;
@@ -61,8 +66,19 @@ class DynamicRouteState extends State<DynamicRoute> {
 
   @override
   void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    });
+
     super.initState();
     content = provider.getContent();
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+
+    super.dispose();
   }
 
   @override
@@ -90,4 +106,12 @@ class DynamicRouteState extends State<DynamicRoute> {
             // By default, show a loading spinner.
             return const CircularProgressIndicator();
           }));
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+
+    // Force refresh of the page
+    setState(() {});
+  }
 }
