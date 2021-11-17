@@ -147,16 +147,16 @@ class SDUIAction {
   String _urlWithParameters() {
     String result = url;
     if (parameters != null) {
-      String query = "";
+      String query = '';
       var keys = parameters!.keys.toList();
       for (var i = 0; i < keys.length; i++) {
         String key = keys[i];
         String? value = parameters?[key]?.toString();
         if (value != null) {
-          query = "$key=$value&";
+          query += '$key=' + Uri.encodeComponent(value) + '&';
         }
-        result = Uri.encodeComponent("$url?$query");
       }
+      result = query.isEmpty ? url : '$url?$query';
     }
     return result;
   }

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.45] 2021-11-17
+### Updated
+- Fix the keyboard DELETE color
+
 ## [0.0.44] 2021-11-14
 ### Added
 - id to all widgets
