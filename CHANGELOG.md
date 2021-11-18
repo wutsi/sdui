@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.45] 2021-11-18
+## [0.0.46] 2021-11-18
 ### Updated
 - Improve command handling
 
