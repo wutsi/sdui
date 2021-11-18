@@ -131,7 +131,7 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     if (json is Map<String, dynamic>) {
       var action = SDUIAction().fromJson(json);
       action.pageController = delegate.action.pageController;
-      action.execute(context, json);
+      action.execute(context, json).then((value) => _handleResult(value));
     }
   }
 

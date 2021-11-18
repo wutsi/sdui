@@ -27,7 +27,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 /// - **replacement**: For `type=route`, this indicate if we replace the current view or navigate.
 /// - **parameters**: Parameters to add to the URL where to redirect to
 class SDUIAction {
-  static final Future<String> _emptyFuture = Future(() => "{}");
+  static final Future<String?> _emptyFuture = Future(() => null);
 
   String? type;
   String url = '';
@@ -89,7 +89,7 @@ class SDUIAction {
         context: context, builder: (context) => prompt!.toWidget(context));
   }
 
-  Future<String> _gotoPage(BuildContext context) {
+  Future<String?> _gotoPage(BuildContext context) {
     int page = -1;
     try {
       page = int.parse(url.substring(6));
@@ -102,7 +102,7 @@ class SDUIAction {
     return _emptyFuture;
   }
 
-  Future<String> _gotoRoute(BuildContext context, Map<String, dynamic>? data) {
+  Future<String?> _gotoRoute(BuildContext context, Map<String, dynamic>? data) {
     if (_isRoute()) {
       var route = url.substring(6);
       if (route == '/..') {

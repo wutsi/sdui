@@ -133,21 +133,23 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
     if (buzy) {
       delegate.action
           .execute(context, {delegate.name: value})
-          .then((value) => _onResult(value))
+          .then((value) => _handleResult(value))
           .whenComplete(() => _onComplete());
     }
   }
 
-  void _onResult(String? result) {
+  Future<String?> _handleResult(String? result) async {
     if (result == null) {
-      return;
+      return Future.value(null);
     }
 
     var json = jsonDecode(result);
     if (json is Map<String, dynamic>) {
       var action = SDUIAction().fromJson(json);
       action.pageController = delegate.action.pageController;
-      action.execute(context, json);
+      return action
+          .execute(context, json)
+          .then((value) => _handleResult(value));
     }
   }
 
