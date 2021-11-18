@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.45] 2021-11-18
+### Updated
+- Improve command handling
+
 ## [0.0.45] 2021-11-17
 ### Updated
 - Fix the keyboard DELETE color

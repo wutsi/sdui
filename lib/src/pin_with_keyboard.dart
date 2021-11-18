@@ -151,6 +151,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
           .execute(context, json)
           .then((value) => _handleResult(value));
     }
+    return Future.value(null);
   }
 
   void _onComplete() {

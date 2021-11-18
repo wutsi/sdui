@@ -122,26 +122,30 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
         .whenComplete(() => _busy(false));
   }
 
-  void _handleResult(String? result) {
+  Future<String?> _handleResult(String? result) {
     if (result == null) {
-      return;
+      return Future.value(null);
     }
 
     var json = jsonDecode(result);
     if (json is Map<String, dynamic>) {
       var action = SDUIAction().fromJson(json);
       action.pageController = delegate.action.pageController;
-      action.execute(context, json).then((value) => _handleResult(value));
+      return action
+          .execute(context, json)
+          .then((value) => _handleResult(value));
     }
+    return Future.value(null);
   }
 
-  void _handleError(
+  Future<String?> _handleError(
       BuildContext context, Object? error, StackTrace stackTrace) {
     if (error is ClientException) {
       _logger.e('FAILURE - POST ${error.uri}', error, stackTrace);
     } else {
       _logger.e('FAILURE', error, stackTrace);
     }
+    return Future.value(null);
   }
 
   void _busy(bool value) {
