@@ -1,6 +1,7 @@
 export 'src/action.dart';
 export 'src/appbar.dart';
 export 'src/button.dart';
+export 'src/circle_avatar.dart';
 export 'src/column.dart';
 export 'src/container.dart';
 export 'src/dialog.dart';

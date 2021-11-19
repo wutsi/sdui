@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'action.dart';
 import 'appbar.dart';
 import 'button.dart';
+import 'circle_avatar.dart';
 import 'column.dart';
 import 'container.dart';
 import 'dialog.dart';
@@ -58,6 +59,9 @@ class SDUIParser {
         break;
       case "column":
         widget = SDUIColumn();
+        break;
+      case "circleavatar":
+        widget = SDUICircleAvatar();
         break;
       case "container":
         widget = SDUIContainer();

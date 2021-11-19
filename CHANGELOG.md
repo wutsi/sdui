@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.46] 2021-11-20
+### Added
+- Support for CircleAvatar
+
 ## [0.0.46] 2021-11-18
 ### Updated
 - Improve command handling
