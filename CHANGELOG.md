@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.46] 2021-11-20
+## [0.0.47] 2021-11-20
 ### Added
 - Support for CircleAvatar
 
