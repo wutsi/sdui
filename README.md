@@ -157,14 +157,16 @@ A widget is a visual element on a screen.
     - [Flexible](https://pub.dev/documentation/sdui/latest/sdui/SDUIFlexible-class.html)
     - [Row](https://pub.dev/documentation/sdui/latest/sdui/SDUIRow-class.html)
     - [Spacer](https://pub.dev/documentation/sdui/latest/sdui/SDUISpacer-class.html)
+- Images/Icons
+    - [CircleAvatar](https://pub.dev/documentation/sdui/latest/sdui/SDUICircleAvatar-class.html)
+    - [Icon](https://pub.dev/documentation/sdui/latest/sdui/SDUIIcon-class.html)
+    - [Image](https://pub.dev/documentation/sdui/latest/sdui/SDUIImage-class.html)
 - Input widgets
     - [Button](https://pub.dev/documentation/sdui/latest/sdui/SDUIButton-class.html)
     - [DropdownButton](https://pub.dev/documentation/sdui/latest/sdui/SDUIDropdownButton-class.html)
     - [DropdownMenuItem](https://pub.dev/documentation/sdui/latest/sdui/SDUIDropdownMenuItem-class.html)
     - [Form](https://pub.dev/documentation/sdui/latest/sdui/SDUIForm-class.html)
-    - [Icon](https://pub.dev/documentation/sdui/latest/sdui/SDUIIcon-class.html)
     - [IconButton](https://pub.dev/documentation/sdui/latest/sdui/SDUIIconButton-class.html)
-    - [Image](https://pub.dev/documentation/sdui/latest/sdui/SDUIImage-class.html)
     - [Input](https://pub.dev/documentation/sdui/latest/sdui/SDUIInput-class.html)
     - [ListView](https://pub.dev/documentation/sdui/latest/sdui/SDUIListView-class.html)
     - [ListItem](https://pub.dev/documentation/sdui/latest/sdui/SDUIListItem-class.html)

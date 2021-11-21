@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'dialog.dart';
 import 'http.dart';
@@ -18,6 +19,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 ///   - `Route`: To redirect to another route
 ///   - `Page`: To redirect to another page, in the context of [PageView]
 ///   - `Command`: To execute a command on the server
+///   - `Share`: Share content
 /// - **url**: Action URL. This URL represent either the route or a command to execute
 ///   - `route:/..`: redirect users to previous route
 ///   - `route:/~`: redirect users to 1st route
@@ -26,11 +28,13 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 ///   - `page:/<PAGE_NUMBER>`: redirect users to a given page. `<PAGE_NUMBER>` is the page index (starting with `0`).
 /// - **replacement**: For `type=route`, this indicate if we replace the current view or navigate.
 /// - **parameters**: Parameters to add to the URL where to redirect to
+/// - **message**: Message to share
 class SDUIAction {
   static final Future<String?> _emptyFuture = Future(() => null);
 
   String? type;
   String url = '';
+  String? message;
   bool replacement = false;
   SDUIDialog? prompt;
   Map<String, dynamic>? parameters;
@@ -41,6 +45,7 @@ class SDUIAction {
   SDUIAction fromJson(Map<String, dynamic>? attributes) {
     url = attributes?["url"] ?? '';
     type = attributes?["type"];
+    message = attributes?['message'];
     replacement = attributes?["replacement"] ?? false;
 
     var prompt = attributes?["prompt"];
@@ -75,9 +80,17 @@ class SDUIAction {
       case 'command':
         return _executeCommand(context, data);
 
+      case 'share':
+        return _share(context);
+
       default:
         return _emptyFuture;
     }
+  }
+
+  Future<String?> _share(BuildContext context) async {
+    await Share.share(message ?? '');
+    Future.value(null);
   }
 
   Future<String?> _prompt(BuildContext context) {
