@@ -41,17 +41,19 @@ class SDUIListView extends SDUIWidget {
 class SDUIListItem extends SDUIWidget {
   String? caption;
   String? subCaption;
-  String? leftIcon;
-  String? rightIcon;
+  String? iconLeft;
+  String? iconRight;
+  double? padding;
 
-  SDUIListItem({this.caption, this.subCaption, this.leftIcon, this.rightIcon});
+  SDUIListItem({this.caption, this.subCaption, this.iconLeft, this.iconRight});
 
   @override
   Widget toWidget(BuildContext context) => ListTile(
         title: Text(caption ?? '<NO-TITLE>'),
         subtitle: subCaption == null ? null : Text(subCaption!),
-        leading: toIcon(leftIcon),
-        trailing: toIcon(rightIcon),
+        leading: toIcon(iconLeft, size: 48),
+        trailing: toIcon(iconRight, size: 48),
+        contentPadding: padding == null ? null : EdgeInsets.all(padding!),
         onTap: () {
           action.execute(context, null);
         },
@@ -61,8 +63,9 @@ class SDUIListItem extends SDUIWidget {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     caption = json?["caption"];
     subCaption = json?["subCaption"];
-    leftIcon = json?["leftIcon"];
-    rightIcon = json?["rightIcon"];
+    iconLeft = json?["iconLeft"];
+    iconRight = json?["iconRight"];
+    padding = json?["padding"];
     return this;
   }
 }

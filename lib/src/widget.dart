@@ -34,9 +34,9 @@ abstract class SDUIWidget {
   Widget? toIcon(String? code, {double? size = 16.0, String? color}) {
     if (code?.startsWith("http://") == true ||
         code?.startsWith("https://") == true) {
-      return Image.network(code!);
+      return Image.network(code!, width: size, height: size,);
     } else {
-      return Icon(toIconData(code), size: size, color: toColor(color));
+      return code == null ? null : Icon(toIconData(code), size: size, color: toColor(color));
     }
   }
 

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.0.49] 2021-11-23
+### Update
+- ListTile now support padding
+- Set the size of ListTile trailing and leading icons
+
 ## [0.0.48] 2021-11-21
 ### Added
 - Support Action.share
