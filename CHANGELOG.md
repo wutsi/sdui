@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.47] 2021-11-21
+## [0.0.48] 2021-11-21
 ### Added
 - Support Action.share
 - Added dependencies to [share_plus](https://pub.dev/packages/share_plus)
