@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.52] 2021-11-24
+### Fixed
+- Fix PIN backspace
+
 ## [0.0.51] 2021-11-24
 ### Fixed
 - Fixed the value

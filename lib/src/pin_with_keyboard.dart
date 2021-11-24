@@ -80,6 +80,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
               fieldsCount: delegate.maxLength,
               controller: controller,
               separator: const SizedBox(width: 5.0),
+              keyboardType: TextInputType.none,
               eachFieldConstraints:
                   const BoxConstraints(minHeight: 10.0, minWidth: 10.0),
               eachFieldWidth: delegate.pinSize,
@@ -120,7 +121,9 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
 
   void _onBack(BuildContext context) {
     String text = controller.text;
-    _changeText(context, text.substring(0, text.length - 1));
+    if (text.isNotEmpty) {
+      _changeText(context, text.substring(0, text.length - 1));
+    }
   }
 
   void _changeText(BuildContext context, String value) {
