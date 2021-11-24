@@ -179,6 +179,10 @@ A widget is a visual element on a screen.
     - [RadioGroup](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadioGroup-class.html)
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)
 
+### Global Variable
+- `sduiErrorState`: Function for building the error state.
+- `sduiLoadingState`: Function for building the loading state.
+
 ## Actions
 With actions, you can:
 - Execute a command on a server (Ex: Saver User Profile, Delete User Account etc.)

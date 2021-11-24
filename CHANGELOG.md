@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## [0.0.54] 2021-11-24
+### Added
+- Error state global variable
+
 ## [0.0.53] 2021-11-24
 ### Added
-- Loading state variable
+- Loading state global variable
 
 ## [0.0.52] 2021-11-24
 ### Fixed

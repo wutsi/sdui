@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
-import 'loading.dart';
+import 'error.dart';
 import 'http.dart';
+import 'loading.dart';
 import 'logger.dart';
 import 'parser.dart';
 import 'widget.dart';
@@ -99,10 +100,10 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
                   SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
               id = widget.id;
               widget.attachPageController(pageController);
-              _logger.i('id=$id status=loaded');
 
               return widget.toWidget(context);
             } else if (snapshot.hasError) {
+              // Log
               var error = snapshot.error;
               if (error is ClientException) {
                 _logger.e('${error.uri} - ${error.message}', error,
@@ -111,10 +112,12 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
                 _logger.e(
                     'Unable to download content', error, snapshot.stackTrace);
               }
-              return const Icon(Icons.error);
+
+              // Error State
+              return sduiErrorState(context, error);
             }
 
-            // By default, show a loading spinner.
+            // Loading state
             return sduiLoadingState(context);
           }));
 
