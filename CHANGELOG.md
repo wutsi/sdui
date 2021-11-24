@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.51] 2021-11-24
+### Fixed
+- Fixed the value
+
 ## [0.0.50] 2021-11-24
 ### Added
 - Add MoneyWithSlider

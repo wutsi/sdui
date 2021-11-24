@@ -251,6 +251,14 @@ class _MoneyWithSliderState extends State<_MoneyWithSlider> {
   _MoneyWithSliderState(this.delegate);
 
   @override
+  void initState() {
+    super.initState();
+
+    state = delegate.value?.toDouble() ?? 0.0;
+    delegate.provider?.setData(delegate.name, state.toString());
+  }
+
+  @override
   Widget build(BuildContext context) => Column(
     children: [
       Container(
@@ -274,5 +282,6 @@ class _MoneyWithSliderState extends State<_MoneyWithSlider> {
 
   void _changed(double value) {
     setState(() => {state = value});
+    delegate.provider?.setData(delegate.name, state.toString());
   }
 }
