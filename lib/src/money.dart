@@ -12,6 +12,7 @@ import 'widget.dart';
 /// - **value**: Current value
 /// - **currency**: Currency code
 /// - **color**: Text color
+/// - **numberFormat**: Number format of the money to display
 class SDUIMoneyText extends SDUIWidget {
   double? value;
   String? currency;
@@ -83,6 +84,18 @@ class MoneyText extends StatelessWidget {
           ]));
 }
 
+/// Descriptor of [MoneyText] with [NumericKeyboard]
+///
+/// ###: Attributes
+/// - **name**: Name of the field
+/// - **value**: Current value
+/// - **currency**: Currency code
+/// - **moneyColor**: Text color of the money
+/// - **keyboardColor**: Text color of the keyboard
+///  - **numberFormat**: Number format of the money to display
+///  - **maxLength**: Maximum length of the moneytary value (default: 7)
+///  - **deleteText**: Text of the delete button
+///  - **keyboardButtonSize**: Size of the keyboard button
 class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
   String name = 'value';
   int? value;
@@ -179,5 +192,87 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard> {
       });
     }
     delegate.provider?.setData(delegate.name, state.toString());
+  }
+}
+
+/// Descriptor of [MoneyText] with [Slider]
+///
+/// ###: Attributes
+/// - **name**: Name of the field
+/// - **value**: Current value
+/// - **currency**: Currency code
+/// - **moneyColor**: Text color of the money
+/// - **sliderColor**: Color of the slider
+///  - **numberFormat**: Number format of the money to display
+///  - **maxLength**: Maximum length of the moneytary value (default: 7)
+///  - **maxValue**: Slider max value
+class SDUIMoneyWithSlider extends SDUIWidget with SDUIFormField {
+  String name = 'value';
+  int? value;
+  String? currency;
+  String? moneyColor;
+  String? sliderColor;
+  String? numberFormat;
+  int maxLength = 7;
+  int? maxValue;
+
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    name = json?['name'] ?? 'name';
+    currency = json?['currency'];
+    moneyColor = json?['moneyColor'];
+    sliderColor = json?['sliderColor'];
+    value = json?['value'];
+    maxLength = json?['maxLength'] ?? 7;
+    numberFormat = json?['numberFormat'];
+    maxValue = json?['maxValue'];
+
+    return this;
+  }
+
+  @override
+  Widget toWidget(BuildContext context) => _MoneyWithSlider(this);
+}
+
+class _MoneyWithSlider extends StatefulWidget {
+  final SDUIMoneyWithSlider delegate;
+
+  const _MoneyWithSlider(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<StatefulWidget> createState() => _MoneyWithSliderState(delegate);
+}
+
+class _MoneyWithSliderState extends State<_MoneyWithSlider> {
+  SDUIMoneyWithSlider delegate;
+  double state = 0;
+
+  _MoneyWithSliderState(this.delegate);
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      Container(
+        padding: const EdgeInsets.all(10),
+        child: MoneyText(
+          color: delegate.toColor(delegate.moneyColor),
+          value: state.toDouble(),
+          currency: delegate.currency ?? 'XAF',
+          numberFormat: delegate.numberFormat,
+        ),
+      ),
+      Slider(
+          value: state,
+          min: 0,
+          max: delegate.maxValue?.toDouble() ?? 100000,
+          onChanged: (value) => _changed(value),
+          activeColor: delegate.toColor(delegate.sliderColor),
+      ),
+    ],
+  );
+
+  void _changed(double value) {
+    setState(() => {state = value});
   }
 }

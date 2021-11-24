@@ -114,6 +114,9 @@ class SDUIParser {
       case "moneywithkeyboard":
         widget = SDUIMoneyWithKeyboard().fromJson(json);
         break;
+      case "moneywithslider":
+        widget = SDUIMoneyWithSlider().fromJson(json);
+        break;
       case "page":
         widget = SDUIPage().fromJson(json);
         break;
