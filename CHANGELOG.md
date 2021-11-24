@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.50] 2021-11-24
+### Added
+- Add MoneyWithSlider
+
 ## [0.0.49] 2021-11-23
 ### Update
 - ListTile now support padding
