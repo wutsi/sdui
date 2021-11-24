@@ -11,6 +11,7 @@ export 'src/expanded.dart';
 export 'src/flexible.dart';
 export 'src/form.dart';
 export 'src/http.dart';
+export 'src/loading.dart';
 export 'src/icon.dart';
 export 'src/icon_button.dart';
 export 'src/image.dart';

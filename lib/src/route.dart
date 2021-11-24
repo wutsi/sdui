@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
-import 'package:sdui/sdui.dart';
-import 'package:sdui/src/logger.dart';
 
+import 'loading.dart';
 import 'http.dart';
+import 'logger.dart';
 import 'parser.dart';
+import 'widget.dart';
 
 /// Route observer to track route navigation so that we can reload screens when poped.
 /// See DynamicRouteState.didPopNext().
@@ -114,7 +115,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
             }
 
             // By default, show a loading spinner.
-            return const CircularProgressIndicator();
+            return sduiLoadingState(context);
           }));
 
   @override

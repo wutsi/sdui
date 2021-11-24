@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   Map<String, WidgetBuilder> _routes() => {
         '/': (context) => const HomeScreen(),
         '/remote': (context) => const DynamicRoute(
-            provider: HttpRouteContentProvider('http://localhost:8080/cashout')),
+            provider: HttpRouteContentProvider('https://wutsi-cash-bff-test.herokuapp.com/cashout')),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(json))
       };

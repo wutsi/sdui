@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## [0.0.53] 2021-11-24
+### Added
+- Loading state variable
+
 ## [0.0.52] 2021-11-24
 ### Fixed
-- Fix PIN backspace
+- Fix PIN backspace on empty text
 
 ## [0.0.51] 2021-11-24
 ### Fixed
