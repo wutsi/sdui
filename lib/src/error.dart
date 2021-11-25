@@ -8,7 +8,10 @@ typedef ErrorStateBuilder = Widget Function(BuildContext context, Object? error)
 ErrorStateBuilder sduiErrorState = (context, error) =>
     Scaffold(
       appBar: AppBar(
-        title: const Text('Error'),
+        backgroundColor: Colors.white,
+        foregroundColor: const Color(0xff8B0000),
+        title: const Text('Error', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xff8B0000))),
+        elevation: 0.0,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -20,7 +23,7 @@ ErrorStateBuilder sduiErrorState = (context, error) =>
           ),
           Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: const Text('Oops', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25))
           ),
           Container(

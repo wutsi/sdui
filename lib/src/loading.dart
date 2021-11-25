@@ -8,8 +8,11 @@ typedef LoadingStateBuilder = Widget Function(BuildContext context);
 LoadingStateBuilder sduiLoadingState = (context) =>
     Scaffold(
       appBar: AppBar(
-        title: const Text('Loading...'),
+        title: const Text('Loading...', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent)),
         automaticallyImplyLeading: false,
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.blueAccent,
       ),
       body: const Center(
         child: CircularProgressIndicator()
