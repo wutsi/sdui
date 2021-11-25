@@ -15,7 +15,7 @@ import 'widget.dart';
 /// Route observer to track route navigation so that we can reload screens when poped.
 /// See DynamicRouteState.didPopNext().
 /// IMPORTANT: This route observer must be added to the application
-final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
+final RouteObserver<ModalRoute> sduiRouteObserver = RouteObserver<ModalRoute>();
 
 /// Returns the content of a route
 abstract class RouteContentProvider {
@@ -70,7 +70,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      routeObserver.subscribe(this, ModalRoute.of(context)!);
+      sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
     });
 
     super.initState();
@@ -79,7 +79,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
 
   @override
   void dispose() {
-    routeObserver.unsubscribe(this);
+    sduiRouteObserver.unsubscribe(this);
 
     super.dispose();
   }

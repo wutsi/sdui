@@ -182,6 +182,7 @@ A widget is a visual element on a screen.
 ### Global Variable
 - `sduiErrorState`: Function for building the error state.
 - `sduiLoadingState`: Function for building the loading state.
+- `sduiRouteObserver`: Route observer that reload each page on navigation.
 
 ## Actions
 With actions, you can:

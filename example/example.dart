@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: _routes(),
       debugShowCheckedModeBanner: false,
-      navigatorObservers: [routeObserver],
+      navigatorObservers: [sduiRouteObserver],
     );
   }
 
@@ -48,7 +48,7 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      routeObserver.subscribe(this, ModalRoute.of(context)!);
+      sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
     });
 
     super.initState();
@@ -56,7 +56,7 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
 
   @override
   void dispose() {
-    routeObserver.unsubscribe(this);
+    sduiRouteObserver.unsubscribe(this);
 
     super.dispose();
   }

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.0.55] 2021-11-25
+### Added
+- Wrapper error and loading page in Scaffold
+- Rename global variable `routeObserver` to `sduiRouteObserver`
+
 ## [0.0.54] 2021-11-24
 ### Added
 - Error state global variable
