@@ -183,6 +183,7 @@ A widget is a visual element on a screen.
 - `sduiErrorState`: Function for building the error state.
 - `sduiLoadingState`: Function for building the loading state.
 - `sduiRouteObserver`: Route observer that reload each page on navigation.
+- `sduiAnalytics`: Analytics class. See [SDUIAnlytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnlytics-class.html)
 
 ## Actions
 With actions, you can:

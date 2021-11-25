@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 typedef LoadingStateBuilder = Widget Function(BuildContext context);
 
 /// Loading state
+/// This is the page displayed when the app move to loading state.
 // ignore: prefer_function_declarations_over_variables
 LoadingStateBuilder sduiLoadingState = (context) =>
     Scaffold(

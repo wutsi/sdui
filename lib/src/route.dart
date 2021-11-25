@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 
+import 'analytics.dart';
 import 'error.dart';
 import 'http.dart';
 import 'loading.dart';
@@ -63,7 +64,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
-  String? id;
+  SDUIWidget? sduiWidget;
 
   DynamicRouteState(this.provider, this.pageController);
 
@@ -85,8 +86,6 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   }
 
   void _reload() {
-    _logger.i('id=$id status=reloading');
-
     content = provider.getContent();
   }
 
@@ -96,12 +95,9 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
           future: content,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              SDUIWidget widget =
-                  SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
-              id = widget.id;
-              widget.attachPageController(pageController);
-
-              return widget.toWidget(context);
+              sduiWidget = SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
+              sduiWidget!.attachPageController(pageController);
+              return sduiWidget!.toWidget(context);
             } else if (snapshot.hasError) {
               // Log
               var error = snapshot.error;
@@ -122,12 +118,39 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
           }));
 
   @override
+  void didPush() {
+    super.didPush();
+
+    _notifyAnalytics();
+  }
+
+  @override
+  void didPop() {
+    super.didPop();
+
+    _notifyAnalytics();
+  }
+
+  @override
   void didPopNext() {
     super.didPopNext();
+
+    _notifyAnalytics();
 
     // Force refresh of the page
     setState(() {
       _reload();
     });
+  }
+
+  void _notifyAnalytics(){
+    try {
+      String? id = sduiWidget?.id;
+      if (id != null) {
+        sduiAnalytics.onRoute(id);
+      }
+    } catch(e){
+      _logger.w("Unable to push event to Analytics", e);
+    }
   }
 }

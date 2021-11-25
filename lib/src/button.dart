@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:sdui/src/logger.dart';
 
 import 'action.dart';
+import 'analytics.dart';
 import 'widget.dart';
 
 /// Descriptor of a button
@@ -114,12 +115,24 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     }
 
     _busy(true);
+    _notifyAnalytics();
     delegate
         ._onSubmit(context)
         .then((value) => _handleResult(value))
         .onError(
             (error, stackTrace) => _handleError(context, error, stackTrace))
         .whenComplete(() => _busy(false));
+  }
+
+  void _notifyAnalytics(){
+    try {
+      String? id = delegate.id;
+      if (id != null) {
+        sduiAnalytics.onClick(id);
+      }
+    } catch (e){
+      _logger.w("Unable to push event to Analytics", e);
+    }
   }
 
   Future<String?> _handleResult(String? result) {

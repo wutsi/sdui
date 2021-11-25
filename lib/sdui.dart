@@ -1,4 +1,5 @@
 export 'src/action.dart';
+export 'src/analytics.dart';
 export 'src/appbar.dart';
 export 'src/button.dart';
 export 'src/circle_avatar.dart';

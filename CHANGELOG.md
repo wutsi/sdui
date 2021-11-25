@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.56] 2021-11-25
+### Added
+- Add SDUIAnalytics for integrating with analytics
+
 ## [0.0.55] 2021-11-25
 ### Added
 - Wrapper error and loading page in Scaffold

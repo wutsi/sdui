@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 typedef ErrorStateBuilder = Widget Function(BuildContext context, Object? error);
 
-/// Error state
+/// Error state global variable.
+/// This is the page that will be displayed when an error occurs
 // ignore: prefer_function_declarations_over_variables
 ErrorStateBuilder sduiErrorState = (context, error) =>
     Scaffold(
@@ -28,7 +29,7 @@ ErrorStateBuilder sduiErrorState = (context, error) =>
           ),
           Container(
             alignment: Alignment.center,
-            child: const Text('An unexpected error has occured', textAlign: TextAlign.center, style: TextStyle(fontSize: 18))
+            child: const Text('An unexpected error has occurred', textAlign: TextAlign.center, style: TextStyle(fontSize: 18))
           ),
         ]));
 
