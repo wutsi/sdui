@@ -20,16 +20,26 @@ import 'widget.dart';
 ///     - `elevated` for [ElevatedButton] (default)
 ///     - `text` for [TextButton]
 ///     - `outlined` for [OutlinedButton]
+/// - *icon*: Icon code
+/// - *iconSize*: Size of the icon
 /// - *action***: [SDUIAction] to execute when the button is clicked
 class SDUIButton extends SDUIWidget {
   String? caption;
   String? type;
   double? padding;
   bool? stretched;
+  String? icon;
+  double? iconSize;
   ActionCallback? onPressed;
 
   SDUIButton(
-      {this.caption, this.type, this.padding, this.onPressed, this.stretched});
+      {this.caption,
+      this.type,
+      this.padding,
+      this.onPressed,
+      this.stretched,
+      this.iconSize,
+      this.icon});
 
   @override
   Widget toWidget(BuildContext context) => _ButtonWidgetStateful(this);
@@ -43,6 +53,8 @@ class SDUIButton extends SDUIWidget {
     type = json?["type"];
     padding = json?["padding"];
     stretched = json?["stretched"];
+    icon = json?["icon"];
+    iconSize = json?["iconSize"];
     return super.fromJson(json);
   }
 }
@@ -97,17 +109,35 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     }
   }
 
-  Widget _createText() => Padding(
-      padding: EdgeInsets.all(delegate.padding ?? 15),
-      child: busy
-          ? const SizedBox(
-              width: 13,
-              height: 13,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 2,
-              ))
-          : Text(delegate.caption ?? 'Button'));
+  Widget _createText() {
+    Widget? child;
+
+    if (busy) {
+      child = const SizedBox(
+          width: 13,
+          height: 13,
+          child: CircularProgressIndicator(
+            color: Colors.white,
+            strokeWidth: 2,
+          ));
+    } else {
+      if (delegate.icon == null) {
+        child = Text(delegate.caption ?? '');
+      } else {
+        child = Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            delegate.toIcon(delegate.icon,
+                size: delegate.iconSize, color: "0xffffff")!,
+            Text(delegate.caption ?? '')
+          ],
+        );
+      }
+    }
+
+    return Padding(
+        padding: EdgeInsets.all(delegate.padding ?? 15), child: child);
+  }
 
   void _onSubmit(BuildContext context) {
     if (busy) {
@@ -124,13 +154,13 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
         .whenComplete(() => _busy(false));
   }
 
-  void _notifyAnalytics(){
+  void _notifyAnalytics() {
     try {
       String? id = delegate.id;
       if (id != null) {
         sduiAnalytics.onClick(id);
       }
-    } catch (e){
+    } catch (e) {
       _logger.w("Unable to push event to Analytics", e);
     }
   }
