@@ -69,6 +69,12 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
   _PinWithKeyboardState(this.delegate);
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [

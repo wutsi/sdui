@@ -87,13 +87,10 @@ class SDUIDialog extends SDUIWidget {
         ],
       );
 
-  Widget? _content(String? text) => text == null
-      ? null
-      : Text(
-          text,
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-        );
+  Widget? _content(String? text) => SingleChildScrollView(
+          child: ListBody(
+        children: <Widget>[Text(text ?? '')],
+      ));
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
