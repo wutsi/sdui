@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.59] 2021-11-26
+### Added
+- Button with icon
+
 ## [0.0.58] 2021-11-26
 ### Added
 - Improve dialog box
