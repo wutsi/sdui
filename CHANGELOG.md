@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.57] 2021-11-26
+## [0.0.58] 2021-11-26
 ### Added
 - Improve dialog box
 
