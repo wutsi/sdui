@@ -126,9 +126,10 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
       } else {
         child = Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
           children: [
             delegate.toIcon(delegate.icon,
-                size: delegate.iconSize, color: "0xffffff")!,
+                size: delegate.iconSize, color: "#ffffff")!,
             Text(delegate.caption ?? '')
           ],
         );
