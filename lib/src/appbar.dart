@@ -12,6 +12,7 @@ import 'package:sdui/sdui.dart';
 /// - **automaticallyImplyLeading**: Imply leading widget (default=true)
 /// - **leading**: action on LHS
 /// - **actions**: List of actions to add on RHS
+/// - **bottom**: Bottom widget
 class SDUIAppBar extends SDUIWidget {
   String? title;
   double? elevation;
@@ -20,17 +21,25 @@ class SDUIAppBar extends SDUIWidget {
   List<SDUIWidget>? actions;
   bool? automaticallyImplyLeading;
   SDUIWidget? leading;
+  SDUIWidget? bottom;
 
   @override
   Widget toWidget(BuildContext context) => AppBar(
-      title: title == null ? null : Text(title!),
-      centerTitle: true,
-      elevation: elevation,
-      foregroundColor: toColor(foregroundColor),
-      backgroundColor: toColor(backgroundColor),
-      leading: leading?.toWidget(context),
-      automaticallyImplyLeading: automaticallyImplyLeading ?? true,
-      actions: actions?.map((e) => e.toWidget(context)).toList());
+        title: title == null ? null : Text(title!),
+        centerTitle: true,
+        elevation: elevation,
+        foregroundColor: toColor(foregroundColor),
+        backgroundColor: toColor(backgroundColor),
+        leading: leading?.toWidget(context),
+        bottom: _bottomWidget(context),
+        automaticallyImplyLeading: automaticallyImplyLeading ?? true,
+        actions: actions?.map((e) => e.toWidget(context)).toList(),
+      );
+
+  PreferredSizeWidget? _bottomWidget(BuildContext context) {
+    var widget = bottom?.toWidget(context);
+    return widget is PreferredSizeWidget ? widget : null;
+  }
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -39,6 +48,7 @@ class SDUIAppBar extends SDUIWidget {
     foregroundColor = json?["foregroundColor"];
     backgroundColor = json?["backgroundColor"];
     leading = _parse(json?["leading"]);
+    bottom = _parse(json?["bottom"]);
     automaticallyImplyLeading = json?["automaticallyImplyLeading"];
 
     var actions = json?["actions"];

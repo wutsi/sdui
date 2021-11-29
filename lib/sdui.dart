@@ -29,5 +29,6 @@ export 'src/route.dart';
 export 'src/row.dart';
 export 'src/screen.dart';
 export 'src/spacer.dart';
+export 'src/tab.dart';
 export 'src/text.dart';
 export 'src/widget.dart';

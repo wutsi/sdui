@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.0.60] 2021-11-21
+- ADD: Add component for supporting tab views: `Tab`, `TabBar`, `TabBarView`
+- CHANGED: Add `bottom` to `AppBar`
+- CHANGED: Add `leading` and `trailing` in `ListView`
+
 ## [0.0.60] 2021-11-26
 - FIXED: Icon color in button
 

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:sdui/sdui.dart';
 
 import 'form.dart';
 import 'widget.dart';
@@ -44,6 +45,8 @@ class SDUIListItem extends SDUIWidget {
   String? iconLeft;
   String? iconRight;
   double? padding;
+  SDUIWidget? leading;
+  SDUIWidget? trailing;
 
   SDUIListItem({this.caption, this.subCaption, this.iconLeft, this.iconRight});
 
@@ -51,8 +54,8 @@ class SDUIListItem extends SDUIWidget {
   Widget toWidget(BuildContext context) => ListTile(
         title: Text(caption ?? '<NO-TITLE>'),
         subtitle: subCaption == null ? null : Text(subCaption!),
-        leading: toIcon(iconLeft, size: 48),
-        trailing: toIcon(iconRight, size: 48),
+        leading: leading?.toWidget(context) ?? toIcon(iconLeft, size: 48),
+        trailing: trailing?.toWidget(context) ?? toIcon(iconRight, size: 48),
         contentPadding: padding == null ? null : EdgeInsets.all(padding!),
         onTap: () {
           action.execute(context, null);
@@ -66,7 +69,21 @@ class SDUIListItem extends SDUIWidget {
     iconLeft = json?["iconLeft"];
     iconRight = json?["iconRight"];
     padding = json?["padding"];
+    leading = _parseWidget('leading', json);
+    trailing = _parseWidget('trailing', json);
     return this;
+  }
+
+  SDUIWidget? _parseWidget(String name, Map<String, dynamic>? json) {
+    var dom = json?[name];
+    if (dom is Map<String, dynamic>) {
+      try {
+        return SDUIParser.getInstance().fromJson(dom);
+      } catch (e) {
+        // Nothing
+      }
+    }
+    return null;
   }
 }
 

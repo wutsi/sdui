@@ -26,6 +26,7 @@ import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
 import 'spacer.dart';
+import 'tab.dart';
 import 'text.dart';
 import 'widget.dart';
 
@@ -65,6 +66,9 @@ class SDUIParser {
         break;
       case "container":
         widget = SDUIContainer();
+        break;
+      case "defaulttabcontroller":
+        widget = SDUIDefaultTabController();
         break;
       case "dialog":
         widget = SDUIDialog();
@@ -140,6 +144,15 @@ class SDUIParser {
         break;
       case "row":
         widget = SDUIRow();
+        break;
+      case "tab":
+        widget = SDUITab();
+        break;
+      case "tabbar":
+        widget = SDUITabBar();
+        break;
+      case "tabbarview":
+        widget = SDUITabBarView();
         break;
       case "text":
         widget = SDUIText();

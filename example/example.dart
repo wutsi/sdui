@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   Map<String, WidgetBuilder> _routes() => {
         '/': (context) => const HomeScreen(),
         '/remote': (context) => const DynamicRoute(
-            provider: HttpRouteContentProvider('http://localhost:8080')),
+            provider: HttpRouteContentProvider('http://localhost:8080/send')),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(json))
       };
@@ -170,7 +170,7 @@ class HttpAuthorizationInterceptor extends HttpInterceptor {
   @override
   void onRequest(RequestTemplate request) async {
     String token =
-        'eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxNiIsInN1Yl90eXBlIjoiVVNFUiIsInNjb3BlIjpbInBheW1lbnQtbWFuYWdlIiwicGF5bWVudC1tYW5hZ2UiLCJwYXltZW50LW1ldGhvZC1tYW5hZ2UiLCJwYXltZW50LW1ldGhvZC1yZWFkIiwicGF5bWVudC1yZWFkIiwicGF5bWVudC1yZWFkIiwic21zLXNlbmQiLCJzbXMtdmVyaWZ5IiwidGVuYW50LXJlYWQiLCJ1c2VyLW1hbmFnZSIsInVzZXItcmVhZCJdLCJpc3MiOiJ3dXRzaS5jb20iLCJuYW1lIjoiSGVydmUgVGNoZXBhbm5vdSIsImFkbWluIjpmYWxzZSwicGhvbmVfbnVtYmVyIjoiKzE1MTQ3NTgwMTkxIiwiZXhwIjoxNjM3MjU3NTg2LCJpYXQiOjE2MzcxNzI5ODYsImp0aSI6IjEifQ.YXHWrUaBRA5OAu7CNtB-HKIIkVTAd764Zl85bOzGBASchkDkMWsRXmmSz2k4xgS0kHaxUTgnDbqFkR6ylQdSL5NSvpojy7mZjjFiAieE0xuD1frHfv3u9EmwiC-tXkvZossz6TB0aTU69OG5S6GebJJ3F7Pkiic4l0uHC3BmNgVqkC0ukfPMQ_bnoxxAXfpqPk4emjkCbcf8Iurj5C1r5JGrRE8K_vosVuNgxRE-4sLE4aqDI5bLIXJWXuz1VdUoMcFxkBYVkyx6Jcfy51uaLDf1hrOuKOdMSvze5O2ZRQ0YgUjysB';
+        'eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxNiIsInN1Yl90eXBlIjoiVVNFUiIsInNjb3BlIjpbImNvbnRhY3QtbWFuYWdlIiwiY29udGFjdC1yZWFkIiwicGF5bWVudC1tYW5hZ2UiLCJwYXltZW50LW1hbmFnZSIsInBheW1lbnQtbWV0aG9kLW1hbmFnZSIsInBheW1lbnQtbWV0aG9kLXJlYWQiLCJwYXltZW50LXJlYWQiLCJwYXltZW50LXJlYWQiLCJzbXMtc2VuZCIsInNtcy12ZXJpZnkiLCJ0ZW5hbnQtcmVhZCIsInVzZXItbWFuYWdlIiwidXNlci1yZWFkIl0sImlzcyI6Ind1dHNpLmNvbSIsIm5hbWUiOiJIZXJ2ZSBUY2hlcGFubm91IiwiYWRtaW4iOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIrMTUxNDc1ODAxOTEiLCJleHAiOjE2MzgyODM2NTQsImlhdCI6MTYzODE5OTA1NCwianRpIjoiMSJ9.YZ62GDn_XeHRpQyqqVlAPT4lRYwIyM2qSpRjzTmgrz8xvPoXimizZQfTBuVI7KqnsAMg_ax-nggE-DzzwTShiQYvXGrzYeZV811o21e2G0_p5_rBAoQXXXivvA24ZaiU7YYL88SyJCHG6Veo4PpPkx4P3oqG03k1c31N_WOTbKA-2OrIFBSIHvPAr8030wN5kt26jiobrNAJW5ltZ7mPJ1d7aXfbmoqtZCELfrfZ0faugSG3l60azyDamxyexlTmwYgePUQUtuZkQXCsg-BRbdEkCGsMPcAsZAwbUuz_7Ja2yV8iAaW6TXlB-o_LqjoBUmem74GOUttmqONa5afgWg';
     request.headers['Authorization'] = 'Bearer $token';
     request.headers['X-Tenant-ID'] = '1';
   }
