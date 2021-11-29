@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.60] 2021-11-21
+## [0.0.61] 2021-11-21
 - ADD: Add component for supporting tab views: `Tab`, `TabBar`, `TabBarView`
 - CHANGED: Add `bottom` to `AppBar`
 - CHANGED: Add `leading` and `trailing` in `ListView`
