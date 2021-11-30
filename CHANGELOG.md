@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.62] 2021-11-21
+- FIXED: Dialog box cause the app to freeze
+
 ## [0.0.61] 2021-11-21
 - ADD: Add component for supporting tab views: `Tab`, `TabBar`, `TabBarView`
 - CHANGED: Add `bottom` to `AppBar`

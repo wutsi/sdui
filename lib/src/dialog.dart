@@ -70,9 +70,10 @@ class SDUIDialog extends SDUIWidget {
         title: title == null ? null : Text(title!),
         content: message == null
             ? null
-            : Row(
+            : Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(iconData, color: color),
+                  Icon(iconData, color: color, size: 48),
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: _content(message),
@@ -87,10 +88,11 @@ class SDUIDialog extends SDUIWidget {
         ],
       );
 
-  Widget? _content(String? text) => SingleChildScrollView(
-          child: ListBody(
-        children: <Widget>[Text(text ?? '')],
-      ));
+  Widget _content(String? text) => Text(
+        text ?? '',
+        maxLines: 3,
+        softWrap: true,
+      );
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
