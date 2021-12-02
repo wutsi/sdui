@@ -40,6 +40,7 @@ dependencies:
     cupertino_icons: ^1.0.2
 
     cached_network_image: ^3.1.0
+    camera: ^0.9.4+5
     email_validator: ^2.0.1
     http: ^0.13.4
     intl: ^0.17.0

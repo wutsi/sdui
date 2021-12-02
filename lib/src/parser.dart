@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:sdui/src/camera.dart';
 
 import 'action.dart';
 import 'appbar.dart';
@@ -57,6 +58,9 @@ class SDUIParser {
         break;
       case "button":
         widget = SDUIButton();
+        break;
+      case "camera":
+        widget = SDUICamera();
         break;
       case "column":
         widget = SDUIColumn();

@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
+import 'package:sdui/src/camera.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,6 +10,8 @@ void main() async {
     HttpJsonInterceptor(),
     HttpAuthorizationInterceptor()
   ];
+
+  sduiCameras = await availableCameras();
 
   runApp(const MyApp());
 }
@@ -93,75 +97,23 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
 
 var json = '''
 {
-  "type" : "Screen",
-  "attributes" : {
-    "safe" : false
-  },
-  "children" : [ {
-    "type" : "Container",
-    "attributes" : {
-      "alignment" : "Center",
-      "padding" : 20.0
-    },
-    "children" : [ {
-      "type" : "Column",
-      "attributes" : { },
-      "children" : [ {
-        "type" : "Form",
-        "attributes" : { },
-        "children" : [ {
-          "type" : "Container",
-          "attributes" : {
-            "padding" : 10.0
-          },
-          "children" : [ {
-            "type" : "MoneyWithKeyboard",
-            "attributes" : {
-              "name" : "amount",
-              "moneyColor" : "#1D7EDF",
-              "deleteText" : "Delete",
-              "maxLength" : 10,
-              "currency" : "XAF"
-            },
-            "children" : [ ]
-          } ]
-        }, {
-          "type" : "Container",
-          "attributes" : {
-            "padding" : 10.0
-          },
-          "children" : [ {
-            "type" : "Input",
-            "attributes" : {
-              "name" : "command",
-              "hideText" : false,
-              "required" : false,
-              "caption" : "Add Cash",
-              "enabled" : true,
-              "readOnly" : false,
-              "type" : "Submit",
-              "minLength" : 0
-            },
-            "children" : [ ],
-            "action" : {
-              "type" : "Command",
-              "url" : "http://localhost:8080/commands/cashin"
-            }
-          } ]
-        } ]
-      } ]
-    } ]
-  } ],
-  "appBar" : {
-    "type" : "AppBar",
-    "attributes" : {
-      "title" : "Add Cash",
-      "elevation" : 0.0,
-      "backgroundColor" : "#FFFFFF",
-      "foregroundColor" : "#000000"
-    },
-    "children" : [ ]
-  }
+	"type": "Screen",
+	"attributes": {
+		"safe": false
+	},
+	"children": [{
+		"type": "Camera"
+	}],
+	"appBar": {
+		"type": "AppBar",
+		"attributes": {
+			"title": "Add Cash",
+			"elevation": 0.0,
+			"backgroundColor": "#FFFFFF",
+			"foregroundColor": "#000000"
+		},
+		"children": []
+	}
 }
 ''';
 

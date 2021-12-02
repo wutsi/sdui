@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.62] 2021-12-02
+- ADDED: Camera support
+
 ## [0.0.62] 2021-11-21
 - FIXED: Dialog box cause the app to freeze
 
