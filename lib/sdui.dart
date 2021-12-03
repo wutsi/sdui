@@ -2,6 +2,7 @@ export 'src/action.dart';
 export 'src/analytics.dart';
 export 'src/appbar.dart';
 export 'src/button.dart';
+export 'src/camera.dart';
 export 'src/circle_avatar.dart';
 export 'src/column.dart';
 export 'src/container.dart';
