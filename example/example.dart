@@ -102,7 +102,10 @@ var json = '''
 		"safe": false
 	},
 	"children": [{
-		"type": "Camera"
+		"type": "Camera",
+		"attributes": {
+			"uploadUrl": "https://www.google.ca"
+		}
 	}],
 	"appBar": {
 		"type": "AppBar",

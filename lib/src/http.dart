@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:sdui/src/logger.dart';
@@ -70,13 +71,13 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
-    RequestTemplate request = _pre('POST', url, data);
+    RequestTemplate request = _pre('POST', url, data, []);
     http.Response? response;
     Exception? ex;
     try {
       response = await http.post(Uri.parse(request.url),
           body: request.body, headers: request.headers);
-      _post(request, response);
+      _post(request, response, []);
       if (response.statusCode / 100 == 2) {
         return response.body;
       } else {
@@ -103,22 +104,67 @@ class Http {
     }
   }
 
-  RequestTemplate _pre(String method, String url, Map<String, dynamic>? data) {
+  void upload(String url, String name, XFile file) async {
+    RequestTemplate request = _pre('POST', url,
+        {'path': file.path, 'filename': name}, [HttpJsonInterceptor]);
+    http.StreamedResponse? response;
+    Exception? ex;
+    try {
+      var req = http.MultipartRequest('POST', Uri.parse(url));
+      req.headers.addAll(request.headers);
+      req.files.add(http.MultipartFile(
+        name,
+        file.readAsBytes().asStream(),
+        await file.length(),
+        filename: file.name,
+      ));
+
+      response = await req.send();
+      if (response.statusCode / 100 == 2) {
+        ex = http.ClientException(
+            '${response.statusCode}', Uri.parse(request.url));
+        throw ex;
+      }
+    } finally {
+      String line = 'POST $url';
+      line += ' request_headers=${request.headers}';
+      if (response != null) {
+        line +=
+            ' response_status=${response.statusCode} response_headers=${response.headers}';
+      }
+
+      if (ex != null) {
+        _logger.e(line);
+      } else {
+        _logger.i(line);
+      }
+    }
+  }
+
+  RequestTemplate _pre(String method, String url, Map<String, dynamic>? data,
+      List<Type> ignoreInterceptors) {
     RequestTemplate request = RequestTemplate(url, method: method, body: data);
     for (var i = 0; i < interceptors.length; i++) {
-      interceptors[i].onRequest(request);
+      var interceptor = interceptors[i];
+      if (ignoreInterceptors.contains(interceptor.runtimeType)) continue;
+
+      interceptor.onRequest(request);
     }
     return request;
   }
 
-  ResponseTemplate _post(RequestTemplate request, http.Response response) {
+  ResponseTemplate _post(RequestTemplate request, http.Response response,
+      List<Type> ignoreInterceptors) {
     ResponseTemplate resp = ResponseTemplate(
         request: request,
         body: response.body,
         statusCode: response.statusCode,
         headers: response.headers);
     for (var i = 0; i < interceptors.length; i++) {
-      interceptors[i].onResponse(resp);
+      var interceptor = interceptors[i];
+      if (ignoreInterceptors.contains(interceptor.runtimeType)) continue;
+
+      interceptor.onResponse(resp);
     }
     return resp;
   }

@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sdui/sdui.dart';
 
 import 'form.dart';
 import 'widget.dart';
@@ -10,6 +11,7 @@ List<CameraDescription> sduiCameras = [];
 /// Descriptor of a [Camera]
 class SDUICamera extends SDUIWidget with SDUIFormField {
   String? name;
+  String? uploadUrl;
 
   @override
   Widget toWidget(BuildContext context) => _CameraWidgetStateful(this);
@@ -17,6 +19,7 @@ class SDUICamera extends SDUIWidget with SDUIFormField {
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     name = json?["name"];
+    uploadUrl = json?["uploadUrl"];
     return super.fromJson(json);
   }
 }
@@ -33,6 +36,7 @@ class _CameraWidgetStateful extends StatefulWidget {
 
 class _CameraWidgetState extends State<_CameraWidgetStateful> {
   SDUICamera delegate;
+  bool buzy = false;
   late CameraDescription _camera;
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
@@ -66,21 +70,29 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
               return Column(
                 children: [
                   CameraPreview(_controller),
-                  Container(
-                    padding: const EdgeInsets.all(10.0),
-                    alignment: Alignment.center,
-                    child: FloatingActionButton(
-                      child: const Icon(Icons.camera_alt, size: 48),
-                      onPressed: () async {
-                        // Ensure that the camera is initialized.
-                        await _initializeControllerFuture;
+                  if (buzy)
+                    const Center(child: CircularProgressIndicator())
+                  else
+                    Container(
+                      padding: const EdgeInsets.all(10.0),
+                      alignment: Alignment.center,
+                      child: FloatingActionButton(
+                        child: const Icon(Icons.camera_alt, size: 48),
+                        onPressed: () async {
+                          // Ensure that the camera is initialized.
+                          await _initializeControllerFuture;
 
-                        final image = await _controller.takePicture();
-                        final name = delegate.name ?? 'image';
-                        delegate.provider?.setData(name, image.path);
-                      },
-                    ),
-                  )
+                          final image = await _controller.takePicture();
+                          final name = delegate.name ?? 'file';
+
+                          _buzy(true);
+                          _upload(name, image)
+                              .then((value) =>
+                                  delegate.action.execute(context, null))
+                              .whenComplete(() => _buzy(false));
+                        },
+                      ),
+                    )
                 ],
               );
             } else {
@@ -88,4 +100,16 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
             }
           },
         );
+
+  void _buzy(bool flag) {
+    setState(() {
+      buzy = flag;
+    });
+  }
+
+  Future<void> _upload(String name, XFile file) async {
+    if (delegate.uploadUrl == null) return;
+
+    Http.getInstance().upload(delegate.uploadUrl!, name, file);
+  }
 }

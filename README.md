@@ -163,6 +163,7 @@ A widget is a visual element on a screen.
     - [Image](https://pub.dev/documentation/sdui/latest/sdui/SDUIImage-class.html)
 - Input widgets
     - [Button](https://pub.dev/documentation/sdui/latest/sdui/SDUIButton-class.html)
+    - [Camera](https://pub.dev/documentation/sdui/latest/sdui/SDUICamera-class.html)
     - [DropdownButton](https://pub.dev/documentation/sdui/latest/sdui/SDUIDropdownButton-class.html)
     - [DropdownMenuItem](https://pub.dev/documentation/sdui/latest/sdui/SDUIDropdownMenuItem-class.html)
     - [Form](https://pub.dev/documentation/sdui/latest/sdui/SDUIForm-class.html)
@@ -179,11 +180,12 @@ A widget is a visual element on a screen.
     - [RadioGroup](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadioGroup-class.html)
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)
 
-### Global Variable
+### Global Variables
 - `sduiErrorState`: Function for building the error state.
 - `sduiLoadingState`: Function for building the loading state.
 - `sduiRouteObserver`: Route observer that reload each page on navigation.
-- `sduiAnalytics`: Analytics class. See [SDUIAnlytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnlytics-class.html)
+- `sduiAnalytics`: Analytics class. See [SDUIAnalytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnlytics-class.html)
+- `sduiCameras`: List of available cameras. Empty by default, must be initialized the application
 
 ## Actions
 With actions, you can:
