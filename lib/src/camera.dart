@@ -49,7 +49,7 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
 
     if (sduiCameras.isNotEmpty) {
       _camera = sduiCameras[0];
-      _controller = CameraController(_camera, ResolutionPreset.medium);
+      _controller = _createCameraController(_camera);
       _initializeControllerFuture = _controller.initialize();
     }
   }
@@ -67,41 +67,78 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                children: [
-                  CameraPreview(_controller),
-                  if (buzy)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    Container(
-                      padding: const EdgeInsets.all(10.0),
-                      alignment: Alignment.center,
-                      child: FloatingActionButton(
-                        child: const Icon(Icons.camera_alt, size: 48),
-                        onPressed: () async {
-                          // Ensure that the camera is initialized.
-                          await _initializeControllerFuture;
-
-                          final image = await _controller.takePicture();
-                          final name = delegate.name ?? 'file';
-
-                          _buzy(true);
-                          _upload(name, image)
-                              .then((value) =>
-                                  delegate.action.execute(context, null))
-                              .whenComplete(() => _buzy(false));
-                        },
-                      ),
-                    )
-                ],
-              );
+              return CameraPreview(_controller,
+                  child: Container(
+                    width: 68,
+                    alignment: Alignment.bottomLeft,
+                    child: sduiCameras.length == 1
+                        ? _pictureButton()
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [_pictureButton(), _flipButton()],
+                          ),
+                  ));
             } else {
               return const Center(child: CircularProgressIndicator());
             }
           },
         );
 
-  void _buzy(bool flag) {
+  Widget _pictureButton() {
+    if (buzy) {
+      return FloatingActionButton(
+        child: const CircularProgressIndicator(),
+        onPressed: () => {},
+      );
+    } else {
+      return FloatingActionButton(
+          child: const Icon(Icons.camera_alt, size: 48),
+          enableFeedback: true,
+          onPressed: () => _takePicture());
+    }
+  }
+
+  Widget _flipButton() {
+    return FloatingActionButton(
+        child: const Icon(Icons.flip_camera_ios_rounded, size: 48),
+        enableFeedback: true,
+        onPressed: () => _flipCamera());
+  }
+
+  void _flipCamera() {
+    var nextDirection = _camera.lensDirection == CameraLensDirection.front
+        ? CameraLensDirection.back
+        : CameraLensDirection.front;
+
+    var nextCamera = sduiCameras
+        .where((element) => element.lensDirection == nextDirection)
+        .toList();
+    if (nextCamera.isNotEmpty) {
+      setState(() {
+        _controller.dispose();
+
+        _camera = nextCamera[0];
+        _controller = _createCameraController(_camera);
+      });
+    }
+  }
+
+  CameraController _createCameraController(CameraDescription camera) =>
+      CameraController(camera, ResolutionPreset.medium);
+
+  void _takePicture() async {
+    await _initializeControllerFuture;
+
+    final image = await _controller.takePicture();
+    final name = delegate.name ?? 'file';
+
+    _setBuzy(true);
+    _upload(name, image)
+        .then((value) => delegate.action.execute(context, null))
+        .whenComplete(() => _setBuzy(false));
+  }
+
+  void _setBuzy(bool flag) {
     setState(() {
       buzy = flag;
     });

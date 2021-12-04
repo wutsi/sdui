@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:logger/logger.dart';
-import 'package:sdui/src/logger.dart';
+
+import 'logger.dart';
 
 class RequestTemplate {
   Map<String, String> headers = {};
@@ -105,19 +107,22 @@ class Http {
   }
 
   void upload(String url, String name, XFile file) async {
-    RequestTemplate request = _pre('POST', url,
-        {'path': file.path, 'filename': name}, [HttpJsonInterceptor]);
+    RequestTemplate request = _pre('POST', url, {}, [HttpJsonInterceptor]);
     http.StreamedResponse? response;
     Exception? ex;
     try {
+      String filename = file.path.split('/').last;
+      String? mimeType = file.mimeType;
+      int filesize = await file.length();
+      _logger.i(
+          'filepath=${file.path} filename=$filename filesize=$filesize mimeType=$mimeType');
+
       var req = http.MultipartRequest('POST', Uri.parse(url));
       req.headers.addAll(request.headers);
       req.files.add(http.MultipartFile(
-        name,
-        file.readAsBytes().asStream(),
-        await file.length(),
-        filename: file.name,
-      ));
+          name, file.readAsBytes().asStream(), await file.length(),
+          filename: filename,
+          contentType: mimeType == null ? null : MediaType.parse(mimeType)));
 
       response = await req.send();
       if (response.statusCode / 100 == 2) {
