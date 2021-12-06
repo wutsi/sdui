@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.73] 2021-12-06
+- FIX: Disable audio for CameraController
+- CHANGED: Default camera = back
+
 ## [0.0.72] 2021-12-06
 - FIX: Image in CircularAvatar not clipped
 

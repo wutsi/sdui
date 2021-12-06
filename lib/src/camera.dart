@@ -13,7 +13,7 @@ List<CameraDescription> sduiCameras = [];
 /// ## Attribute ##
 /// - **name**: Name of the form field of the file.
 /// - **uploadUrl**: URL where to upload the file
-/// - **lensDirection**: Lens direction (default: `front`)
+/// - **lensDirection**: Lens direction (default: `back`)
 class SDUICamera extends SDUIWidget with SDUIFormField {
   String? name;
   String? uploadUrl;
@@ -114,17 +114,17 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
 
   CameraLensDirection _toLensDirection(String? lensDirection) {
     switch (lensDirection?.toLowerCase()) {
-      case "back":
-        return CameraLensDirection.back;
+      case "front":
+        return CameraLensDirection.front;
       case "external":
         return CameraLensDirection.external;
       default:
-        return CameraLensDirection.front;
+        return CameraLensDirection.back;
     }
   }
 
   CameraController _createCameraController(CameraDescription camera) =>
-      CameraController(camera, ResolutionPreset.medium);
+      CameraController(camera, ResolutionPreset.medium, enableAudio: false);
 
   void _takePicture() async {
     _setBuzy(true);
