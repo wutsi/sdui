@@ -81,7 +81,7 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return buzy
-                  ? sduiProgressIndicator(context)
+                  ? Center(child: sduiProgressIndicator(context))
                   : CameraPreview(_controller,
                       child: Container(
                         width: 68,

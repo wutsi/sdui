@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:sdui/sdui.dart';
 
+import 'action.dart';
 import 'form.dart';
+import 'loading.dart';
 import 'numeric_keyboard.dart';
 import 'widget.dart';
 
@@ -101,13 +102,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
           Container(
             alignment: Alignment.bottomCenter,
             child: buzy
-                ? SizedBox(
-                    width: 13,
-                    height: 13,
-                    child: CircularProgressIndicator(
-                      color: delegate.color,
-                      strokeWidth: 2,
-                    ))
+                ? Center(child: sduiProgressIndicator(context))
                 : NumericKeyboard(
                     textColor: delegate.color,
                     onKeyboardTap: (value) => _onKeyboardTap(context, value),

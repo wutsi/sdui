@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.70] 2021-12-06
+## [0.0.71] 2021-12-06
 - ADDED: Camera support
 - ADDED: Global variable `sduiProgressIndicator`
 
