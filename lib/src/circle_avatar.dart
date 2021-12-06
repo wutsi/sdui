@@ -12,7 +12,10 @@ class SDUICircleAvatar extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) => CircleAvatar(
         radius: radius,
-        child: child()?.toWidget(context),
+        child: ClipRRect(
+          borderRadius: radius != null ? BorderRadius.circular(radius!) : null,
+          child: child()?.toWidget(context),
+        ),
       );
 
   @override

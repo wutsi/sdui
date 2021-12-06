@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.72] 2021-12-06
+- FIX: Image in CircularAvatar not clipped
+
 ## [0.0.71] 2021-12-06
 - ADDED: Camera support
 - ADDED: Global variable `sduiProgressIndicator`

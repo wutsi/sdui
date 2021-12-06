@@ -22,4 +22,4 @@ LoadingStateBuilder sduiLoadingState = (context) => Scaffold(
       backgroundColor: Colors.white,
       foregroundColor: Colors.blueAccent,
     ),
-    body: sduiProgressIndicator(context));
+    body: Center(child: sduiProgressIndicator(context)));
