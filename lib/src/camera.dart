@@ -8,10 +8,15 @@ import 'widget.dart';
 
 List<CameraDescription> sduiCameras = [];
 
-/// Descriptor of a [Camera]
+/// Descriptor of a [Camera].
+/// ## Attribute ##
+/// - **name**: Name of the form field of the file.
+/// - **uploadUrl**: URL where to upload the file
+/// - **lensDirection**: Lens direction (default: `front`)
 class SDUICamera extends SDUIWidget with SDUIFormField {
   String? name;
   String? uploadUrl;
+  String? lensDirection;
 
   @override
   Widget toWidget(BuildContext context) => _CameraWidgetStateful(this);
@@ -20,6 +25,7 @@ class SDUICamera extends SDUIWidget with SDUIFormField {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     name = json?["name"];
     uploadUrl = json?["uploadUrl"];
+    lensDirection = json?["lensDirection"];
     return super.fromJson(json);
   }
 }
@@ -47,8 +53,8 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
   void initState() {
     super.initState();
 
-    if (sduiCameras.isNotEmpty) {
-      _camera = sduiCameras[0];
+    if (_cameraAvailable()) {
+      _camera = findCamera(delegate.lensDirection) ?? sduiCameras[0];
       _controller = _createCameraController(_camera);
       _initializeControllerFuture = _controller.initialize();
     }
@@ -57,11 +63,17 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    if (_cameraAvailable()) {
+      _controller.dispose();
+    }
   }
 
+  bool _cameraAvailable() => sduiCameras.isNotEmpty;
+
+  bool _cameraNotAvailable() => !_cameraAvailable();
+
   @override
-  Widget build(BuildContext context) => sduiCameras.isEmpty
+  Widget build(BuildContext context) => _cameraNotAvailable()
       ? Container()
       : FutureBuilder<void>(
           future: _initializeControllerFuture,
@@ -75,7 +87,7 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
                         ? _pictureButton()
                         : Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: [_pictureButton(), _flipButton()],
+                            children: [_pictureButton()],
                           ),
                   ));
             } else {
@@ -98,28 +110,22 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
     }
   }
 
-  Widget _flipButton() {
-    return FloatingActionButton(
-        child: const Icon(Icons.flip_camera_ios_rounded, size: 48),
-        enableFeedback: true,
-        onPressed: () => _flipCamera());
+  CameraDescription? findCamera(String? lensDirection) {
+    CameraLensDirection direction = _toLensDirection(lensDirection);
+    List<CameraDescription> cameras = sduiCameras
+        .where((element) => element.lensDirection == direction)
+        .toList();
+    return cameras.isEmpty ? null : cameras[0];
   }
 
-  void _flipCamera() {
-    var nextDirection = _camera.lensDirection == CameraLensDirection.front
-        ? CameraLensDirection.back
-        : CameraLensDirection.front;
-
-    var nextCamera = sduiCameras
-        .where((element) => element.lensDirection == nextDirection)
-        .toList();
-    if (nextCamera.isNotEmpty) {
-      setState(() {
-        _controller.dispose();
-
-        _camera = nextCamera[0];
-        _controller = _createCameraController(_camera);
-      });
+  CameraLensDirection _toLensDirection(String? lensDirection) {
+    switch (lensDirection?.toLowerCase()) {
+      case "back":
+        return CameraLensDirection.back;
+      case "external":
+        return CameraLensDirection.external;
+      default:
+        return CameraLensDirection.front;
     }
   }
 
