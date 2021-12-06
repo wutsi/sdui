@@ -183,6 +183,7 @@ A widget is a visual element on a screen.
 ### Global Variables
 - `sduiErrorState`: Function for building the error state.
 - `sduiLoadingState`: Function for building the loading state.
+- `sduiProgressIndicator`: Function for building the progress indicator.
 - `sduiRouteObserver`: Route observer that reload each page on navigation.
 - `sduiAnalytics`: Analytics class. See [SDUIAnalytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnlytics-class.html)
 - `sduiCameras`: List of available cameras. Empty by default, must be initialized the application

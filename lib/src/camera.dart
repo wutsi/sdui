@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
 
 import 'form.dart';
+import 'loading.dart';
 import 'widget.dart';
 
 List<CameraDescription> sduiCameras = [];
@@ -79,36 +80,29 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return CameraPreview(_controller,
-                  child: Container(
-                    width: 68,
-                    alignment: Alignment.bottomLeft,
-                    child: sduiCameras.length == 1
-                        ? _pictureButton()
-                        : Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [_pictureButton()],
-                          ),
-                  ));
+              return buzy
+                  ? sduiProgressIndicator(context)
+                  : CameraPreview(_controller,
+                      child: Container(
+                        width: 68,
+                        alignment: Alignment.bottomLeft,
+                        child: sduiCameras.length == 1
+                            ? _pictureButton()
+                            : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [_pictureButton()],
+                              ),
+                      ));
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: sduiProgressIndicator(context));
             }
           },
         );
 
-  Widget _pictureButton() {
-    if (buzy) {
-      return FloatingActionButton(
-        child: const CircularProgressIndicator(),
-        onPressed: () => {},
-      );
-    } else {
-      return FloatingActionButton(
-          child: const Icon(Icons.camera_alt, size: 48),
-          enableFeedback: true,
-          onPressed: () => _takePicture());
-    }
-  }
+  Widget _pictureButton() => FloatingActionButton(
+      child: const Icon(Icons.camera_alt, size: 48),
+      enableFeedback: true,
+      onPressed: () => _takePicture());
 
   CameraDescription? findCamera(String? lensDirection) {
     CameraLensDirection direction = _toLensDirection(lensDirection);
@@ -133,12 +127,13 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
       CameraController(camera, ResolutionPreset.medium);
 
   void _takePicture() async {
+    _setBuzy(true);
+
     await _initializeControllerFuture;
 
     final image = await _controller.takePicture();
     final name = delegate.name ?? 'file';
 
-    _setBuzy(true);
     _upload(name, image)
         .then((value) => delegate.action.execute(context, null))
         .whenComplete(() => _setBuzy(false));
