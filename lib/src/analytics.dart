@@ -6,7 +6,7 @@ class SDUIAnalytics {
   void onRoute(String id) {}
 
   /// Start a trace
-  dynamic startTace(String id) {}
+  dynamic startTrace(String id) {}
 
   /// End a trace
   void endTrace(dynamic trace) {}

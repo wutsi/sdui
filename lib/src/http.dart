@@ -74,7 +74,7 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
-    dynamic trace = sduiAnalytics.startTace(url);
+    dynamic trace = sduiAnalytics.startTrace(url);
 
     RequestTemplate request = _pre('POST', url, data, []);
     http.Response? response;
@@ -112,7 +112,7 @@ class Http {
   }
 
   void upload(String url, String name, XFile file) async {
-    dynamic trace = sduiAnalytics.startTace(url);
+    dynamic trace = sduiAnalytics.startTrace(url);
 
     RequestTemplate request = _pre('POST', url, {}, [HttpJsonInterceptor]);
     http.StreamedResponse? response;
