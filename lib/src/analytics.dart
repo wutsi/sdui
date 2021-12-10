@@ -6,10 +6,10 @@ class SDUIAnalytics {
   void onRoute(String id) {}
 
   /// Start a trace
-  void startTace(String id) {}
+  dynamic startTace(String id) {}
 
   /// End a trace
-  void endTrace(String? id) {}
+  void endTrace(dynamic trace) {}
 
   /// This method will be called when button is clicked
   void onClick(String id) {}
