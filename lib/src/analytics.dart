@@ -5,6 +5,12 @@ class SDUIAnalytics {
   /// This method will be called when user navigate to a route
   void onRoute(String id) {}
 
+  /// Start a trace
+  void startTace(String id) {}
+
+  /// End a trace
+  void endTrace(String? id) {}
+
   /// This method will be called when button is clicked
   void onClick(String id) {}
 }

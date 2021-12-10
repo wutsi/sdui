@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:logger/logger.dart';
 
+import 'analytics.dart';
 import 'logger.dart';
 
 class RequestTemplate {
@@ -73,6 +74,8 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
+    sduiAnalytics.startTace(url);
+
     RequestTemplate request = _pre('POST', url, data, []);
     http.Response? response;
     Exception? ex;
@@ -88,6 +91,8 @@ class Http {
         throw ex;
       }
     } finally {
+      sduiAnalytics.endTrace(url);
+
       String line = 'POST $url';
       line += ' request_headers=${request.headers}';
       if (data != null) {
@@ -107,6 +112,8 @@ class Http {
   }
 
   void upload(String url, String name, XFile file) async {
+    sduiAnalytics.startTace(url);
+
     RequestTemplate request = _pre('POST', url, {}, [HttpJsonInterceptor]);
     http.StreamedResponse? response;
     Exception? ex;
@@ -131,6 +138,8 @@ class Http {
         throw ex;
       }
     } finally {
+      sduiAnalytics.endTrace(url);
+
       String line = 'POST $url';
       line += ' request_headers=${request.headers}';
       if (response != null) {

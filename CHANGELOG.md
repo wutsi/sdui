@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.74] 2021-12-06
+- ADDED: Added in analytics.dart callback method for tracing
+
 ## [0.0.73] 2021-12-06
 - FIX: Disable audio for CameraController
 - CHANGED: Default camera = back
