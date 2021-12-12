@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import 'form.dart';
 import 'numeric_keyboard.dart';
+import 'route.dart';
 import 'widget.dart';
 
 /// Descriptor of [MoneyText]
@@ -136,7 +137,8 @@ class _MoneyWithKeyboard extends StatefulWidget {
   _MoneyWithKeyboardState createState() => _MoneyWithKeyboardState(delegate);
 }
 
-class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard> {
+class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
+    with RouteAware {
   SDUIMoneyWithKeyboard delegate;
   int state = 0;
 
@@ -148,6 +150,17 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard> {
 
     state = delegate.value ?? 0;
     delegate.provider?.setData(delegate.name, state.toString());
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    sduiRouteObserver.unsubscribe(this);
   }
 
   @override
@@ -192,6 +205,16 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard> {
       });
     }
     delegate.provider?.setData(delegate.name, state.toString());
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+
+    // Force refresh of the page
+    setState(() {
+      state = 0;
+    });
   }
 }
 
@@ -260,25 +283,25 @@ class _MoneyWithSliderState extends State<_MoneyWithSlider> {
 
   @override
   Widget build(BuildContext context) => Column(
-    children: [
-      Container(
-        padding: const EdgeInsets.all(10),
-        child: MoneyText(
-          color: delegate.toColor(delegate.moneyColor),
-          value: state.toDouble(),
-          currency: delegate.currency ?? 'XAF',
-          numberFormat: delegate.numberFormat,
-        ),
-      ),
-      Slider(
-          value: state,
-          min: 0,
-          max: delegate.maxValue?.toDouble() ?? 100000,
-          onChanged: (value) => _changed(value),
-          activeColor: delegate.toColor(delegate.sliderColor),
-      ),
-    ],
-  );
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: MoneyText(
+              color: delegate.toColor(delegate.moneyColor),
+              value: state.toDouble(),
+              currency: delegate.currency ?? 'XAF',
+              numberFormat: delegate.numberFormat,
+            ),
+          ),
+          Slider(
+            value: state,
+            min: 0,
+            max: delegate.maxValue?.toDouble() ?? 100000,
+            onChanged: (value) => _changed(value),
+            activeColor: delegate.toColor(delegate.sliderColor),
+          ),
+        ],
+      );
 
   void _changed(double value) {
     setState(() => {state = value});

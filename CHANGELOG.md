@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.77] 2021-12-12
+- FIXED: Reset the amount on navigation pop
+
 ## [0.0.76] 2021-12-06
 - ADDED: Added in analytics.dart callback method for tracing
 
