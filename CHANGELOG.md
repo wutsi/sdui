@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## [0.0.79] 2021-12-13
+## [0.0.80] 2021-12-13
 - CHANGE: await for camera to upload picture
+- FIX: Improve handling of HTTP upload response
 
 ## [0.0.77] 2021-12-12
 - FIXED: Reset the amount on navigation pop

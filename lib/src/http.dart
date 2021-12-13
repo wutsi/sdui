@@ -132,11 +132,6 @@ class Http {
           contentType: mimeType == null ? null : MediaType.parse(mimeType)));
 
       response = await req.send();
-      if (response.statusCode / 100 == 2) {
-        ex = http.ClientException(
-            '${response.statusCode}', Uri.parse(request.url));
-        throw ex;
-      }
     } finally {
       sduiAnalytics.endTrace(trace);
 
