@@ -111,7 +111,7 @@ class Http {
     }
   }
 
-  void upload(String url, String name, XFile file) async {
+  Future<void> upload(String url, String name, XFile file) async {
     dynamic trace = sduiAnalytics.startTrace(url);
 
     RequestTemplate request = _pre('POST', url, {}, [HttpJsonInterceptor]);

@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.80] 2021-12-13
+## [0.0.81] 2021-12-13
 - CHANGE: await for camera to upload picture
 - FIX: Improve handling of HTTP upload response
 

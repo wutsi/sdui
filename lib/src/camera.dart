@@ -134,8 +134,11 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
       final image = await _controller.takePicture();
       final name = delegate.name ?? 'file';
 
-      await _upload(name, image);
-      delegate.action.execute(context, null);
+      if (delegate.uploadUrl != null) {
+        Http.getInstance()
+            .upload(delegate.uploadUrl!, name, image)
+            .then((value) => delegate.action.execute(context, null));
+      }
     } finally {
       _setBuzy(false);
     }
@@ -145,11 +148,5 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
     setState(() {
       buzy = flag;
     });
-  }
-
-  Future<void> _upload(String name, XFile file) async {
-    if (delegate.uploadUrl == null) return;
-
-    Http.getInstance().upload(delegate.uploadUrl!, name, file);
   }
 }
