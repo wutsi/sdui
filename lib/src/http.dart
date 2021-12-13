@@ -104,7 +104,7 @@ class Http {
       }
 
       if (ex != null) {
-        _logger.e(line);
+        _logger.e(line, ex);
       } else {
         _logger.i(line);
       }
@@ -148,7 +148,7 @@ class Http {
       }
 
       if (ex != null) {
-        _logger.e(line);
+        _logger.e(line, ex);
       } else {
         _logger.i(line);
       }
