@@ -128,15 +128,17 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
 
   void _takePicture() async {
     _setBuzy(true);
+    try {
+      await _initializeControllerFuture;
 
-    await _initializeControllerFuture;
+      final image = await _controller.takePicture();
+      final name = delegate.name ?? 'file';
 
-    final image = await _controller.takePicture();
-    final name = delegate.name ?? 'file';
-
-    _upload(name, image)
-        .then((value) => delegate.action.execute(context, null))
-        .whenComplete(() => _setBuzy(false));
+      await _upload(name, image);
+      delegate.action.execute(context, null);
+    } finally {
+      _setBuzy(false);
+    }
   }
 
   void _setBuzy(bool flag) {
