@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.85] 2021-12-14
+- FIXED: Revert the form reset on navigation change
+- CHANGED: Put the icon and message inside to `Column` instead of a `Row`
+
 ## [0.0.84] 2021-12-14
 - CHANGED: Reset form state on navigation changed
 

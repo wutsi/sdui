@@ -214,6 +214,7 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
     // Force refresh of the page
     setState(() {
       state = 0;
+      delegate.provider?.setData(delegate.name, state.toString());
     });
   }
 }

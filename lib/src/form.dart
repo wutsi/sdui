@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'route.dart';
 import 'widget.dart';
 
 /// Descriptor of [Form]
@@ -45,7 +44,6 @@ class _FormWidgetStateful extends StatefulWidget {
 }
 
 class _FormWidgetState extends State<_FormWidgetStateful>
-    with RouteAware
     implements SDUIFormDataProvider {
   SDUIForm delegate;
   Map<String, String> data = <String, String>{};
@@ -68,17 +66,6 @@ class _FormWidgetState extends State<_FormWidgetStateful>
     for (int i = 0; i < delegate.children.length; i++) {
       _attachForm(delegate.children[i]);
     }
-
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    sduiRouteObserver.unsubscribe(this);
   }
 
   @override
@@ -95,13 +82,5 @@ class _FormWidgetState extends State<_FormWidgetStateful>
         _attachForm(child.children[i]);
       }
     }
-  }
-
-  @override
-  void didPopNext() {
-    super.didPopNext();
-
-    // Reset the state
-    data = <String, String>{};
   }
 }

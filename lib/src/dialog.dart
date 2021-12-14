@@ -34,7 +34,7 @@ class SDUIDialog extends SDUIWidget {
       title: title == null ? null : Text(title!),
       content: message == null
           ? null
-          : Row(
+          : Column(
               mainAxisSize: MainAxisSize.min,
               children: children,
             ),
