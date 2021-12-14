@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.82] 2021-12-13
+- FIX: Add UTF-8 encoding for the `Content-Type` and `Accept` headers
+
 ## [0.0.81] 2021-12-13
 - CHANGE: await for camera to upload picture
 - FIX: Improve handling of HTTP upload response

@@ -42,8 +42,8 @@ abstract class HttpInterceptor {
 class HttpJsonInterceptor extends HttpInterceptor {
   @override
   void onRequest(RequestTemplate request) {
-    request.headers['Content-Type'] = 'application/json';
-    request.headers['Accept'] = 'application/json';
+    request.headers['Content-Type'] = 'application/json; charset=utf-8';
+    request.headers['Accept'] = 'application/json; charset=utf-8';
 
     request.body = request.body is Map<String, dynamic>?
         ? jsonEncode(request.body)
