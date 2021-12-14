@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.85] 2021-12-14
+## [0.0.84] 2021-12-14
 - CHANGED: Reset form state on navigation changed
 
 ## [0.0.83] 2021-12-13
