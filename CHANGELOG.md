@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.83] 2021-12-13
+- CHANGED: Added custom actions
+
 ## [0.0.82] 2021-12-13
 - FIX: Add UTF-8 encoding for the `Content-Type` and `Accept` headers
 

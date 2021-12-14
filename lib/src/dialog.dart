@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'parser.dart';
 import 'widget.dart';
 
 /// Descriptor of a [AlertDialog]
@@ -18,87 +19,105 @@ class SDUIDialog extends SDUIWidget {
   String? title;
   String? message;
   String? type;
+  List<SDUIWidget>? actions;
 
   @override
   Widget toWidget(BuildContext context) {
+    List<Widget> children = [];
+    Widget? icon = _icon();
+    if (icon != null) {
+      children.add(icon);
+    }
+    children.add(_content(message));
+
+    return AlertDialog(
+      title: title == null ? null : Text(title!),
+      content: message == null
+          ? null
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: children,
+            ),
+      actions: _actions(context),
+    );
+  }
+
+  Widget? _icon() {
     switch (type?.toLowerCase()) {
       case 'error':
-        return _message(context, Icons.error, Colors.red);
+        return const Icon(Icons.error, color: Colors.red, size: 32);
 
       case 'warning':
-        return _message(context, Icons.warning, Colors.yellow);
+        return const Icon(Icons.warning, color: Colors.yellow, size: 32);
 
       case 'information':
-        return _message(context, Icons.info, Colors.blueAccent);
+        return const Icon(Icons.info, color: Colors.blueAccent, size: 32);
 
       case 'confirm':
-        return _confirm(context);
+        return const Icon(Icons.help, color: Colors.blueAccent, size: 32);
 
       default:
-        return _alert(context);
+        return null;
     }
   }
 
-  Widget _confirm(BuildContext context) => AlertDialog(
-        title: title == null ? null : Text(title!),
-        content: _content(message),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'ok'),
-            child: const Text('OK'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, null),
-            child: const Text('Cancel'),
-          )
-        ],
-      );
-
-  Widget _alert(BuildContext context) => AlertDialog(
-        title: title == null ? null : Text(title!),
-        content: _content(message),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'ok'),
-            child: const Text('OK'),
-          )
-        ],
-      );
-
-  Widget _message(BuildContext context, IconData iconData, Color color) =>
-      AlertDialog(
-        title: title == null ? null : Text(title!),
-        content: message == null
-            ? null
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(iconData, color: color, size: 48),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: _content(message),
-                  )
-                ],
-              ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'ok'),
-            child: const Text('OK'),
-          )
-        ],
-      );
-
-  Widget _content(String? text) => Text(
+  Widget _content(String? text) => Container(
+      padding: const EdgeInsets.all(10.0),
+      child: Text(
         text ?? '',
         maxLines: 3,
         softWrap: true,
-      );
+      ));
+
+  List<Widget> _actions(BuildContext context) {
+    if (actions != null) {
+      return actions!.map((e) => e.toWidget(context)).toList();
+    } else {
+      switch (type?.toLowerCase()) {
+        case 'confirm':
+          return [
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'ok'),
+              child: const Text('OK'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, null),
+              child: const Text('Cancel'),
+            )
+          ];
+
+        default:
+          return [
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'ok'),
+              child: const Text('OK'),
+            )
+          ];
+      }
+    }
+  }
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     title = json?['title'];
     message = json?['message'];
     type = json?['type'];
+
+    var actions = json?["actions"];
+    if (actions is List<dynamic>) {
+      this.actions = [];
+      actions.map((it) => _parseAction(it)).forEach((it) {
+        if (it != null) {
+          it.action.inDialog =
+              true; // Set this flag so that the dialog is clicked when executed
+          this.actions?.add(it);
+        }
+      });
+    }
+
     return this;
   }
+
+  SDUIWidget? _parseAction(dynamic it) =>
+      it is Map<String, dynamic> ? SDUIParser.getInstance().fromJson(it) : null;
 }

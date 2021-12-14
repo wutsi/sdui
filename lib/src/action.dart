@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 
 import 'dialog.dart';
 import 'http.dart';
+import 'parser.dart';
 import 'route.dart';
 
 typedef ActionCallback = Future<String?> Function(BuildContext context);
@@ -38,6 +39,7 @@ class SDUIAction {
   bool replacement = false;
   SDUIDialog? prompt;
   Map<String, dynamic>? parameters;
+  bool inDialog = false;
 
   /// controller associated with the action
   PageController? pageController;
@@ -50,7 +52,10 @@ class SDUIAction {
 
     var prompt = attributes?["prompt"];
     if (prompt is Map<String, dynamic>) {
-      this.prompt = SDUIDialog().fromJson(prompt) as SDUIDialog;
+      var tmp = SDUIParser.getInstance().fromJson(prompt);
+      if (tmp is SDUIDialog) {
+        this.prompt = tmp;
+      }
     }
 
     var parameters = attributes?["parameters"];
@@ -70,6 +75,12 @@ class SDUIAction {
       return _emptyFuture;
     }
 
+    // Close the popup
+    if (inDialog) {
+      Navigator.of(context).pop();
+    }
+
+    // Execute the action
     switch (type?.toLowerCase()) {
       case 'route':
         return _gotoRoute(context, data);
