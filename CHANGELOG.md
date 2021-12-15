@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.86] 2021-12-15
+- CHANGED: Decorate `Scaffold` with `GestureDetector` to remove focus from current input on tap out
+
 ## [0.0.85] 2021-12-14
 - FIXED: Revert the form reset on navigation change
 - CHANGED: Put the icon and message inside to `Column` instead of a `Row`

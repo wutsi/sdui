@@ -17,12 +17,14 @@ class SDUIScreen extends SDUIWidget {
   String? backgroundColor;
 
   @override
-  Widget toWidget(BuildContext context) => Scaffold(
+  Widget toWidget(BuildContext context) => GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: toColor(backgroundColor),
         appBar: appBar == null ? null : (appBar!.toWidget(context) as AppBar),
         body: safe == true ? SafeArea(child: _child(context)) : _child(context),
-      );
+      ));
 
   Widget _child(BuildContext context) =>
       hasChildren() ? child()!.toWidget(context) : Container();
