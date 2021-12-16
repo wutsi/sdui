@@ -53,8 +53,8 @@ class MoneyText extends StatelessWidget {
       required this.value,
       required this.currency,
       this.numberFormat,
-      this.valueFontSize = 50,
-      this.currencyFontSize = 18,
+      this.valueFontSize = 40,
+      this.currencyFontSize = 12,
       this.color,
       this.bold = true})
       : super(key: key);
@@ -106,7 +106,7 @@ class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
   String? numberFormat;
   int maxLength = 7;
   String deleteText = 'Delete';
-  double keyboardButtonSize = 90.0;
+  double keyboardButtonSize = 70.0;
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -117,7 +117,7 @@ class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
     value = json?['value'];
     maxLength = json?['maxLength'] ?? 7;
     deleteText = json?['deleteText'] ?? 'Delete';
-    keyboardButtonSize = json?['keyboardButtonSize'] ?? 90.0;
+    keyboardButtonSize = json?['keyboardButtonSize'] ?? 70.0;
     numberFormat = json?['numberFormat'];
 
     return this;
@@ -179,6 +179,7 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
           Container(
             alignment: Alignment.bottomCenter,
             child: NumericKeyboard(
+              buttonSize: delegate.keyboardButtonSize,
               textColor:
                   delegate.toColor(delegate.keyboardColor) ?? Colors.black,
               onKeyboardTap: (value) => _onKeyboardTap(value),

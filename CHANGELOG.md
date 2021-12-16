@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.0.87] 2021-12-15
+- FIX: Use the numeric keyboard button size
+- ADDED: ListView.separatorColor
+- CHANGED: Remove the dropdown outline
+
 ## [0.0.86] 2021-12-15
 - CHANGED: Decorate `Scaffold` with `GestureDetector` to remove focus from current input on tap out
 

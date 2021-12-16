@@ -106,7 +106,6 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
       child: DropdownButtonFormField<String>(
         value: state,
         hint: delegate.hint == null ? null : Text(delegate.hint!),
-        decoration: const InputDecoration(border: OutlineInputBorder()),
         onChanged: (value) => _onChanged(value),
         validator: (value) => _onValidate(value),
         items: _toItems(context),

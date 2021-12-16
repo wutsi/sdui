@@ -19,7 +19,7 @@ import 'widget.dart';
 /// - **maxLength**: Max length of the code to enter (default: 6)
 /// - **deleteText**: Text of delete button (default: 'Delete')
 /// - **pinSize**: Size of each pin input (default=20)
-/// - **keyboardButtonSize**: Size of each keyboard button (default=90)
+/// - **keyboardButtonSize**: Size of each keyboard button (default=70)
 class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
   String name = 'value';
   Color color = Colors.black;
@@ -27,7 +27,7 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
   int maxLength = 6;
   String deleteText = 'Delete';
   double pinSize = 20.0;
-  double keyboardButtonSize = 90.0;
+  double keyboardButtonSize = 70.0;
 
   @override
   Widget toWidget(BuildContext context) => _PinWithKeyboard(this);
@@ -40,7 +40,7 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
     maxLength = json?["maxLength"] ?? 6;
     deleteText = json?['deleteText'] ?? 'Delete';
     pinSize = json?['pinSize'] ?? 20.0;
-    keyboardButtonSize = json?['keyboardButtonSize'] ?? 90.0;
+    keyboardButtonSize = json?['keyboardButtonSize'] ?? 70.0;
     return this;
   }
 }
@@ -105,6 +105,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
                 ? Center(child: sduiProgressIndicator(context))
                 : NumericKeyboard(
                     textColor: delegate.color,
+                    buttonSize: delegate.keyboardButtonSize,
                     onKeyboardTap: (value) => _onKeyboardTap(context, value),
                     rightButtonFn: () => _onBack(context),
                     rightButton: Text(delegate.deleteText),

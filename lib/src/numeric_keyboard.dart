@@ -10,7 +10,7 @@ class NumericKeyboard extends StatefulWidget {
   /// Display a custom right icon
   final Widget? rightButton;
 
-  /// Height of the button
+  /// Font size
   final double fontSize;
 
   /// Action to trigger when right button is pressed
@@ -25,7 +25,7 @@ class NumericKeyboard extends StatefulWidget {
   /// Callback when an item is pressed
   final KeyboardTapCallback onKeyboardTap;
 
-  // Button width
+  /// Button Size
   final double buttonSize;
 
   const NumericKeyboard(
@@ -37,7 +37,7 @@ class NumericKeyboard extends StatefulWidget {
       this.rightButton,
       this.leftButtonFn,
       this.leftButton,
-      this.buttonSize = 80.0})
+      this.buttonSize = 70.0})
       : super(key: key);
 
   @override

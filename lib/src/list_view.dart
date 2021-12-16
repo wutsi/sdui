@@ -10,6 +10,7 @@ import 'widget.dart';
 class SDUIListView extends SDUIWidget {
   String? direction;
   bool? separator;
+  String? separatorColor;
 
   @override
   Widget toWidget(BuildContext context) => ListView(
@@ -20,6 +21,7 @@ class SDUIListView extends SDUIWidget {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     direction = json?["direction"];
     separator = json?["separator"];
+    separatorColor = json?["separatorColor"];
     return this;
   }
 
@@ -30,7 +32,13 @@ class SDUIListView extends SDUIWidget {
   Widget _toListItem(Widget item) {
     if (separator == true) {
       return Column(
-        children: [item, const Divider(height: 1)],
+        children: [
+          item,
+          Divider(
+            height: 1,
+            color: toColor(separatorColor),
+          )
+        ],
       );
     } else {
       return item;
