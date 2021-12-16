@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.88] 2021-12-15
+- CHANGED: Use icon for keyboard DEL key
+
 ## [0.0.87] 2021-12-15
 - FIX: Use the numeric keyboard button size
 - ADDED: ListView.separatorColor

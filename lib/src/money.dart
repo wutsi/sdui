@@ -95,7 +95,6 @@ class MoneyText extends StatelessWidget {
 /// - **keyboardColor**: Text color of the keyboard
 ///  - **numberFormat**: Number format of the money to display
 ///  - **maxLength**: Maximum length of the moneytary value (default: 7)
-///  - **deleteText**: Text of the delete button
 ///  - **keyboardButtonSize**: Size of the keyboard button
 class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
   String name = 'value';
@@ -105,7 +104,6 @@ class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
   String? keyboardColor;
   String? numberFormat;
   int maxLength = 7;
-  String deleteText = 'Delete';
   double keyboardButtonSize = 70.0;
 
   @override
@@ -116,7 +114,6 @@ class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
     keyboardColor = json?['keyboardColor'];
     value = json?['value'];
     maxLength = json?['maxLength'] ?? 7;
-    deleteText = json?['deleteText'] ?? 'Delete';
     keyboardButtonSize = json?['keyboardButtonSize'] ?? 70.0;
     numberFormat = json?['numberFormat'];
 
@@ -180,15 +177,17 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
             alignment: Alignment.bottomCenter,
             child: NumericKeyboard(
               buttonSize: delegate.keyboardButtonSize,
-              textColor:
-                  delegate.toColor(delegate.keyboardColor) ?? Colors.black,
+              textColor: _keyboardColor(),
               onKeyboardTap: (value) => _onKeyboardTap(value),
               rightButtonFn: () => _onBack(),
-              rightButton: Text(delegate.deleteText),
+              rightButton: Icon(Icons.backspace, color: _keyboardColor()),
             ),
           ),
         ],
       );
+
+  Color _keyboardColor() =>
+      delegate.toColor(delegate.keyboardColor) ?? Colors.black;
 
   void _onKeyboardTap(String value) {
     _changeText(state * 10 + int.parse(value));

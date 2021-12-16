@@ -17,7 +17,6 @@ import 'widget.dart';
 /// - **color**: Text color (default: black)
 /// - **hideText**: Hide the text (default: false)
 /// - **maxLength**: Max length of the code to enter (default: 6)
-/// - **deleteText**: Text of delete button (default: 'Delete')
 /// - **pinSize**: Size of each pin input (default=20)
 /// - **keyboardButtonSize**: Size of each keyboard button (default=70)
 class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
@@ -25,7 +24,6 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
   Color color = Colors.black;
   bool hideText = false;
   int maxLength = 6;
-  String deleteText = 'Delete';
   double pinSize = 20.0;
   double keyboardButtonSize = 70.0;
 
@@ -38,7 +36,6 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
     color = toColor(json?["color"]) ?? Colors.black;
     hideText = json?["hideText"] ?? false;
     maxLength = json?["maxLength"] ?? 6;
-    deleteText = json?['deleteText'] ?? 'Delete';
     pinSize = json?['pinSize'] ?? 20.0;
     keyboardButtonSize = json?['keyboardButtonSize'] ?? 70.0;
     return this;
@@ -108,7 +105,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
                     buttonSize: delegate.keyboardButtonSize,
                     onKeyboardTap: (value) => _onKeyboardTap(context, value),
                     rightButtonFn: () => _onBack(context),
-                    rightButton: Text(delegate.deleteText),
+                    rightButton: Icon(Icons.backspace, color: delegate.color),
                   ),
           ),
         ],
