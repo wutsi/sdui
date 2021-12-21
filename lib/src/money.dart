@@ -53,7 +53,7 @@ class MoneyText extends StatelessWidget {
       required this.value,
       required this.currency,
       this.numberFormat,
-      this.valueFontSize = 40,
+      this.valueFontSize = 50,
       this.currencyFontSize = 12,
       this.color,
       this.bold = true})

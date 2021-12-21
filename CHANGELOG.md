@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.89] 2021-12-21
+- CHANGED: Increase money size
+
 ## [0.0.88] 2021-12-15
 - CHANGED: Use icon for keyboard DEL key
 
