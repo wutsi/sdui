@@ -432,9 +432,7 @@ class _ImageWidgetState extends State<_ImageWidgetStateful> {
 
     button = SDUIButton(
         caption: delegate.caption,
-        stretched: false,
         type: "text",
-        padding: 5.0,
         onPressed: (context) => _onPressed(context));
     button.action.pageController = delegate.action.pageController;
   }
