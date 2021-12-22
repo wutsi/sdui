@@ -113,11 +113,14 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     Widget? child;
 
     if (busy) {
-      child = const SizedBox(
+      child = SizedBox(
           width: 13,
           height: 13,
           child: CircularProgressIndicator(
-            color: Colors.white,
+            color: (delegate.type?.toLowerCase() == "text") ||
+                    (delegate.type?.toLowerCase() == "outlined")
+                ? null
+                : Colors.white,
             strokeWidth: 2,
           ));
     } else {

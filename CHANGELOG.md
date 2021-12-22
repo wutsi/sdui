@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## [0.0.94] 2021-12-21
+## [0.0.95] 2021-12-21
 - ADDED: Input of type `image` and `video` using [image_picker](https://pub.dev/packages/image_picker)
+- FIXED: Button circular progress color
 
 ## [0.0.89] 2021-12-21
 - CHANGED: Increase money size
@@ -10,7 +11,7 @@
 - CHANGED: Use icon for keyboard DEL key
 
 ## [0.0.87] 2021-12-15
-- FIX: Use the numeric keyboard button size
+- FIXED: Use the numeric keyboard button size
 - ADDED: ListView.separatorColor
 - CHANGED: Remove the dropdown outline
 
