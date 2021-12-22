@@ -43,6 +43,9 @@ import 'widget.dart';
 /// - **imageSource**: From where to get the image or video. For `type=image` or `type=video`. The possible values
 ///   - `camera`: Default
 ///   - `gallery`
+/// - **imageMaxWidth**: Image max width
+/// - **imageMaxHeight**: Image max width
+/// - **videoMaxDuration**: Video max width in seconds
 /// - *action***: [SDUIAction] to execute when the input is clicked
 class SDUIInput extends SDUIWidget with SDUIFormField {
   String name = '_no_name_';
@@ -60,6 +63,9 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   List<String>? countries;
   String? uploadUrl;
   String? imageSource;
+  int? imageMaxWidth;
+  int? imageMaxHeight;
+  int? videoMaxDuration;
 
   @override
   Widget toWidget(BuildContext context) => _createWidget(context);
@@ -80,6 +86,9 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     minLength = json?["minLength"] ?? 0;
     uploadUrl = json?["uploadUrl"];
     imageSource = json?["imageSource"];
+    imageMaxWidth = json?["imageMaxWidth"];
+    imageMaxHeight = json?["imageMaxHeight"];
+    videoMaxDuration = json?["videoMaxDuration"];
 
     var nodes = json?["countries"];
     if (nodes is List<dynamic>) {
@@ -436,26 +445,24 @@ class _ImageWidgetState extends State<_ImageWidgetStateful> {
   Future<String?> _onPressed(BuildContext context) async {
     XFile? file;
     final ImagePicker _picker = ImagePicker();
+    final ImageSource source = delegate.imageSource?.toLowerCase() == 'gallery'
+        ? ImageSource.gallery
+        : ImageSource.camera;
 
     switch (delegate.type.toLowerCase()) {
       case 'video':
-        switch (delegate.imageSource?.toLowerCase()) {
-          case 'gallery':
-            file = await _picker.pickVideo(source: ImageSource.gallery);
-            break;
-          default:
-            file = await _picker.pickVideo(source: ImageSource.camera);
-        }
+        file = await _picker.pickVideo(
+            source: source,
+            maxDuration: delegate.videoMaxDuration == null
+                ? null
+                : Duration(seconds: delegate.videoMaxDuration!));
         break;
 
       default:
-        switch (delegate.imageSource?.toLowerCase()) {
-          case 'gallery':
-            file = await _picker.pickImage(source: ImageSource.gallery);
-            break;
-          default:
-            file = await _picker.pickImage(source: ImageSource.camera);
-        }
+        file = await _picker.pickImage(
+            source: source,
+            maxHeight: delegate.imageMaxHeight?.toDouble(),
+            maxWidth: delegate.imageMaxWidth?.toDouble());
     }
 
     if (file != null) {
