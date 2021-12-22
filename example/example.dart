@@ -101,12 +101,30 @@ var json = '''
 	"attributes": {
 		"safe": false
 	},
-	"children": [{
-		"type": "Camera",
-		"attributes": {
-			"uploadUrl": "https://www.google.ca"
-		}
-	}],
+	"children": [
+    {
+      "type": "column",
+      "children":[
+        {
+          "type": "input",
+          "attributes": {
+            "caption": "Take Picture",
+            "type": "image",
+            "uploadUrl": "https://www.google.ca"
+          }
+        },
+        {
+          "type": "input",
+          "attributes": {
+            "caption": "Upload Picture",
+            "imageSource": "gallery",
+            "type": "image",
+            "uploadUrl": "https://www.google.ca"
+          }
+        }
+      ]
+    }
+	],
 	"appBar": {
 		"type": "AppBar",
 		"attributes": {

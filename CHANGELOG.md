@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.92] 2021-12-21
+- ADDED: Input of type `image` and `video` using [image_picker](https://pub.dev/packages/image_picker)
+
 ## [0.0.89] 2021-12-21
 - CHANGED: Increase money size
 

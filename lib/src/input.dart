@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:logger/logger.dart';
@@ -23,6 +24,8 @@ import 'widget.dart';
 ///    - `phone`: Phone number
 ///    - `date`: Date
 ///    - `time`: Time
+///    - `image`
+///    - `video`
 /// - **value**: Default value.
 ///    - When `type=date`, the format should be `yyyy-MM-dd` (Ex: 2020-07-30)
 ///    - When `type=time`, the format should be `HH:mm` (Ex: 23:30)
@@ -36,6 +39,10 @@ import 'widget.dart';
 /// - **maxLine**: Maximum number of line  (for multi-line input)
 /// - **minLength**: Minimum length of the field (Default: 0)
 /// - **countries**: List of country codes - for `type=phone`
+/// - **uploadUrl**: URL where to upload the file. For `type=image` or `type=video`
+/// - **imageSource**: From where to get the image or video. For `type=image` or `type=video`. The possible values
+///   - `camera`: Default
+///   - `gallery`
 /// - *action***: [SDUIAction] to execute when the input is clicked
 class SDUIInput extends SDUIWidget with SDUIFormField {
   String name = '_no_name_';
@@ -51,6 +58,8 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   int? maxLength;
   int minLength = 0;
   List<String>? countries;
+  String? uploadUrl;
+  String? imageSource;
 
   @override
   Widget toWidget(BuildContext context) => _createWidget(context);
@@ -69,6 +78,8 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     maxLines = json?["maxLines"];
     maxLength = json?["maxLength"];
     minLength = json?["minLength"] ?? 0;
+    uploadUrl = json?["uploadUrl"];
+    imageSource = json?["imageSource"];
 
     var nodes = json?["countries"];
     if (nodes is List<dynamic>) {
@@ -88,6 +99,10 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
 
       case 'phone':
         return _PhoneWidgetStateful(this);
+
+      case 'image':
+      case 'video':
+        return _ImageWidgetStateful(this);
 
       default:
         return _TextFieldWidgetStateful(this);
@@ -382,5 +397,72 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
 
   String? _onValidate(String? value) {
     return delegate._onValidate(value);
+  }
+}
+
+/// Image
+class _ImageWidgetStateful extends StatefulWidget {
+  final SDUIInput delegate;
+
+  const _ImageWidgetStateful(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<StatefulWidget> createState() => _ImageWidgetState(delegate);
+}
+
+class _ImageWidgetState extends State<_ImageWidgetStateful> {
+  SDUIInput delegate;
+  SDUIButton button = SDUIButton();
+
+  _ImageWidgetState(this.delegate);
+
+  @override
+  void initState() {
+    super.initState();
+
+    button = SDUIButton(
+        caption: delegate.caption,
+        stretched: false,
+        type: "text",
+        padding: 5.0,
+        onPressed: (context) => _onPressed(context));
+    button.action.pageController = delegate.action.pageController;
+  }
+
+  @override
+  Widget build(BuildContext context) => button.toWidget(context);
+
+  Future<String?> _onPressed(BuildContext context) async {
+    XFile? file;
+    final ImagePicker _picker = ImagePicker();
+
+    switch (delegate.type.toLowerCase()) {
+      case 'video':
+        switch (delegate.imageSource?.toLowerCase()) {
+          case 'gallery':
+            file = await _picker.pickVideo(source: ImageSource.gallery);
+            break;
+          default:
+            file = await _picker.pickVideo(source: ImageSource.camera);
+        }
+        break;
+
+      default:
+        switch (delegate.imageSource?.toLowerCase()) {
+          case 'gallery':
+            file = await _picker.pickImage(source: ImageSource.gallery);
+            break;
+          default:
+            file = await _picker.pickImage(source: ImageSource.camera);
+        }
+    }
+
+    if (file != null) {
+      Http.getInstance()
+          .upload(delegate.uploadUrl!, delegate.name, file)
+          .then((value) => delegate.action.execute(context, null));
+    }
+    return file?.name;
   }
 }
