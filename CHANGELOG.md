@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.96] 2021-12-25
+- ADDED: Added `color` and `iconColor` to button
+
 ## [0.0.95] 2021-12-21
 - ADDED: Input of type `image` and `video` using [image_picker](https://pub.dev/packages/image_picker)
 - FIXED: Button circular progress color

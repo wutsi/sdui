@@ -23,6 +23,8 @@ import 'widget.dart';
 /// - *icon*: Icon code
 /// - *iconSize*: Size of the icon
 /// - *action***: [SDUIAction] to execute when the button is clicked
+/// - **color** Text color
+/// - iconColor: Icon color
 class SDUIButton extends SDUIWidget {
   String? caption;
   String? type;
@@ -31,6 +33,8 @@ class SDUIButton extends SDUIWidget {
   String? icon;
   double? iconSize;
   ActionCallback? onPressed;
+  String? color;
+  String? iconColor;
 
   SDUIButton(
       {this.caption,
@@ -55,6 +59,8 @@ class SDUIButton extends SDUIWidget {
     stretched = json?["stretched"];
     icon = json?["icon"];
     iconSize = json?["iconSize"];
+    color = json?["color"];
+    iconColor = json?["iconColor"];
     return super.fromJson(json);
   }
 }
@@ -124,17 +130,17 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
             strokeWidth: 2,
           ));
     } else {
+      Widget text = Text(delegate.caption ?? '',
+          style: TextStyle(color: delegate.toColor(delegate.color)));
       if (delegate.icon == null) {
-        child = Text(delegate.caption ?? '');
+        child = text;
       } else {
+        Widget icon = delegate.toIcon(delegate.icon,
+            size: delegate.iconSize, color: delegate.iconColor)!;
         child = Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
-          children: [
-            delegate.toIcon(delegate.icon,
-                size: delegate.iconSize, color: "#ffffff")!,
-            Text(delegate.caption ?? '')
-          ],
+          children: [icon, text],
         );
       }
     }
