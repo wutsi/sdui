@@ -26,6 +26,7 @@ import 'money.dart';
 import 'page_view.dart';
 import 'pin_with_keyboard.dart';
 import 'qr_image.dart';
+import 'qr_view.dart';
 import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
@@ -142,6 +143,9 @@ class SDUIParser {
         break;
       case 'qrimage':
         widget = SDUIQrImage().fromJson(json);
+        break;
+      case 'qrview':
+        widget = SDUIQrView().fromJson(json);
         break;
       case "radio":
         widget = SDUIRadio();

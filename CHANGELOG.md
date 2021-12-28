@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.102] 2021-12-28
+- ADDED: Add QRView for scanning QR codes
+
 ## [0.0.99] 2021-12-28
 - ADDED: Added Center
 

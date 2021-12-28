@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -68,6 +70,22 @@ class SDUIAction {
   Future<String?> execute(
           BuildContext context, Map<String, dynamic>? data) async =>
       _prompt(context).then((value) => _execute(value, context, data));
+
+  Future<String?> handleResult(BuildContext context, String? result) async {
+    if (result == null) {
+      return Future.value(null);
+    }
+
+    var json = jsonDecode(result);
+    if (json is Map<String, dynamic>) {
+      var action = SDUIAction().fromJson(json);
+      action.pageController = pageController;
+      return action
+          .execute(context, json)
+          .then((value) => handleResult(context, value));
+    }
+    return Future.value(null);
+  }
 
   Future<String?> _execute(
       String? result, BuildContext context, Map<String, dynamic>? data) async {

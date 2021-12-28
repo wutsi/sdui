@@ -106,20 +106,8 @@ var json = '''
       "type": "column",
       "children":[
         {
-          "type": "input",
+          "type": "qrview",
           "attributes": {
-            "caption": "Take Picture",
-            "type": "image",
-            "uploadUrl": "https://www.google.ca"
-          }
-        },
-        {
-          "type": "input",
-          "attributes": {
-            "caption": "Upload Picture",
-            "imageSource": "gallery",
-            "type": "image",
-            "uploadUrl": "https://www.google.ca"
           }
         }
       ]
