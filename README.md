@@ -151,6 +151,7 @@ A widget is a visual element on a screen.
     - [PageView](https://pub.dev/documentation/sdui/latest/sdui/SDUIPageView-class.html)
     - [Screen](https://pub.dev/documentation/sdui/latest/sdui/SDUIScreen-class.html)
 - Layout widgets
+    - [Center](https://pub.dev/documentation/sdui/latest/sdui/SDUICenter-class.html)
     - [Column](https://pub.dev/documentation/sdui/latest/sdui/SDUIColumn-class.html)
     - [Container](https://pub.dev/documentation/sdui/latest/sdui/SDUIContainer-class.html)
     - [Expanded](https://pub.dev/documentation/sdui/latest/sdui/SDUIExpanded-class.html)
@@ -176,6 +177,7 @@ A widget is a visual element on a screen.
     - [MoneyWithKeyboard](https://pub.dev/documentation/sdui/latest/sdui/SDUIMoneyWithKeyboard-class.html)
     - [MoneyWithSlider](https://pub.dev/documentation/sdui/latest/sdui/MoneyWithSlider-class.html)
     - [PinWidthKeyboard](https://pub.dev/documentation/sdui/latest/sdui/SDUIPinWidthKeyboard-class.html)
+    - [QrImage](https://pub.dev/documentation/sdui/latest/sdui/SDUIQrImage-class.html)
     - [Radio](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadio-class.html)
     - [RadioGroup](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadioGroup-class.html)
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)

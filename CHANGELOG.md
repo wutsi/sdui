@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.98] 2021-12-28
+- ADDED: Added Center
+
 ## [0.0.97] 2021-12-27
 - ADDED: Added QrImage
 

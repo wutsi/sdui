@@ -7,6 +7,7 @@ import 'package:sdui/src/qr_image.dart';
 import 'action.dart';
 import 'appbar.dart';
 import 'button.dart';
+import 'center.dart';
 import 'circle_avatar.dart';
 import 'column.dart';
 import 'container.dart';
@@ -63,6 +64,9 @@ class SDUIParser {
         break;
       case "camera":
         widget = SDUICamera();
+        break;
+      case "column":
+        widget = SDUICenter();
         break;
       case "column":
         widget = SDUIColumn();

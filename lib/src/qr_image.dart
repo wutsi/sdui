@@ -5,7 +5,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import 'widget.dart';
 
-/// Descriptor of a button
+/// Descriptor of a [QrImage]
 ///
 /// ### JSON Attributes
 ///  - *data*: Data of the QR code - REQUIRED
