@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.97] 2021-12-27
+- ADDED: Added QrImage
+
 ## [0.0.96] 2021-12-25
 - ADDED: Added `color` and `iconColor` to button
 

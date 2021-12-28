@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:sdui/src/camera.dart';
+import 'package:sdui/src/qr_image.dart';
 
 import 'action.dart';
 import 'appbar.dart';
@@ -23,6 +24,7 @@ import 'list_view.dart';
 import 'money.dart';
 import 'page_view.dart';
 import 'pin_with_keyboard.dart';
+import 'qr_image.dart';
 import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
@@ -133,6 +135,9 @@ class SDUIParser {
         break;
       case 'pinwithkeyboard':
         widget = SDUIPinWidthKeyboard().fromJson(json);
+        break;
+      case 'qrimage':
+        widget = SDUIQrImage().fromJson(json);
         break;
       case "radio":
         widget = SDUIRadio();

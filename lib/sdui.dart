@@ -25,6 +25,7 @@ export 'src/money.dart';
 export 'src/page_view.dart';
 export 'src/parser.dart';
 export 'src/pin_with_keyboard.dart';
+export 'src/qr_image.dart';
 export 'src/radio.dart';
 export 'src/route.dart';
 export 'src/row.dart';
