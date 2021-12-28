@@ -65,7 +65,7 @@ class SDUIParser {
       case "camera":
         widget = SDUICamera();
         break;
-      case "column":
+      case "center":
         widget = SDUICenter();
         break;
       case "column":
