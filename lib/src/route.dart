@@ -38,11 +38,12 @@ class StaticRouteContentProvider implements RouteContentProvider {
 /// Static implementation of RouteContentProvider with static content
 class HttpRouteContentProvider implements RouteContentProvider {
   final String _url;
+  final Map<String, dynamic>? data;
 
-  const HttpRouteContentProvider(this._url);
+  const HttpRouteContentProvider(this._url, {this.data});
 
   @override
-  Future<String> getContent() async => Http.getInstance().post(_url, null);
+  Future<String> getContent() async => Http.getInstance().post(_url, data);
 }
 
 /// Dynamic Route
@@ -95,7 +96,8 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
           future: content,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              sduiWidget = SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
+              sduiWidget =
+                  SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
               sduiWidget!.attachPageController(pageController);
               return sduiWidget!.toWidget(context);
             } else if (snapshot.hasError) {
@@ -143,13 +145,13 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     });
   }
 
-  void _notifyAnalytics(){
+  void _notifyAnalytics() {
     try {
       String? id = sduiWidget?.id;
       if (id != null) {
         sduiAnalytics.onRoute(id);
       }
-    } catch(e){
+    } catch (e) {
       _logger.w("Unable to push event to Analytics", e);
     }
   }

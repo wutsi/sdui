@@ -3,17 +3,25 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:sdui/sdui.dart';
 
+import 'route.dart';
 import 'widget.dart';
 
 /// Descriptor of a [QRView]
 ///
 /// ### JSON Attributes
-///  - *action*: Action to invoke once the QR code scanned
+///  - *submitUrl*: URL where to submit the data
 class SDUIQrView extends SDUIWidget {
+  String? submitUrl;
+
   @override
   Widget toWidget(BuildContext context) => _QRViewStatefulWidget(this);
+
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    submitUrl = json?["submitUrl"];
+    return super.fromJson(json);
+  }
 }
 
 class _QRViewStatefulWidget extends StatefulWidget {
@@ -30,6 +38,7 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
   final SDUIQrView delegate;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
+  Barcode? barcode;
 
   _QRViewState(this.delegate);
 
@@ -52,18 +61,34 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => QRView(
+  Widget build(BuildContext context) {
+    if (barcode == null) {
+      return QRView(
         key: qrKey,
         onQRViewCreated: (controller) => _onQRViewCreated(context, controller),
+        overlay: QrScannerOverlayShape(
+          // Configure the overlay to look nice
+          borderRadius: 10,
+          borderWidth: 5,
+          borderColor: Colors.red,
+        ),
       );
+    } else {
+      return DynamicRoute(
+          provider: HttpRouteContentProvider(delegate.submitUrl!, data: {
+        'code': barcode!.code,
+        'format': barcode!.format.formatName
+      }));
+    }
+  }
 
   void _onQRViewCreated(BuildContext context, QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      delegate.action.execute(context, {
-        'code': scanData.code,
-        'format': scanData.format
-      }).then((value) => delegate.action.handleResult(context, value));
+    controller.scannedDataStream.listen((data) {
+      controller.pauseCamera();
+      setState(() {
+        barcode = data;
+      });
     });
   }
 }
