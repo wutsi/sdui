@@ -79,6 +79,7 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
 
   void _onQRViewCreated(BuildContext context, QRViewController controller) {
     this.controller = controller;
+    controller.toggleFlash();
     controller.scannedDataStream.listen((data) {
       controller.pauseCamera();
       setState(() {
