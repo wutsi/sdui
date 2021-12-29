@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import 'loading.dart';
 import 'route.dart';
 import 'widget.dart';
 
@@ -12,14 +13,16 @@ import 'widget.dart';
 /// ### JSON Attributes
 ///  - *submitUrl*: URL where to submit the data
 class SDUIQrView extends SDUIWidget {
-  String? submitUrl;
+  String submitUrl;
+
+  SDUIQrView({this.submitUrl = ''});
 
   @override
   Widget toWidget(BuildContext context) => _QRViewStatefulWidget(this);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
-    submitUrl = json?["submitUrl"];
+    submitUrl = json?["submitUrl"] ?? '';
     return super.fromJson(json);
   }
 }
@@ -61,26 +64,18 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (barcode == null) {
-      return QRView(
-        key: qrKey,
-        onQRViewCreated: (controller) => _onQRViewCreated(context, controller),
-        overlay: QrScannerOverlayShape(
-          // Configure the overlay to look nice
-          borderRadius: 10,
-          borderWidth: 5,
-          borderColor: Colors.red,
-        ),
-      );
-    } else {
-      return DynamicRoute(
-          provider: HttpRouteContentProvider(delegate.submitUrl!, data: {
-        'code': barcode!.code,
-        'format': barcode!.format.formatName
-      }));
-    }
-  }
+  Widget build(BuildContext context) => barcode == null
+      ? QRView(
+          key: qrKey,
+          onQRViewCreated: (controller) =>
+              _onQRViewCreated(context, controller),
+          overlay: QrScannerOverlayShape(
+            borderRadius: 10,
+            borderWidth: 5,
+            borderColor: Colors.red,
+          ),
+        )
+      : Center(child: sduiProgressIndicator(context));
 
   void _onQRViewCreated(BuildContext context, QRViewController controller) {
     this.controller = controller;
@@ -89,6 +84,14 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
       setState(() {
         barcode = data;
       });
+
+      var provider = HttpRouteContentProvider(delegate.submitUrl,
+          data: {'code': data.code, 'format': data.format.formatName});
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DynamicRoute(provider: provider)),
+      );
     });
   }
 }

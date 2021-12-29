@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.111] 2021-12-28
+## [0.0.112] 2021-12-28
 - ADDED: Add QRView for scanning QR codes
 
 ## [0.0.99] 2021-12-28
