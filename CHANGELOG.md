@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## [0.0.113] 2021-12-28
+## [0.0.114] 2021-12-28
 - ADDED: Add QRView for scanning QR codes
+- FIXED: Remove the color from the embeded image
 
 ## [0.0.99] 2021-12-28
 - ADDED: Added Center

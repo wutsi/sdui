@@ -34,8 +34,7 @@ class SDUIQrImage extends SDUIWidget {
         embeddedImageStyle: embeddedImageUrl == null
             ? null
             : QrEmbeddedImageStyle(
-                size: Size(embeddedImageSize ?? 64, embeddedImageSize ?? 64),
-                color: Colors.white),
+                size: Size(embeddedImageSize ?? 64, embeddedImageSize ?? 64)),
       );
 
   @override
