@@ -67,8 +67,8 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
   Widget build(BuildContext context) => barcode == null
       ? QRView(
           key: qrKey,
-          onQRViewCreated: (controller) =>
-              _onQRViewCreated(context, controller),
+          onQRViewCreated: (ctl) => _onQRViewCreated(context, ctl),
+          onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
           overlay: QrScannerOverlayShape(
             borderRadius: 10,
             borderWidth: 5,
@@ -94,5 +94,13 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
             builder: (context) => DynamicRoute(provider: provider)),
       );
     });
+  }
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No Permission to QR Code Scanner')),
+      );
+    }
   }
 }
