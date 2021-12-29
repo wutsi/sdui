@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.116] 2021-12-29
+- CHANGED: Added action handler on CircleAvatar
+
 ## [0.0.115] 2021-12-28
 - ADDED: Add QRView for scanning QR codes
 - FIXED: Remove the color from the embeded image
