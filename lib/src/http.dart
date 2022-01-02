@@ -93,20 +93,17 @@ class Http {
     } finally {
       sduiAnalytics.endTrace(trace);
 
-      String line = 'POST $url';
-      line += ' request_headers=${request.headers}';
-      if (data != null) {
-        line += ' request_payload=$data';
-      }
-      if (response != null) {
-        line +=
-            ' response_status=${response.statusCode} response_headers=${response.headers}';
-      }
-
       if (ex != null) {
+        String line = 'POST $url';
+        line += ' request_headers=${request.headers}';
+        if (data != null) {
+          line += ' request_payload=$data';
+        }
+        if (response != null) {
+          line +=
+              ' response_status=${response.statusCode} response_headers=${response.headers}';
+        }
         _logger.e(line, ex);
-      } else {
-        _logger.i(line);
       }
     }
   }
@@ -121,8 +118,6 @@ class Http {
       String filename = file.path.split('/').last;
       String? mimeType = file.mimeType;
       int filesize = await file.length();
-      _logger.i(
-          'filepath=${file.path} filename=$filename filesize=$filesize mimeType=$mimeType');
 
       var req = http.MultipartRequest('POST', Uri.parse(url));
       req.headers.addAll(request.headers);
@@ -135,17 +130,15 @@ class Http {
     } finally {
       sduiAnalytics.endTrace(trace);
 
-      String line = 'POST $url';
-      line += ' request_headers=${request.headers}';
-      if (response != null) {
-        line +=
-            ' response_status=${response.statusCode} response_headers=${response.headers}';
-      }
-
       if (ex != null) {
+        String line = 'POST $url';
+        line += ' request_headers=${request.headers}';
+        if (response != null) {
+          line +=
+              ' response_status=${response.statusCode} response_headers=${response.headers}';
+        }
+
         _logger.e(line, ex);
-      } else {
-        _logger.i(line);
       }
     }
   }
