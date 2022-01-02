@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.116] 2022-02-02
+## [0.0.118] 2022-02-02
 - CHANGED: Improved logging in HTTP
 
 ## [0.0.116] 2021-12-29

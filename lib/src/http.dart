@@ -93,17 +93,33 @@ class Http {
     } finally {
       sduiAnalytics.endTrace(trace);
 
+      // Request headers
+      String line = 'POST $url status=${response?.statusCode}';
+      request.headers.forEach((key, value) {
+        if (key == 'Authorization') {
+          line += ' request_header_Authorization=***';
+        } else {
+          line += ' request_header_$key=$value';
+        }
+      });
+
+      // Response
+      if (response != null) {
+        response.headers.forEach((key, value) {
+          line += ' response_header_$key=$value';
+        });
+      }
+
+      // Payload
+      if (data != null) {
+        line += ' request_payload=$data';
+      }
+
+      // Log
       if (ex != null) {
-        String line = 'POST $url';
-        line += ' request_headers=${request.headers}';
-        if (data != null) {
-          line += ' request_payload=$data';
-        }
-        if (response != null) {
-          line +=
-              ' response_status=${response.statusCode} response_headers=${response.headers}';
-        }
         _logger.e(line, ex);
+      } else {
+        _logger.i(line);
       }
     }
   }
@@ -117,7 +133,6 @@ class Http {
     try {
       String filename = file.path.split('/').last;
       String? mimeType = file.mimeType;
-      int filesize = await file.length();
 
       var req = http.MultipartRequest('POST', Uri.parse(url));
       req.headers.addAll(request.headers);
@@ -130,15 +145,21 @@ class Http {
     } finally {
       sduiAnalytics.endTrace(trace);
 
-      if (ex != null) {
-        String line = 'POST $url';
-        line += ' request_headers=${request.headers}';
-        if (response != null) {
-          line +=
-              ' response_status=${response.statusCode} response_headers=${response.headers}';
+      // Request headers
+      String line = 'POST $url status=${response?.statusCode}';
+      request.headers.forEach((key, value) {
+        if (key == 'Authorization') {
+          line += ' request_header_Authorization=***';
+        } else {
+          line += ' request_header_$key=$value';
         }
+      });
 
+      // Log
+      if (ex != null) {
         _logger.e(line, ex);
+      } else {
+        _logger.i(line);
       }
     }
   }
