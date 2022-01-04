@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.119] 2022-02-04
+- FIX: Turn on/off flash-light in the QR Code scanner
+
 ## [0.0.118] 2022-02-02
 - CHANGED: Improved logging in HTTP
 
