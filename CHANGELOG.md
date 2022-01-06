@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.120] 2022-02-06
+## [0.0.122] 2022-02-06
 - ADDED: Navigate action to launch URLs
 
 ## [0.0.120] 2022-02-06

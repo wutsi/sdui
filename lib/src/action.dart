@@ -123,10 +123,12 @@ class SDUIAction {
   }
 
   Future<String?> _navigate(BuildContext context) async {
-    if (!await launch(url)) {
-      throw 'Could not launch $url';
+    if (await canLaunch(url)) {
+      await launch(url);
+      return "ok";
+    } else {
+      return "";
     }
-    return "";
   }
 
   Future<String?> _share(BuildContext context) async {
