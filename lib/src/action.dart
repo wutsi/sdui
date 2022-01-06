@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'dialog.dart';
 import 'http.dart';
@@ -23,6 +24,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 ///   - `Page`: To redirect to another page, in the context of [PageView]
 ///   - `Command`: To execute a command on the server
 ///   - `Share`: Share content
+///   - `Navigate`: To navigate users to URLs
 /// - **url**: Action URL. This URL represent either the route or a command to execute
 ///   - `route:/..`: redirect users to previous route
 ///   - `route:/~`: redirect users to 1st route
@@ -112,9 +114,19 @@ class SDUIAction {
       case 'share':
         return _share(context);
 
+      case 'navigate':
+        return _navigate(context);
+
       default:
         return _emptyFuture;
     }
+  }
+
+  Future<String?> _navigate(BuildContext context) async {
+    if (!await launch(url)) {
+      throw 'Could not launch $url';
+    }
+    return "";
   }
 
   Future<String?> _share(BuildContext context) async {

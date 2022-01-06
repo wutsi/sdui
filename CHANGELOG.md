@@ -1,6 +1,9 @@
 # CHANGELOG
 
 ## [0.0.120] 2022-02-06
+- ADDED: Navigate action to launch URLs
+
+## [0.0.120] 2022-02-06
 - FIX: Action handling of list-view-switch
 
 ## [0.0.119] 2022-02-04
