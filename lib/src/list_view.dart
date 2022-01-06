@@ -119,7 +119,9 @@ class SDUIListItemSwitch extends SDUIWidget with SDUIFormField {
   void submit(BuildContext context, String value) {
     var data = <String, String>{};
     data[name] = value;
-    action.execute(context, data);
+    action
+        .execute(context, data)
+        .then((value) => action.handleResult(context, value));
   }
 }
 

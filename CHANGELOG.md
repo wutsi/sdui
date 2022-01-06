@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.120] 2022-02-06
+- FIX: Action handling of list-view-switch
+
 ## [0.0.119] 2022-02-04
 - FIX: Turn on/off flash-light in the QR Code scanner
 
