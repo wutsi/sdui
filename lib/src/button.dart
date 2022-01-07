@@ -116,7 +116,7 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
   }
 
   Widget _createText() {
-    Widget? child;
+    Widget child;
 
     if (busy) {
       child = SizedBox(
@@ -137,11 +137,15 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
       } else {
         Widget icon = delegate.toIcon(delegate.icon,
             size: delegate.iconSize, color: delegate.iconColor)!;
-        child = Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: [icon, text],
-        );
+        if (delegate.caption != null) {
+          child = Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
+            children: [icon, text],
+          );
+        } else {
+          return icon;
+        }
       }
     }
 

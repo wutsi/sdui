@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.123] 2022-02-07
+- CHANGED: Fix padding of buttons
+
 ## [0.0.122] 2022-02-06
 - ADDED: Navigate action to launch URLs
 
