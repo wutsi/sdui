@@ -33,6 +33,9 @@ class StaticRouteContentProvider implements RouteContentProvider {
   Future<String> getContent() {
     return Future(() => _json);
   }
+
+  @override
+  String toString() => "StaticRouteContentProvider";
 }
 
 /// Static implementation of RouteContentProvider with static content
@@ -44,6 +47,9 @@ class HttpRouteContentProvider implements RouteContentProvider {
 
   @override
   Future<String> getContent() async => Http.getInstance().post(_url, data);
+
+  @override
+  String toString() => "StaticRouteContentProvider(url=$_url)";
 }
 
 /// Dynamic Route
@@ -62,6 +68,7 @@ class DynamicRoute extends StatefulWidget {
 
 class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   static final Logger _logger = LoggerFactory.create('DynamicRouteState');
+  static Map<int, String> statusCodeRoutes = {};
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
@@ -104,14 +111,19 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
               // Log
               var error = snapshot.error;
               if (error is ClientException) {
-                _logger.e('${error.uri} - ${error.message}', error,
-                    snapshot.stackTrace);
-              } else {
-                _logger.e(
-                    'Unable to download content', error, snapshot.stackTrace);
+                int? statusCode = int.tryParse(error.message);
+                if (statusCode != null) {
+                  String? route = statusCodeRoutes[statusCode];
+                  if (route != null) {
+                    _logger.e('status=$statusCode route=$route', error,
+                        snapshot.stackTrace);
+                    Navigator.pushReplacementNamed(context, route);
+                  }
+                }
               }
 
               // Error State
+              _logger.e('provider=$provider', error, snapshot.stackTrace);
               return sduiErrorState(context, error);
             }
 

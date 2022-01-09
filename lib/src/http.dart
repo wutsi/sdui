@@ -87,7 +87,7 @@ class Http {
         return response.body;
       } else {
         ex = http.ClientException(
-            '${response.statusCode}', Uri.parse(request.url));
+            response.statusCode.toString(), Uri.parse(request.url));
         throw ex;
       }
     } finally {
@@ -118,6 +118,8 @@ class Http {
       // Log
       if (ex != null) {
         _logger.e(line, ex);
+      } else if (response == null || response.statusCode / 100 > 2) {
+        _logger.e(line);
       } else {
         _logger.i(line);
       }

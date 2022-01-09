@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.124] 2022-02-08
+- CHANGED: Added in `DynamicRouteState` routes for the various status code
+
 ## [0.0.123] 2022-02-07
 - CHANGED: Fix padding of buttons
 

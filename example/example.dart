@@ -1,7 +1,5 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
-import 'package:sdui/src/camera.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,8 +8,7 @@ void main() async {
     HttpJsonInterceptor(),
     HttpAuthorizationInterceptor()
   ];
-
-  sduiCameras = await availableCameras();
+  DynamicRouteState.statusCodeRoutes[401] = '/401';
 
   runApp(const MyApp());
 }
@@ -33,10 +30,10 @@ class MyApp extends StatelessWidget {
   Map<String, WidgetBuilder> _routes() => {
         '/': (context) => const HomeScreen(),
         '/remote': (context) => const DynamicRoute(
-            provider: HttpRouteContentProvider(
-                'http://localhost:8080/settings/about')),
+            provider: HttpRouteContentProvider('http://localhost:8080/shell')),
         '/static': (context) =>
-            DynamicRoute(provider: StaticRouteContentProvider(json))
+            DynamicRoute(provider: StaticRouteContentProvider(json)),
+        '/401': (context) => const Error401()
       };
 }
 
@@ -94,6 +91,14 @@ class HomeScreenState extends State<HomeScreen> with RouteAware {
       state++;
     });
   }
+}
+
+class Error401 extends StatelessWidget {
+  const Error401({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) => const Center(child: Text('401'));
 }
 
 var json = '''
