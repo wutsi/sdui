@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:sdui/src/camera.dart';
-import 'package:sdui/src/qr_image.dart';
 
 import 'action.dart';
 import 'appbar.dart';
 import 'button.dart';
+import 'camera.dart';
 import 'center.dart';
 import 'circle_avatar.dart';
 import 'column.dart';
@@ -23,6 +22,7 @@ import 'image.dart';
 import 'input.dart';
 import 'list_view.dart';
 import 'money.dart';
+import 'null.dart';
 import 'page_view.dart';
 import 'pin_with_keyboard.dart';
 import 'qr_image.dart';
@@ -180,7 +180,7 @@ class SDUIParser {
         break;
 
       default:
-        throw Exception("Unsupported node: ${json["type"]}");
+        widget = SDUINull();
     }
 
     // Attributes

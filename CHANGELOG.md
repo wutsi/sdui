@@ -1,7 +1,10 @@
 # CHANGELOG
 
+## [0.0.126] 2022-01-17
+- CHANGED: Add SDUINull for handling non-supported components
+
 ## [0.0.125] 2022-01-17
-- CHANGED: Added in `Wrap`
+- ADDED: Added in `Wrap`
 
 ## [0.0.124] 2022-01-08
 - CHANGED: Added in `DynamicRouteState` routes for the various status code
