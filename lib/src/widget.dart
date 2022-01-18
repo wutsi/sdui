@@ -46,6 +46,10 @@ abstract class SDUIWidget {
     }
   }
 
+  Axis toAxis(String? direction) => direction?.toLowerCase() == "horizontal"
+      ? Axis.horizontal
+      : Axis.vertical;
+
   Color? toColor(String? hexColor) {
     if (hexColor == null) {
       return null;

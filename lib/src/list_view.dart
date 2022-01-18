@@ -15,7 +15,7 @@ class SDUIListView extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) => ListView(
       children: childrenWidgets(context).map((e) => _toListItem(e)).toList(),
-      scrollDirection: _toScrollDirection());
+      scrollDirection: toAxis(direction));
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -24,10 +24,6 @@ class SDUIListView extends SDUIWidget {
     separatorColor = json?["separatorColor"];
     return this;
   }
-
-  Axis _toScrollDirection() => direction?.toLowerCase() == "horizontal"
-      ? Axis.horizontal
-      : Axis.vertical;
 
   Widget _toListItem(Widget item) {
     if (separator == true) {

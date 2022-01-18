@@ -34,6 +34,7 @@ import 'spacer.dart';
 import 'tab.dart';
 import 'text.dart';
 import 'widget.dart';
+import 'wrap.dart';
 
 //-- Core ------------------------------------
 /// Parser that convert JSON to flutter [Widget]
@@ -173,6 +174,9 @@ class SDUIParser {
         break;
       case "text":
         widget = SDUIText();
+        break;
+      case "wrap":
+        widget = SDUIWrap();
         break;
 
       default:

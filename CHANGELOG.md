@@ -1,21 +1,24 @@
 # CHANGELOG
 
-## [0.0.124] 2022-02-08
+## [0.0.125] 2022-01-17
+- CHANGED: Added in `Wrap`
+
+## [0.0.124] 2022-01-08
 - CHANGED: Added in `DynamicRouteState` routes for the various status code
 
-## [0.0.123] 2022-02-07
+## [0.0.123] 2022-01-07
 - CHANGED: Fix padding of buttons
 
-## [0.0.122] 2022-02-06
+## [0.0.122] 2022-01-06
 - ADDED: Navigate action to launch URLs
 
-## [0.0.120] 2022-02-06
+## [0.0.120] 2022-01-06
 - FIX: Action handling of list-view-switch
 
-## [0.0.119] 2022-02-04
+## [0.0.119] 2022-01-04
 - FIX: Turn on/off flash-light in the QR Code scanner
 
-## [0.0.118] 2022-02-02
+## [0.0.118] 2022-01-02
 - CHANGED: Improved logging in HTTP
 
 ## [0.0.116] 2021-12-29

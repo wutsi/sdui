@@ -36,3 +36,4 @@ export 'src/spacer.dart';
 export 'src/tab.dart';
 export 'src/text.dart';
 export 'src/widget.dart';
+export 'src/wrap.dart';
