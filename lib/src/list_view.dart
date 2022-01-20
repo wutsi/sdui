@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:sdui/sdui.dart';
 
 import 'form.dart';
+import 'parser.dart';
 import 'widget.dart';
 
 /// Descriptor of a [ListView]

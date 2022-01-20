@@ -1,15 +1,14 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:logger/logger.dart';
-import 'package:sdui/sdui.dart';
-import 'package:sdui/src/logger.dart';
 
 import 'button.dart';
 import 'form.dart';
+import 'http.dart';
+import 'logger.dart';
 import 'widget.dart';
 
 /// Descriptor of a form Input

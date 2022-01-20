@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sdui/sdui.dart';
-import 'package:sdui/src/appbar.dart';
 
+import 'appbar.dart';
 import 'widget.dart';
 
 /// Descriptor of a screen, implemented as [Scaffold]
