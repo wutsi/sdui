@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.126] 2022-01-20
+- CHANGED: Upgrade to flutter 2.8.1
+
 ## [0.0.126] 2022-01-17
 - CHANGED: Add SDUINull for handling non-supported components
 
