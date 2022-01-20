@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:logger/logger.dart';
+import 'package:sdui/src/logger.dart';
 
 import 'action.dart';
 import 'appbar.dart';
@@ -39,6 +41,7 @@ import 'wrap.dart';
 //-- Core ------------------------------------
 /// Parser that convert JSON to flutter [Widget]
 class SDUIParser {
+  static final Logger _logger = LoggerFactory.create('SDUIParser');
   static final SDUIParser _singleton = SDUIParser._internal();
 
   SDUIParser._internal();
@@ -56,6 +59,10 @@ class SDUIParser {
 
   SDUIWidget fromJson(Map<String, dynamic> json) {
     var type = json["type"].toString().toLowerCase();
+    var id = json["attributes"]?["id"];
+
+    _logger.i('...Parsing $type' + (id == null ? '' : ' id=$id'));
+
     SDUIWidget? widget;
     switch (type) {
       case "appbar":
@@ -178,8 +185,8 @@ class SDUIParser {
       case "wrap":
         widget = SDUIWrap();
         break;
-
       default:
+        _logger.i('.....Oups... $type not supported');
         widget = SDUINull();
     }
 

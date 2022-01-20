@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'dialog.dart';
 import 'http.dart';
+import 'logger.dart';
 import 'parser.dart';
 import 'route.dart';
 
@@ -34,6 +36,7 @@ typedef ActionCallback = Future<String?> Function(BuildContext context);
 /// - **parameters**: Parameters to add to the URL where to redirect to
 /// - **message**: Message to share
 class SDUIAction {
+  static final Logger _logger = LoggerFactory.create('SDUIAction');
   static final Future<String?> _emptyFuture = Future(() => null);
 
   String? type;
@@ -122,6 +125,7 @@ class SDUIAction {
   }
 
   Future<String?> _navigate(BuildContext context) async {
+    _logger.i('Navigate to $url');
     if (await canLaunch(url)) {
       await launch(url);
       return "ok";
@@ -145,6 +149,7 @@ class SDUIAction {
   }
 
   Future<String?> _gotoPage(BuildContext context) {
+    _logger.i('Goto page $url');
     int page = -1;
     try {
       page = int.parse(url.substring(6));
@@ -158,6 +163,7 @@ class SDUIAction {
   }
 
   Future<String?> _gotoRoute(BuildContext context, Map<String, dynamic>? data) {
+    _logger.i('Goto route $url');
     if (_isRoute()) {
       var route = url.substring(6);
       if (route == '/..') {
@@ -192,8 +198,10 @@ class SDUIAction {
   }
 
   Future<String> _executeCommand(
-          BuildContext context, Map<String, dynamic>? data) =>
-      Http.getInstance().post(_urlWithParameters(), data);
+      BuildContext context, Map<String, dynamic>? data) {
+    _logger.i('Execute command $url');
+    return Http.getInstance().post(_urlWithParameters(), data);
+  }
 
   bool _isRoute() => url.startsWith('route:') == true;
 

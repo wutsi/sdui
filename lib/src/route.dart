@@ -68,7 +68,7 @@ class DynamicRoute extends StatefulWidget {
 
 class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   static final Logger _logger = LoggerFactory.create('DynamicRouteState');
-  static Map<int, String> statusCodeRoutes = {};
+  static Map<int, String?> statusCodeRoutes = {};
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
