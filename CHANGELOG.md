@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [0.0.131] 2022-01-20
+## [0.0.132] 2022-01-20
 - CHANGED: Upgrade to flutter 2.8.1
 - FIX: NullPointerException when handling HTTP errors
+- FIX: Throw exception on unsupported node
 
 ## [0.0.126] 2022-01-17
 - CHANGED: Add SDUINull for handling non-supported components

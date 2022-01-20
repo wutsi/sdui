@@ -24,7 +24,6 @@ import 'image.dart';
 import 'input.dart';
 import 'list_view.dart';
 import 'money.dart';
-import 'null.dart';
 import 'page_view.dart';
 import 'pin_with_keyboard.dart';
 import 'qr_image.dart';
@@ -186,8 +185,7 @@ class SDUIParser {
         widget = SDUIWrap();
         break;
       default:
-        _logger.i('.....Oups... $type not supported');
-        widget = SDUINull();
+        throw Exception("Unsupported node: ${json["type"]}");
     }
 
     // Attributes
