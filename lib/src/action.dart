@@ -198,9 +198,9 @@ class SDUIAction {
   }
 
   Future<String> _executeCommand(
-      BuildContext context, Map<String, dynamic>? data) {
+      BuildContext context, Map<String, dynamic>? data) async {
     _logger.i('Execute command $url');
-    return Http.getInstance().post(_urlWithParameters(), data);
+    return await Http.getInstance().post(_urlWithParameters(), data);
   }
 
   bool _isRoute() => url.startsWith('route:') == true;
