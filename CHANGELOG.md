@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.133] 2022-01-20
+- FIX: fix submition of form
+
 ## [0.0.132] 2022-01-20
 - CHANGED: Upgrade to flutter 2.8.1
 - FIX: NullPointerException when handling HTTP errors

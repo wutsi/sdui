@@ -143,7 +143,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     return null;
   }
 
-  Future<String?> _onSubmit(BuildContext context) {
+  Future<String?> _onSubmit(BuildContext context) async {
     if (formKey?.currentState?.validate() == false) {
       return Future.value(null);
     }
