@@ -191,15 +191,24 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
     switch (delegate.type.toLowerCase()) {
       case 'email':
         return TextInputType.emailAddress;
+
       case 'number':
         return TextInputType.number;
+
       case 'url':
         return TextInputType.url;
+
+      case 'date':
+      case 'time':
+        return TextInputType.datetime;
+
+      case 'phone':
+        return TextInputType.phone;
     }
 
-    return delegate.maxLength != null && delegate.maxLength! > 1
-        ? TextInputType.multiline
-        : TextInputType.text;
+    return delegate.maxLines == null || delegate.maxLines! == 1
+        ? TextInputType.text
+        : TextInputType.multiline;
   }
 
   InputDecoration? _toInputDecoration() => InputDecoration(

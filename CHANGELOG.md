@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.136] 2022-01-29
+## [0.0.137] 2022-01-29
 - CHANGE: support multi-line text editor
 
 ## [0.0.135] 2022-01-20
