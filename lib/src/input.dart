@@ -45,6 +45,8 @@ import 'widget.dart';
 /// - **imageMaxWidth**: Image max width
 /// - **imageMaxHeight**: Image max width
 /// - **videoMaxDuration**: Video max width in seconds
+/// - **prefix**: Prefix in the input field
+/// - **suffix**: Suffix in the input field
 /// - *action***: [SDUIAction] to execute when the input is clicked
 class SDUIInput extends SDUIWidget with SDUIFormField {
   String name = '_no_name_';
@@ -65,6 +67,8 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   int? imageMaxWidth;
   int? imageMaxHeight;
   int? videoMaxDuration;
+  String? prefix;
+  String? suffix;
 
   @override
   Widget toWidget(BuildContext context) => _createWidget(context);
@@ -88,6 +92,8 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     imageMaxWidth = json?["imageMaxWidth"];
     imageMaxHeight = json?["imageMaxHeight"];
     videoMaxDuration = json?["videoMaxDuration"];
+    prefix = json?["prefix"];
+    suffix = json?["suffix"];
 
     var nodes = json?["countries"];
     if (nodes is List<dynamic>) {
@@ -212,8 +218,11 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
   }
 
   InputDecoration? _toInputDecoration() => InputDecoration(
-      hintText: delegate.hint,
-      label: delegate.caption == null ? null : Text(delegate.caption!));
+        hintText: delegate.hint,
+        label: delegate.caption == null ? null : Text(delegate.caption!),
+        prefix: delegate.prefix == null ? null : Text(delegate.prefix!),
+        suffix: delegate.suffix == null ? null : Text(delegate.suffix!),
+      );
 
   String? _onValidate(String? value) => delegate._onValidate(value);
 

@@ -1,10 +1,13 @@
 # CHANGELOG
 
+## [0.0.138] 2022-01-29
+- CHANGE: Support `prefix` and `suffix` for `Input`
+
 ## [0.0.137] 2022-01-29
 - CHANGE: support multi-line text editor
 
 ## [0.0.135] 2022-01-20
-- FIX: fix submition of form
+- FIX: Make form subscription synchronous
 
 ## [0.0.132] 2022-01-20
 - CHANGED: Upgrade to flutter 2.8.1
