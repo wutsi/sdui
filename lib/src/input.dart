@@ -132,7 +132,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
       try {
         Uri.parse(value);
       } catch (e) {
-        return "Malformed URL address";
+        return "Malformed URL";
       }
     }
     if (type == 'number' && !empty) {
@@ -196,7 +196,10 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
       case 'url':
         return TextInputType.url;
     }
-    return TextInputType.text;
+
+    return delegate.maxLength != null && delegate.maxLength! > 1
+        ? TextInputType.multiline
+        : TextInputType.text;
   }
 
   InputDecoration? _toInputDecoration() => InputDecoration(
