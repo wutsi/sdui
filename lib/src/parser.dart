@@ -25,6 +25,7 @@ import 'input.dart';
 import 'list_view.dart';
 import 'money.dart';
 import 'page_view.dart';
+import 'photo_view.dart';
 import 'pin_with_keyboard.dart';
 import 'qr_image.dart';
 import 'qr_view.dart';
@@ -144,6 +145,9 @@ class SDUIParser {
         break;
       case "pageview":
         widget = SDUIPageView().fromJson(json);
+        break;
+      case "photoview":
+        widget = SDUIPhotoView().fromJson(json);
         break;
       case 'pinwithkeyboard':
         widget = SDUIPinWidthKeyboard().fromJson(json);

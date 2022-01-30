@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## [0.0.145] 2022-01-29
+## [0.0.147] 2022-01-29
 - CHANGE: Add to `Container` support for `width`, `height` and `backgroundImageUrl
 - CHANGE: Add support `FloatingActionButton`
 - CHANGE: Container supports tap gesture
+- ADDED: PhotoView
 
 ## [0.0.138] 2022-01-29
 - CHANGE: Support `prefix` and `suffix` for `Input`
