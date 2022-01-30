@@ -15,6 +15,7 @@ import 'widget.dart';
 /// - **backgroundImageUrl**: Background Image
 /// - **width**: Width
 /// - **height**: Height
+/// - **action**: Container action on tap
 class SDUIContainer extends SDUIWidget {
   String? alignment;
   double? padding;
@@ -27,16 +28,13 @@ class SDUIContainer extends SDUIWidget {
   double? width;
   double? height;
 
-  SDUIContainer(
-      {this.alignment,
-      this.padding,
-      this.margin,
-      this.background,
-      this.border,
-      this.borderRadius});
-
   @override
-  Widget toWidget(BuildContext context) => Container(
+  Widget toWidget(BuildContext context) => action.type == null
+      ? _createContainer(context)
+      : GestureDetector(
+          onTap: () => _onTap(context), child: _createContainer(context));
+
+  Container _createContainer(BuildContext context) => Container(
         child: child()?.toWidget(context),
         margin: margin == null ? null : EdgeInsets.all(margin!),
         padding: padding == null ? null : EdgeInsets.all(padding!),
@@ -45,6 +43,12 @@ class SDUIContainer extends SDUIWidget {
         width: width,
         height: height,
       );
+
+  void _onTap(BuildContext context) {
+    action
+        .execute(context, null)
+        .then((value) => action.handleResult(context, value));
+  }
 
   Alignment? _toAlignment() {
     switch (alignment) {
@@ -110,7 +114,7 @@ class SDUIContainer extends SDUIWidget {
     borderRadius = json?["borderRadius"];
     borderColor = json?["borderColor"];
     background = json?["background"];
-    background = json?["backgroundImageUrl"];
+    backgroundImageUrl = json?["backgroundImageUrl"];
     width = json?["width"];
     height = json?["height"];
     return this;
