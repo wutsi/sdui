@@ -211,13 +211,22 @@ class SDUIParser {
       }
     }
 
-    // AppBar
     if (widget is SDUIScreen) {
+      // AppBar
       var appBar = json["appBar"];
       if (appBar is Map<String, dynamic>) {
         var item = fromJson(appBar);
         if (item is SDUIAppBar) {
           widget.appBar = item;
+        }
+      }
+
+      // FloatingActionButton
+      var floatingActionButton = json["floatingActionButton"];
+      if (floatingActionButton is Map<String, dynamic>) {
+        var item = fromJson(appBar);
+        if (item is SDUIButton) {
+          widget.floatingActionButton = item;
         }
       }
     }
