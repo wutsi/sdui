@@ -106,6 +106,12 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
           onPressed: () => _onSubmit(context),
         );
 
+      case "floatable":
+        return FloatingActionButton(
+          child: _createText(),
+          onPressed: () => _onSubmit(context),
+        );
+
       default:
         return ElevatedButton(
           child: _createText(),
@@ -136,7 +142,7 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
       } else {
         Widget icon = delegate.toIcon(delegate.icon,
             size: delegate.iconSize, color: delegate.iconColor)!;
-        if (delegate.caption != null) {
+        if (delegate.caption != null && delegate.caption?.isNotEmpty == true) {
           child = Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
@@ -148,8 +154,10 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
       }
     }
 
-    return Padding(
-        padding: EdgeInsets.all(delegate.padding ?? 15), child: child);
+    return delegate.type?.toLowerCase() == 'floatable'
+        ? child
+        : Padding(
+            padding: EdgeInsets.all(delegate.padding ?? 15), child: child);
   }
 
   void _onSubmit(BuildContext context) {
