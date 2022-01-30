@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.143] 2022-01-29
+- CHANGE: Add to `Container` support for `width`, `height` and `backgroundImageUrl`
+
 ## [0.0.142] 2022-01-29
 - CHANGE: Add support `FloatingActionButton`
 

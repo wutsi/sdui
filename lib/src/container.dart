@@ -12,6 +12,9 @@ import 'widget.dart';
 /// - **border**: Border size
 /// - **borderRadius**: Radius of the border
 /// - **borderColor**: Color of the border
+/// - **backgroundImageUrl**: Background Image
+/// - **width**: Width
+/// - **height**: Height
 class SDUIContainer extends SDUIWidget {
   String? alignment;
   double? padding;
@@ -20,6 +23,9 @@ class SDUIContainer extends SDUIWidget {
   double? border;
   double? borderRadius;
   String? borderColor;
+  String? backgroundImageUrl;
+  double? width;
+  double? height;
 
   SDUIContainer(
       {this.alignment,
@@ -36,6 +42,8 @@ class SDUIContainer extends SDUIWidget {
         padding: padding == null ? null : EdgeInsets.all(padding!),
         alignment: _toAlignment(),
         decoration: _toBoxDecoration(context),
+        width: width,
+        height: height,
       );
 
   Alignment? _toAlignment() {
@@ -79,16 +87,19 @@ class SDUIContainer extends SDUIWidget {
   }
 
   BoxDecoration _toBoxDecoration(BuildContext context) => BoxDecoration(
-        color: toColor(background),
-        border: border == null
-            ? null
-            : Border.all(
-                color: toColor(borderColor) ?? Theme.of(context).primaryColor,
-                width: border!,
-              ),
-        borderRadius:
-            borderRadius == null ? null : BorderRadius.circular(borderRadius!),
-      );
+      color: toColor(background),
+      border: border == null
+          ? null
+          : Border.all(
+              color: toColor(borderColor) ?? Theme.of(context).primaryColor,
+              width: border!,
+            ),
+      borderRadius:
+          borderRadius == null ? null : BorderRadius.circular(borderRadius!),
+      image: backgroundImageUrl == null
+          ? null
+          : DecorationImage(
+              image: NetworkImage(backgroundImageUrl!), fit: BoxFit.fill));
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -99,6 +110,9 @@ class SDUIContainer extends SDUIWidget {
     borderRadius = json?["borderRadius"];
     borderColor = json?["borderColor"];
     background = json?["background"];
+    background = json?["backgroundImageUrl"];
+    width = json?["width"];
+    height = json?["height"];
     return this;
   }
 }
