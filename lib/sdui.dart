@@ -1,6 +1,7 @@
 export 'src/action.dart';
 export 'src/analytics.dart';
 export 'src/appbar.dart';
+export 'src/aspect_ratio.dart';
 export 'src/button.dart';
 export 'src/camera.dart';
 export 'src/center.dart';

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.154] 2022-01-31
+- ADDED: Add `AspectRatio`
+- ADDED: Add `Text.maxLines`
+
 ## [0.0.151] 2022-01-31
 - ADDED: Add to `GridView`
 - ADDED: Add to `SingleChildScrollView`

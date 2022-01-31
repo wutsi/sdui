@@ -12,6 +12,7 @@ class SDUIText extends SDUIWidget {
   double? size;
   String? alignment;
   String? decoration;
+  int? maxLines;
 
   SDUIText(
       {this.caption,
@@ -29,6 +30,7 @@ class SDUIText extends SDUIWidget {
         overflow: _toTextOverflow(),
         style: _toTextStyle(),
         textAlign: _toTextAlign(),
+        maxLines: maxLines,
       );
 
   @override
@@ -41,6 +43,7 @@ class SDUIText extends SDUIWidget {
     size = json?['size'];
     alignment = json?['alignment'];
     decoration = json?['decoration'];
+    maxLines = json?['maxLines'];
     return this;
   }
 

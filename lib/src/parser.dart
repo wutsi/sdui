@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
+import 'package:sdui/src/aspect_ratio.dart';
 import 'package:sdui/src/logger.dart';
 
 import 'action.dart';
@@ -69,6 +70,9 @@ class SDUIParser {
     switch (type) {
       case "appbar":
         widget = SDUIAppBar();
+        break;
+      case "aspectratio":
+        widget = SDUIAspectRatio();
         break;
       case "button":
         widget = SDUIButton();
