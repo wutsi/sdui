@@ -18,6 +18,7 @@ import 'dropdown.dart';
 import 'expanded.dart';
 import 'flexible.dart';
 import 'form.dart';
+import 'grid_view.dart';
 import 'icon.dart';
 import 'icon_button.dart';
 import 'image.dart';
@@ -32,6 +33,7 @@ import 'qr_view.dart';
 import 'radio.dart';
 import 'row.dart';
 import 'screen.dart';
+import 'single_child_scroll_view.dart';
 import 'spacer.dart';
 import 'tab.dart';
 import 'text.dart';
@@ -110,6 +112,9 @@ class SDUIParser {
       case "form":
         widget = SDUIForm();
         break;
+      case "gridview":
+        widget = SDUIGridView();
+        break;
       case "icon":
         widget = SDUIIcon();
         break;
@@ -172,6 +177,9 @@ class SDUIParser {
         break;
       case "row":
         widget = SDUIRow();
+        break;
+      case "singlechildscrollview":
+        widget = SDUISingleChildScrollView();
         break;
       case "tab":
         widget = SDUITab();

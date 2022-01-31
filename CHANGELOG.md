@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.0.151] 2022-01-31
+- ADDED: Add to `GridView`
+- ADDED: Add to `SingleChildScrollView`
+
 ## [0.0.150] 2022-01-29
 - CHANGE: Add to `Container` support for `width`, `height` and `backgroundImageUrl
 - CHANGE: Add support `FloatingActionButton`
