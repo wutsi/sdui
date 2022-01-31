@@ -228,10 +228,7 @@ class SDUIParser {
       // FloatingActionButton
       var floatingActionButton = json["floatingActionButton"];
       if (floatingActionButton is Map<String, dynamic>) {
-        var item = fromJson(floatingActionButton);
-        if (item is SDUIButton) {
-          widget.floatingActionButton = item;
-        }
+        widget.floatingActionButton = fromJson(floatingActionButton);
       }
     }
 

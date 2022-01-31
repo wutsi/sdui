@@ -15,7 +15,7 @@ class SDUIScreen extends SDUIWidget {
   bool? safe;
   SDUIAppBar? appBar;
   String? backgroundColor;
-  SDUIButton? floatingActionButton;
+  SDUIWidget? floatingActionButton;
 
   @override
   Widget toWidget(BuildContext context) => GestureDetector(
