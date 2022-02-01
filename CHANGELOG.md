@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.0.155] 2022-02-01
+- ADDED: Add `Carousel`
+-
 ## [0.0.154] 2022-01-31
 - ADDED: Add `AspectRatio`
 - ADDED: Add `Text.maxLines`

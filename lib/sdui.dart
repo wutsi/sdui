@@ -4,6 +4,7 @@ export 'src/appbar.dart';
 export 'src/aspect_ratio.dart';
 export 'src/button.dart';
 export 'src/camera.dart';
+export 'src/carousel_slider.dart';
 export 'src/center.dart';
 export 'src/circle_avatar.dart';
 export 'src/column.dart';

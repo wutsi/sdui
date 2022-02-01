@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
-import 'package:sdui/src/aspect_ratio.dart';
-import 'package:sdui/src/logger.dart';
 
 import 'action.dart';
 import 'appbar.dart';
+import 'aspect_ratio.dart';
 import 'button.dart';
 import 'camera.dart';
+import 'carousel_slider.dart';
 import 'center.dart';
 import 'circle_avatar.dart';
 import 'column.dart';
@@ -25,6 +25,7 @@ import 'icon_button.dart';
 import 'image.dart';
 import 'input.dart';
 import 'list_view.dart';
+import 'logger.dart';
 import 'money.dart';
 import 'page_view.dart';
 import 'photo_view.dart';
@@ -79,6 +80,9 @@ class SDUIParser {
         break;
       case "camera":
         widget = SDUICamera();
+        break;
+      case "carouselslider":
+        widget = SDUICarouselSlider();
         break;
       case "center":
         widget = SDUICenter();

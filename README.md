@@ -110,15 +110,15 @@ class MyApp extends StatelessWidget {
   Map<String, WidgetBuilder> _routes() => {
         '/': (context) => const DynamicRoute(
             provider: HttpRouteContentProvider(
-                'http://myapp.herokuapp.com/screens/profile'))
+                'http://www.myapp.com/screens/profile'))
       };
 }
 ```
 
 ### Screenshots
-| Screen | Date Picker  | Alert Dialog |
-|--------|--------------|--------------|
-|![](doc/images/screenshot-01.png)|![](doc/images/screenshot-02.png)|![](doc/images/screenshot-03.png)
+| Screen                            | Date Picker                        | Alert Dialog                        |
+|-----------------------------------|------------------------------------|-------------------------------------|
+| ![](doc/images/screenshot-01.png) | ![](doc/images/screenshot-02.png)  | ![](doc/images/screenshot-03.png)   |
 
 ## Widgets
 In Flutter, UI is composed of a hierarchy of Widgets.
@@ -161,6 +161,7 @@ A widget is a visual element on a screen.
     - [SingleChildScrollView](https://pub.dev/documentation/sdui/latest/sdui/SDUISingleChildScrollView-class.html)
     - [Spacer](https://pub.dev/documentation/sdui/latest/sdui/SDUISpacer-class.html)
 - Images/Icons
+    - [CarouselSlider](https://pub.dev/documentation/sdui/latest/sdui/SDUICarouselSlider-class.html)
     - [CircleAvatar](https://pub.dev/documentation/sdui/latest/sdui/SDUICircleAvatar-class.html)
     - [Icon](https://pub.dev/documentation/sdui/latest/sdui/SDUIIcon-class.html)
     - [IconButton](https://pub.dev/documentation/sdui/latest/sdui/SDUIIconButton-class.html)
@@ -221,8 +222,13 @@ With actions, you can:
 }
 ```
 
-- `type`: Defines the type of action (Example: `Prompt`, `Command` or `Screen`)
+- `type`: Defines the type of action:
+  - `Command`: Remote action to execute. The screen is associated with a URL that will execute the command, and redirect the user to the next screen
+  - `Screen`: Screen to render. The screen is associated with a URL that return the content of the screen
+  - `Navigate`: Navigate user to a web page
+  - `Share`: Share a message to user via email/messenger/whatsapp etc.
 - `url`: is the URL associated with the action
+- `message`: Message to share
 - `prompt.type`: The type of prompt (Exemple: `Confirm`, `Error`, `Warning`, `Information`)
 - `prompt.title`: Title of the alert box to open
 - `prompt.message`: Message to display to the user
