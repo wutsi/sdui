@@ -5,14 +5,17 @@ import 'package:sdui/sdui.dart';
 ///
 /// ### JSON Attributes
 /// - **radius**: Radius
+/// - **backgroundColor**: Radius
 class SDUICircleAvatar extends SDUIWidget {
   double? radius;
+  String? backgroundColor;
 
   @override
   Widget toWidget(BuildContext context) => GestureDetector(
       onTap: () => _onTap(context),
       child: CircleAvatar(
         radius: radius,
+        backgroundColor: toColor(backgroundColor),
         child: ClipRRect(
           borderRadius: radius != null ? BorderRadius.circular(radius!) : null,
           child: child()?.toWidget(context),
@@ -22,6 +25,7 @@ class SDUICircleAvatar extends SDUIWidget {
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     radius = json?["radius"];
+    backgroundColor = json?["backgroundColor"];
     return super.fromJson(json);
   }
 
