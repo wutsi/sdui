@@ -135,7 +135,12 @@ class SDUIAction {
   }
 
   Future<String?> _share(BuildContext context) async {
-    await Share.share(message ?? '');
+    String msg = message ?? '';
+    if (url.isNotEmpty) {
+      msg = msg.isEmpty ? url : "$msg - $url";
+    }
+
+    await Share.share(msg);
     Future.value(null);
   }
 
