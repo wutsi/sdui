@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:search_choices/search_choices.dart';
 
 import 'form.dart';
 import 'widget.dart';
@@ -109,6 +110,82 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
         validator: (value) => _onValidate(value),
         items: _toItems(context),
       ));
+
+  List<DropdownMenuItem<String>> _toItems(BuildContext context) {
+    List<DropdownMenuItem<String>> items = <DropdownMenuItem<String>>[];
+    var children = delegate.childrenWidgets(context);
+    for (var i = 0; i < children.length; i++) {
+      var child = children[i];
+      if (child is DropdownMenuItem<String>) {
+        items.add(child);
+      }
+    }
+    return items;
+  }
+}
+
+/// Descriptor of a [SearchableDropdown]
+class SDUISearchableDropdown extends SDUIWidget with SDUIFormField {
+  String name = '_no_name_';
+  String? value;
+  String? hint;
+  bool? required;
+
+  @override
+  Widget toWidget(BuildContext context) => _SearchableDropdownWidget(this);
+
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    name = json?["name"] ?? '_no_name_';
+    value = json?["value"];
+    required = json?["required"];
+    hint = json?["hint"];
+    return super.fromJson(json);
+  }
+}
+
+class _SearchableDropdownWidget extends StatefulWidget {
+  final SDUISearchableDropdown delegate;
+
+  const _SearchableDropdownWidget(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<StatefulWidget> createState() => _SearchableDropdownState(delegate);
+}
+
+class _SearchableDropdownState extends State<_DropdownButtonWidget> {
+  SDUISearchableDropdown delegate;
+  String? state;
+
+  _SearchableDropdownState(this.delegate);
+
+  @override
+  void initState() {
+    super.initState();
+
+    state = delegate.value;
+    delegate.provider?.setData(delegate.name, state ?? '');
+  }
+
+  void _onChanged(String? value) {
+    delegate.provider?.setData(delegate.name, value ?? '');
+  }
+
+  String? _onValidate(String? value) {
+    if (delegate.required == true && (value == null || value.isEmpty)) {
+      return 'This field is required';
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) => SearchChoices.single(
+      items: _toItems(context),
+      onChanged: (value) => _onChanged(value),
+      validator: (value) => _onValidate(value),
+      hint: delegate.hint,
+      value: delegate.value);
 
   List<DropdownMenuItem<String>> _toItems(BuildContext context) {
     List<DropdownMenuItem<String>> items = <DropdownMenuItem<String>>[];

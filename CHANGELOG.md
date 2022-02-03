@@ -1,7 +1,11 @@
 # CHANGELOG
 
+## [0.0.164] 2022-02-02
+- CHANGE: Hide carousel indicator if less than 2 items
+
 ## [0.0.163] 2022-02-02
 - FIX: Action handling of IconButton and Button
+- ADD: Support for search dropdown
 
 ## [0.0.159] 2022-02-01
 - ADDED: Add `Carousel`

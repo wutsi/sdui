@@ -185,6 +185,7 @@ A widget is a visual element on a screen.
     - [QrImage](https://pub.dev/documentation/sdui/latest/sdui/SDUIQrImage-class.html)
     - [Radio](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadio-class.html)
     - [RadioGroup](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadioGroup-class.html)
+    - [SearchableDropdown](https://pub.dev/documentation/sdui/latest/sdui/SDUISearchableButton-class.html)
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)
 
 ### Global Variables

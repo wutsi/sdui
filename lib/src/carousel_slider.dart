@@ -60,22 +60,25 @@ class _CarouselSliderState extends State<_CarouselSliderWidget> {
               });
             }),
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: delegate.children.asMap().entries.map((entry) {
-          return Container(
-            width: 12.0,
-            height: 12.0,
-            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: (Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black)
-                    .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-          );
-        }).toList(),
-      )
+      delegate.children.length > 1
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: delegate.children.asMap().entries.map((entry) {
+                return Container(
+                  width: 12.0,
+                  height: 12.0,
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 4.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: (Theme.of(context).brightness == Brightness.dark
+                              ? Colors.white
+                              : Colors.black)
+                          .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+                );
+              }).toList(),
+            )
+          : Container()
     ]);
   }
 }
