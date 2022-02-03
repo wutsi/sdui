@@ -177,6 +177,9 @@ class SDUIParser {
       case "radiogroup":
         widget = SDUIRadioGroup();
         break;
+      case "searchabledropdown":
+        widget = SDUISearchableDropdown();
+        break;
       case "screen":
         widget = SDUIScreen();
         break;
