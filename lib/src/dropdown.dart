@@ -154,7 +154,7 @@ class _SearchableDropdownWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _SearchableDropdownState(delegate);
 }
 
-class _SearchableDropdownState extends State<_DropdownButtonWidget> {
+class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
   SDUISearchableDropdown delegate;
   String? state;
 
@@ -181,11 +181,13 @@ class _SearchableDropdownState extends State<_DropdownButtonWidget> {
 
   @override
   Widget build(BuildContext context) => SearchChoices.single(
-      items: _toItems(context),
-      onChanged: (value) => _onChanged(value),
-      validator: (value) => _onValidate(value),
-      hint: delegate.hint,
-      value: delegate.value);
+        items: _toItems(context),
+        onChanged: (value) => _onChanged(value),
+        validator: (value) => _onValidate(value),
+        hint: delegate.hint,
+        value: delegate.value,
+        isExpanded: true,
+      );
 
   List<DropdownMenuItem<String>> _toItems(BuildContext context) {
     List<DropdownMenuItem<String>> items = <DropdownMenuItem<String>>[];

@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.0.167] 2022-02-02
+## [0.1.3] 2022-02-02
 - CHANGE: Hide carousel indicator if less than 2 items
 - ADD: SearchableDropdown
 
