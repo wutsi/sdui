@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.9] 2022-02-05
+- ADD: `Badge`
+
 ## [0.1.8] 2022-02-05
 - ADD: `Stack`
 - ADD: `Positionned`
