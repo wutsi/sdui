@@ -89,8 +89,9 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
     delegate.provider?.setData(delegate.name, state ?? '');
   }
 
-  void _onChanged(String? value) {
+  void _onChanged(BuildContext context, String? value) {
     delegate.provider?.setData(delegate.name, value ?? '');
+    delegate.action.execute(context, {delegate.name: value});
   }
 
   String? _onValidate(String? value) {
@@ -106,7 +107,9 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
       child: DropdownButtonFormField<String>(
         value: state,
         hint: delegate.hint == null ? null : Text(delegate.hint!),
-        onChanged: (value) => _onChanged(value),
+        decoration:
+            const InputDecoration(border: OutlineInputBorder(gapPadding: 2.0)),
+        onChanged: (value) => _onChanged(context, value),
         validator: (value) => _onValidate(value),
         items: _toItems(context),
       ));

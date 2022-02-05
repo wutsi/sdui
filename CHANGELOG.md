@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.7] 2022-02-05
+- CHANGE: `DropdownButton` execute its action
+- CHANGE: `DropdownButton` Add border outline
+
 ## [0.1.3] 2022-02-02
 - CHANGE: Hide carousel indicator if less than 2 items
 - ADD: SearchableDropdown

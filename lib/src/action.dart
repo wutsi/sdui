@@ -168,7 +168,7 @@ class SDUIAction {
   }
 
   Future<String?> _gotoRoute(BuildContext context, Map<String, dynamic>? data) {
-    _logger.i('Goto route $url');
+    _logger.i('Goto route $url - data=$data');
     if (_isRoute()) {
       var route = url.substring(6);
       if (route == '/..') {
@@ -188,14 +188,16 @@ class SDUIAction {
           context,
           MaterialPageRoute(
               builder: (context) => DynamicRoute(
-                  provider: HttpRouteContentProvider(_urlWithParameters()))),
+                  provider: HttpRouteContentProvider(_urlWithParameters(),
+                      data: data))),
         );
       } else {
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => DynamicRoute(
-                  provider: HttpRouteContentProvider(_urlWithParameters()))),
+                  provider: HttpRouteContentProvider(_urlWithParameters(),
+                      data: data))),
         );
       }
     }
@@ -204,7 +206,7 @@ class SDUIAction {
 
   Future<String> _executeCommand(
       BuildContext context, Map<String, dynamic>? data) async {
-    _logger.i('Execute command $url');
+    _logger.i('Execute command $url - data=$data');
     return await Http.getInstance().post(_urlWithParameters(), data);
   }
 
