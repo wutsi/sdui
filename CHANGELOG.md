@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.8] 2022-02-05
+- ADD: `Stack`
+- ADD: `Positionned`
+
 ## [0.1.7] 2022-02-05
 - CHANGE: `DropdownButton` execute its action
 - CHANGE: `DropdownButton` Add border outline

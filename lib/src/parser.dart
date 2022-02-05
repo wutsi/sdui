@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'action.dart';
 import 'appbar.dart';
 import 'aspect_ratio.dart';
+import 'badge.dart';
 import 'button.dart';
 import 'camera.dart';
 import 'carousel_slider.dart';
@@ -30,6 +31,7 @@ import 'money.dart';
 import 'page_view.dart';
 import 'photo_view.dart';
 import 'pin_with_keyboard.dart';
+import 'positioned.dart';
 import 'qr_image.dart';
 import 'qr_view.dart';
 import 'radio.dart';
@@ -37,6 +39,7 @@ import 'row.dart';
 import 'screen.dart';
 import 'single_child_scroll_view.dart';
 import 'spacer.dart';
+import 'stack.dart';
 import 'tab.dart';
 import 'text.dart';
 import 'widget.dart';
@@ -74,6 +77,9 @@ class SDUIParser {
         break;
       case "aspectratio":
         widget = SDUIAspectRatio();
+        break;
+      case "badge":
+        widget = SDUIBadge();
         break;
       case "button":
         widget = SDUIButton();
@@ -165,6 +171,9 @@ class SDUIParser {
       case 'pinwithkeyboard':
         widget = SDUIPinWidthKeyboard().fromJson(json);
         break;
+      case 'positioned':
+        widget = SDUIPositioned().fromJson(json);
+        break;
       case 'qrimage':
         widget = SDUIQrImage().fromJson(json);
         break;
@@ -191,6 +200,9 @@ class SDUIParser {
         break;
       case "singlechildscrollview":
         widget = SDUISingleChildScrollView();
+        break;
+      case "stack":
+        widget = SDUIStack();
         break;
       case "tab":
         widget = SDUITab();

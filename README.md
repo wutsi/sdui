@@ -157,7 +157,9 @@ A widget is a visual element on a screen.
     - [Expanded](https://pub.dev/documentation/sdui/latest/sdui/SDUIExpanded-class.html)
     - [Flexible](https://pub.dev/documentation/sdui/latest/sdui/SDUIFlexible-class.html)
     - [GridView](https://pub.dev/documentation/sdui/latest/sdui/SDUIGridView-class.html)
+    - [Positioned](https://pub.dev/documentation/sdui/latest/sdui/SDUIPositioned-class.html)
     - [Row](https://pub.dev/documentation/sdui/latest/sdui/SDUIRow-class.html)
+    - [Stack](https://pub.dev/documentation/sdui/latest/sdui/SDUIStack-class.html)
     - [SingleChildScrollView](https://pub.dev/documentation/sdui/latest/sdui/SDUISingleChildScrollView-class.html)
     - [Spacer](https://pub.dev/documentation/sdui/latest/sdui/SDUISpacer-class.html)
 - Images/Icons
@@ -168,6 +170,7 @@ A widget is a visual element on a screen.
     - [Image](https://pub.dev/documentation/sdui/latest/sdui/SDUIImage-class.html)
     - [PhotoView](https://pub.dev/documentation/sdui/latest/sdui/SDUIPhotoView-class.html)
 - Input widgets
+    - [Badge](https://pub.dev/documentation/sdui/latest/sdui/SDUIBadge-class.html)
     - [Button](https://pub.dev/documentation/sdui/latest/sdui/SDUIButton-class.html)
     - [Camera](https://pub.dev/documentation/sdui/latest/sdui/SDUICamera-class.html)
     - [DropdownButton](https://pub.dev/documentation/sdui/latest/sdui/SDUIDropdownButton-class.html)
