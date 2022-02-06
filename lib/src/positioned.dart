@@ -19,4 +19,16 @@ class SDUIPositioned extends SDUIWidget {
       width: width,
       height: height,
       child: child()?.toWidget(context) ?? Container());
+
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    top = json?["top"];
+    bottom = json?["bottom"];
+    right = json?["right"];
+    left = json?["left"];
+    width = json?["width"];
+    height = json?["height"];
+
+    return super.fromJson(json);
+  }
 }
