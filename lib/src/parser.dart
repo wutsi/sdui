@@ -11,6 +11,7 @@ import 'button.dart';
 import 'camera.dart';
 import 'carousel_slider.dart';
 import 'center.dart';
+import 'chip.dart';
 import 'circle_avatar.dart';
 import 'column.dart';
 import 'container.dart';
@@ -92,6 +93,9 @@ class SDUIParser {
         break;
       case "center":
         widget = SDUICenter();
+        break;
+      case "chip":
+        widget = SDUIChip();
         break;
       case "column":
         widget = SDUIColumn();
