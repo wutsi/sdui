@@ -16,7 +16,11 @@ class SDUIImage extends SDUIWidget {
       width: width,
       height: height,
       fit: _toFit(),
-      placeholder: (context, url) => const CircularProgressIndicator(),
+      placeholder: (context, url) => Container(
+          alignment: Alignment.center,
+          width: 16.0,
+          height: 16.0,
+          child: const CircularProgressIndicator()),
       errorWidget: (context, url, error) => const Icon(Icons.error));
 
   @override

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.14] 2022-02-09
+- CHANGE: Change the size of image circular-loader
+
 ## [0.1.13] 2022-02-06
 - ADD: `Chip`
 
