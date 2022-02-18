@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.17] 2022-02-09
+- CHANGE: Add `caption` and `backgrounColor` to `Badge` and `Chip`
+
 ## [0.1.14] 2022-02-09
 - CHANGE: Change the size of image circular-loader
 

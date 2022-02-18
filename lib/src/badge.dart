@@ -7,29 +7,45 @@ import 'widget.dart';
 class SDUIBadge extends SDUIWidget {
   String? shape;
   String? color;
+  String? backgroundColor;
   double? borderRadius;
   String? position;
   double? elevation;
+  String? caption;
+  double? fontSize;
+  double? padding;
 
   @override
   Widget toWidget(BuildContext context) => Badge(
         elevation: elevation ?? 2,
-        badgeColor: toColor(color) ?? Colors.red,
+        badgeColor: toColor(backgroundColor) ?? Colors.red,
         borderRadius: borderRadius == null
             ? BorderRadius.zero
             : BorderRadius.all(Radius.circular(borderRadius!)),
         shape: _toBadgeShape(shape),
         position: _toBadgePosition(position),
         child: child()?.toWidget(context),
+        padding: EdgeInsets.all(padding ?? 5.0),
+        badgeContent: caption != null
+            ? Text(
+                caption!,
+                style: TextStyle(
+                    color: toColor(color) ?? Colors.white, fontSize: fontSize),
+              )
+            : null,
       );
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     shape = json?["shape"];
+    backgroundColor = json?["backgroundColor"];
     color = json?["color"];
+    caption = json?["caption"];
     borderRadius = json?["borderRadius"];
     position = json?["position"];
     elevation = json?["elevation"];
+    fontSize = json?["fontSize"];
+    padding = json?["padding"];
 
     return super.fromJson(json);
   }
@@ -45,13 +61,13 @@ class SDUIBadge extends SDUIWidget {
     switch (position?.toLowerCase()) {
       case "center":
         return BadgePosition.center();
-      case "topEnd":
+      case "topend":
         return BadgePosition.topEnd();
-      case "topStart":
+      case "topstart":
         return BadgePosition.topStart();
-      case "bottomEnd":
+      case "bottomend":
         return BadgePosition.bottomEnd();
-      case "bottomStart":
+      case "bottomstart":
         return BadgePosition.bottomStart();
     }
     return null;
