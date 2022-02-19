@@ -51,6 +51,8 @@ class SDUIDropdownButton extends SDUIWidget with SDUIFormField {
   String? value;
   String? hint;
   bool? required;
+  bool? stretched;
+  bool? outlinedBorder;
 
   @override
   Widget toWidget(BuildContext context) => _DropdownButtonWidget(this);
@@ -61,6 +63,8 @@ class SDUIDropdownButton extends SDUIWidget with SDUIFormField {
     value = json?["value"];
     required = json?["required"];
     hint = json?["hint"];
+    stretched = json?["stretched"];
+    outlinedBorder = json?["outlinedBorder"];
     return super.fromJson(json);
   }
 }
@@ -91,7 +95,8 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
 
   void _onChanged(BuildContext context, String? value) {
     delegate.provider?.setData(delegate.name, value ?? '');
-    delegate.action.execute(context, {delegate.name: value});
+    delegate.action.execute(context, {delegate.name: value}).then(
+        (value) => delegate.action.handleResult(context, value));
   }
 
   String? _onValidate(String? value) {
@@ -102,17 +107,20 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-      width: double.infinity,
-      child: DropdownButtonFormField<String>(
+  Widget build(BuildContext context) => delegate.stretched ?? true
+      ? SizedBox(width: double.infinity, child: _button())
+      : _button();
+
+  DropdownButtonFormField _button() => DropdownButtonFormField<String>(
         value: state,
         hint: delegate.hint == null ? null : Text(delegate.hint!),
-        decoration:
-            const InputDecoration(border: OutlineInputBorder(gapPadding: 2.0)),
+        decoration: delegate.outlinedBorder ?? true
+            ? const InputDecoration(border: OutlineInputBorder(gapPadding: 2.0))
+            : null,
         onChanged: (value) => _onChanged(context, value),
         validator: (value) => _onValidate(value),
         items: _toItems(context),
-      ));
+      );
 
   List<DropdownMenuItem<String>> _toItems(BuildContext context) {
     List<DropdownMenuItem<String>> items = <DropdownMenuItem<String>>[];
