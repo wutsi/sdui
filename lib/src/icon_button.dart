@@ -22,7 +22,9 @@ class SDUIIconButton extends SDUIWidget {
         icon: icon == null ? const Icon(Icons.warning) : toIcon(icon)!,
         color: toColor(color),
         tooltip: tooltip,
-        onPressed: () => action.execute(context, null),
+        onPressed: () => action
+            .execute(context, null)
+            .then((value) => action.handleResult(context, value)),
       );
 
   @override

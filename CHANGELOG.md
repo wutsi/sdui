@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.22] 2022-02-22
+- CHANGE: Improve exception handling
+
 ## [0.1.21] 2022-02-19
 - CHANGE: Add `caption` and `backgrounColor` to `Badge` and `Chip`
 - CHANGE: Add properties for stretching dropdown
