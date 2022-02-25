@@ -52,6 +52,7 @@ class HttpRouteContentProvider implements RouteContentProvider {
   String toString() => "StaticRouteContentProvider(url=$_url)";
 }
 
+
 /// Dynamic Route
 class DynamicRoute extends StatefulWidget {
   final RouteContentProvider provider;

@@ -18,6 +18,7 @@ import 'container.dart';
 import 'dialog.dart';
 import 'divider.dart';
 import 'dropdown.dart';
+import 'dynamic_widget.dart';
 import 'expanded.dart';
 import 'flexible.dart';
 import 'form.dart';
@@ -120,6 +121,9 @@ class SDUIParser {
         break;
       case "dropdownmenuitem":
         widget = SDUIDropdownMenuItem();
+        break;
+      case "dynamicwidget":
+        widget = SDUIDynamicWidget();
         break;
       case "expanded":
         widget = SDUIExpanded();

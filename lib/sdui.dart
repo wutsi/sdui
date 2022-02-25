@@ -14,6 +14,7 @@ export 'src/container.dart';
 export 'src/dialog.dart';
 export 'src/divider.dart';
 export 'src/dropdown.dart';
+export 'src/dynamic_widget.dart';
 export 'src/error.dart';
 export 'src/expanded.dart';
 export 'src/flexible.dart';

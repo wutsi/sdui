@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.23] 2022-02-25
+- ADD: DynamicWidget
+
 ## [0.1.22] 2022-02-22
 - CHANGE: Improve exception handling
 
