@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import 'action.dart';
@@ -82,6 +83,12 @@ class SDUIParser {
         break;
       case "badge":
         widget = SDUIBadge();
+        break;
+      case "bottomnavigationbar":
+        widget = SDUIBottomNavigationBar();
+        break;
+      case "bottomnavigationbaritem":
+        widget = SDUIBottomNavigationBarItem();
         break;
       case "button":
         widget = SDUIButton();
@@ -268,6 +275,15 @@ class SDUIParser {
       var floatingActionButton = json["floatingActionButton"];
       if (floatingActionButton is Map<String, dynamic>) {
         widget.floatingActionButton = fromJson(floatingActionButton);
+      }
+
+      // BottomNavigationBar
+      var bottomNavigationBar = json["bottomNavigationBar"];
+      if (bottomNavigationBar is Map<String, dynamic>) {
+        SDUIWidget item = fromJson(bottomNavigationBar);
+        if (item is SDUIBottomNavigationBar) {
+          widget.bottomNavigationBar = item;
+        }
       }
     }
 

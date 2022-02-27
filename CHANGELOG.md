@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.26] 2022-02-26
+- ADD: BottomNavigationBar
+
 ## [0.1.23] 2022-02-25
 - ADD: DynamicWidget
 
