@@ -41,7 +41,7 @@ class SDUIBottomNavigationBar extends SDUIWidget{
       iconSize: iconSize ?? 24.0,
       elevation: elevation,
       currentIndex: currentIndex ?? 0,
-      onTap: (index) => action.execute(context, {}),
+      onTap: (index) => (children[index] as SDUIBottomNavigationBarItem).action.execute(context, {}),
   );
 
   @override
