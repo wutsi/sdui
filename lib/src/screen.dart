@@ -30,19 +30,28 @@ class SDUIBottomNavigationBar extends SDUIWidget{
   int? currentIndex;
 
   @override
-  Widget toWidget(BuildContext context) => BottomNavigationBar(
-      items: children.map((e) => BottomNavigationBarItem(
-          icon: toIcon((e as SDUIBottomNavigationBarItem).icon) ?? const Icon(Icons.error),
-          label: e.caption
-      )).toList(),
+  Widget toWidget(BuildContext context) {
+    List<BottomNavigationBarItem> items = children.map((e) =>
+        BottomNavigationBarItem(
+            icon: toIcon((e as SDUIBottomNavigationBarItem).icon) ??
+                const Icon(Icons.error),
+            label: e.caption
+        )
+    ).toList();
+    return BottomNavigationBar(
+      items: items,
       backgroundColor: toColor(background),
       selectedItemColor: toColor(selectedItemColor),
       unselectedItemColor: toColor(unselectedItemColor),
       iconSize: iconSize ?? 24.0,
       elevation: elevation,
       currentIndex: currentIndex ?? 0,
-      onTap: (index) => (children[index] as SDUIBottomNavigationBarItem).action.execute(context, {}),
-  );
+      type : BottomNavigationBarType.fixed,
+      onTap: (index) =>
+          (children[index] as SDUIBottomNavigationBarItem).action.execute(
+              context, {}),
+    );
+  }
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
