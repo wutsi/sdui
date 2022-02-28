@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.30] 2022-02-29
+- CHANGE: Fix deserialization of Screen
+
 ## [0.1.29] 2022-02-26
 - ADD: BottomNavigationBar
 

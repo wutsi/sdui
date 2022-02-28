@@ -96,4 +96,12 @@ class SDUIScreen extends SDUIWidget {
             bottomNavigationBar: bottomNavigationBar?.toWidget(context)));
 
   Widget _child(BuildContext context) => hasChildren() ? child()!.toWidget(context) : Container();
+
+
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    safe = json?["safe"];
+    backgroundColor = json?["backgroundColor"];
+    return super.fromJson(json);
+  }
 }
