@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'appbar.dart';
 import 'button.dart';
-import 'route.dart';
 import 'widget.dart';
 
 class SDUIBottomNavigationBarItem extends SDUIWidget {
   String? caption;
   String? icon;
 
+  @override
   SDUIBottomNavigationBarItem fromJson(Map<String, dynamic>? json) {
     caption = json?["caption"];
     icon = json?["icon"];

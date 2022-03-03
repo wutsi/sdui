@@ -60,7 +60,8 @@ class SDUIListItem extends SDUIWidget {
         trailing: trailing?.toWidget(context) ?? toIcon(iconRight, size: 48),
         contentPadding: padding == null ? null : EdgeInsets.all(padding!),
         onTap: () {
-          action.execute(context, null);
+          action.execute(context, null)
+            .then((value) => action.handleResult(context, value));
         },
       );
 

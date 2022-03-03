@@ -136,7 +136,9 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     }
     if (type == 'url' && !empty) {
       try {
-        Uri.parse(value);
+        if (!Uri.parse(value).isAbsolute) {
+          return "Malformed URL";
+        }
       } catch (e) {
         return "Malformed URL";
       }

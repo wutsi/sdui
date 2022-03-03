@@ -33,30 +33,34 @@ class SDUIRadio extends SDUIWidget {
 class SDUIRadioGroup extends SDUIWidget with SDUIFormField {
   String name = '<no-name>';
   String? value;
+  bool? separator;
+  String? separatorColor;
 
   @override
-  Widget toWidget(BuildContext context) => RadioGroupWidget(this);
+  Widget toWidget(BuildContext context) => _RadioGroupWidget(this);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     super.fromJson(json);
     name = json?["name"] ?? '<no-name>';
     value = json?["value"];
+    separator = json?["separator"];
+    separatorColor = json?["separatorColor"];
     return this;
   }
 }
 
-class RadioGroupWidget extends StatefulWidget {
+class _RadioGroupWidget extends StatefulWidget {
   final SDUIRadioGroup delegate;
 
-  const RadioGroupWidget(this.delegate, {Key? key}) : super(key: key);
+  const _RadioGroupWidget(this.delegate, {Key? key}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
   _RadioGroupState createState() => _RadioGroupState(delegate);
 }
 
-class _RadioGroupState extends State<RadioGroupWidget> {
+class _RadioGroupState extends State<_RadioGroupWidget> {
   String state = '';
   SDUIRadioGroup delegate;
 
@@ -73,16 +77,33 @@ class _RadioGroupState extends State<RadioGroupWidget> {
   Widget build(BuildContext context) => ListView(
           children: delegate.children.map((e) {
         if (e is SDUIRadio) {
-          return RadioListTile<String>(
+          return _toListItem(
+              RadioListTile<String>(
               title: Text(e.caption ?? '<NO-TITLE>'),
               subtitle: e.subCaption == null ? null : Text(e.subCaption ?? ''),
               value: e.value ?? '',
               groupValue: state,
-              onChanged: (String? v) => _onChange(context, v));
+              onChanged: (String? v) => _onChange(context, v)));
         } else {
-          return e.toWidget(context);
+          return _toListItem(e.toWidget(context));
         }
       }).toList());
+
+  Widget _toListItem(Widget item) {
+    if (delegate.separator == true) {
+      return Column(
+        children: [
+          item,
+          Divider(
+            height: 1,
+            color: delegate.toColor(delegate.separatorColor),
+          )
+        ],
+      );
+    } else {
+      return item;
+    }
+  }
 
   void _onChange(BuildContext context, String? value) {
     var val = value ?? '';
@@ -93,7 +114,9 @@ class _RadioGroupState extends State<RadioGroupWidget> {
 
     var data = <String, String>{};
     data[(delegate.name)] = val;
-    delegate.action.execute(context, data);
+    delegate.action
+        .execute(context, data)
+        .then((value) => delegate.action.handleResult(context, value));
     delegate.provider?.setData(delegate.name, state.toString());
   }
 }

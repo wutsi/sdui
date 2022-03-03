@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.32] 2022-03-03
+- CHANGE: Fix action handling
+- FIX: Fix input URL validation
+
 ## [0.1.30] 2022-02-29
 - CHANGE: Fix deserialization of Screen
 
