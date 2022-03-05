@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:sdui/sdui.dart';
 import 'package:search_choices/search_choices.dart';
 
 import 'form.dart';
@@ -166,6 +168,7 @@ class _SearchableDropdownWidget extends StatefulWidget {
 }
 
 class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
+  static final Logger _logger = LoggerFactory.create('_SearchableDropdownState');
   SDUISearchableDropdown delegate;
   String? state;
 
@@ -198,7 +201,41 @@ class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
         hint: delegate.hint,
         value: delegate.value,
         isExpanded: true,
+        searchFn: _search,
       );
+
+  List<int> _search(String? keyword, List<DropdownMenuItem<String>> items){
+    _logger.i('...search keyword=$keyword');
+    List<int> shownIndexes = [];
+    int i = 0;
+    for (var item in items) {
+      if ((keyword?.isEmpty ?? true) || _matches(keyword!, item)) {
+        shownIndexes.add(i);
+      }
+      i++;
+    }
+    return shownIndexes;
+  }
+
+  bool _matches(String keyword, DropdownMenuItem<String> item){
+    String? text = _toText(item.child);
+    _logger.i('......keywordd=$keyword text=$text');
+    return text == null || text.toLowerCase().contains(keyword.toLowerCase());
+  }
+
+  String? _toText(Widget child){
+    Text? text;
+    if (child is Text){
+      text = child;
+    } else if (child is Row){
+      for (var element in child.children) {
+        if (element is Text){
+          text = element;
+        }
+      }
+    }
+    return text?.data;
+  }
 
   List<DropdownMenuItem<String>> _toItems(BuildContext context) {
     List<DropdownMenuItem<String>> items = <DropdownMenuItem<String>>[];

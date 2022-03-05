@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.35] 2022-03-04
+- FIX: Search function of the searchable dropdown
+
 ## [0.1.32] 2022-03-03
 - CHANGE: Fix action handling
 - FIX: Fix input URL validation
