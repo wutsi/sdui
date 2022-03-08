@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.40] 2022-03-08
+- FIX: Navigation on dropdown
+
 ## [0.1.35] 2022-03-04
 - FIX: Search function of the searchable dropdown
 

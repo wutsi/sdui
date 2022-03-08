@@ -68,13 +68,13 @@ class SDUIParser {
   }
 
   SDUIWidget fromJson(Map<String, dynamic> json) {
-    var type = json["type"].toString().toLowerCase();
+    var type = json["type"];
     var id = json["attributes"]?["id"];
 
     _logger.i('...Parsing $type' + (id == null ? '' : ' id=$id'));
 
     SDUIWidget? widget;
-    switch (type) {
+    switch (type?.toLowerCase()) {
       case "appbar":
         widget = SDUIAppBar();
         break;

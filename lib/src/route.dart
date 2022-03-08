@@ -70,6 +70,8 @@ class DynamicRoute extends StatefulWidget {
 class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   static final Logger _logger = LoggerFactory.create('DynamicRouteState');
   static Map<int, String?> statusCodeRoutes = {};
+  static final List<String> _history = [];
+
   final RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
@@ -106,7 +108,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
             if (snapshot.hasData) {
               sduiWidget =
                   SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
-              sduiWidget!.attachPageController(pageController);
+              sduiWidget?.attachPageController(pageController);
               return sduiWidget!.toWidget(context);
             } else if (snapshot.hasError) {
               // Log
@@ -132,30 +134,62 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
             return sduiLoadingState(context);
           }));
 
+  void _push(String? pageId) {
+    if (pageId != null && pageId != _peek()) {
+      _history.add(pageId);
+      _logger.i('...push($pageId) - history=$_history');
+    }
+  }
+
+  void _pop() {
+    if (_history.isNotEmpty) {
+      _history.removeAt(_history.length - 1);
+      _logger.i('...pop() - history=$_history');
+    }
+  }
+
+  String? _peek() => _history.isEmpty ? null : _history.last;
+
+
   @override
   void didPush() {
+    _logger.i('didPush() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
     super.didPush();
 
     _notifyAnalytics();
   }
 
   @override
-  void didPop() {
-    super.didPop();
+  void didPushNext() {
+    _logger.i('didPushNext() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
+    super.didPush();
 
-    _notifyAnalytics();
+    _push(sduiWidget?.id);
+  }
+
+  @override
+  void didPop() {
+    _logger.i('didPop() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
+    super.didPop();
   }
 
   @override
   void didPopNext() {
+    _logger.i('didPopNext() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
     super.didPopNext();
 
-    _notifyAnalytics();
+    if (_peek() != sduiWidget?.id) {
+    // This is for handling the case where dropdown are opened.. we do not want to refresh the page
 
-    // Force refresh of the page
-    setState(() {
-      _reload();
-    });
+      _notifyAnalytics();
+
+      // Force refresh of the page
+      setState(() {
+        _reload();
+      });
+    } else {
+      _pop();
+    }
   }
 
   void _notifyAnalytics() {
