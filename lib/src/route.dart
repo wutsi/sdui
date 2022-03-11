@@ -109,6 +109,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
               sduiWidget =
                   SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
               sduiWidget?.attachPageController(pageController);
+              _push(sduiWidget?.id);
               return sduiWidget!.toWidget(context);
             } else if (snapshot.hasError) {
               // Log
@@ -164,32 +165,30 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     _logger.i('didPushNext() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
     super.didPush();
 
-    _push(sduiWidget?.id);
+    // _push(sduiWidget?.id);
   }
 
   @override
   void didPop() {
     _logger.i('didPop() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
     super.didPop();
-
-    if (_history.isEmpty || _peek() != sduiWidget?.id) {
-      // This is for handling the case where dropdown are opened.. we do not want to refresh the page
-
-      _notifyAnalytics();
-
-      // Force refresh of the page
-      setState(() {
-        _reload();
-      });
-    } else {
-      _pop();
-    }
   }
 
   @override
   void didPopNext() {
     _logger.i('didPopNext() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
     super.didPopNext();
+
+    if (_history.isEmpty || _peek() != sduiWidget?.id) {
+      _logger.i('... Reloading the page');
+      _pop();
+      _notifyAnalytics();
+
+      // Force refresh of the page
+      setState(() {
+        _reload();
+      });
+    }
   }
 
   void _notifyAnalytics() {

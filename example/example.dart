@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   Map<String, WidgetBuilder> _routes() => {
         '/': (context) => const HomeScreen(),
         '/remote': (context) => const DynamicRoute(
-            provider: HttpRouteContentProvider('http://10.0.2.2:8080/settings/store')),
+            provider: HttpRouteContentProvider('http://10.0.2.2:8080')),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(json)),
         '/401': (context) => const Error401()
