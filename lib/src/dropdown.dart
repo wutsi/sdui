@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:sdui/sdui.dart';
 import 'package:search_choices/search_choices.dart';
 
 import 'form.dart';
+import 'logger.dart';
 import 'widget.dart';
 
 /// Descriptor of a widget [DropdownMenuItem].

@@ -171,15 +171,9 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   void didPop() {
     _logger.i('didPop() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
     super.didPop();
-  }
 
-  @override
-  void didPopNext() {
-    _logger.i('didPopNext() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
-    super.didPopNext();
-
-    if (_peek() != sduiWidget?.id) {
-    // This is for handling the case where dropdown are opened.. we do not want to refresh the page
+    if (_history.isEmpty || _peek() != sduiWidget?.id) {
+      // This is for handling the case where dropdown are opened.. we do not want to refresh the page
 
       _notifyAnalytics();
 
@@ -190,6 +184,12 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     } else {
       _pop();
     }
+  }
+
+  @override
+  void didPopNext() {
+    _logger.i('didPopNext() - widget.id=${sduiWidget?.id} - peek=${_peek()}');
+    super.didPopNext();
   }
 
   void _notifyAnalytics() {

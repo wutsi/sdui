@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.41] 2022-03-11
+- FIX: Reload home page
+
 ## [0.1.40] 2022-03-08
 - FIX: Navigation on dropdown
 
