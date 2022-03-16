@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:logger/logger.dart';
+import 'package:mime/mime.dart';
 
 import 'button.dart';
 import 'form.dart';
@@ -25,6 +29,7 @@ import 'widget.dart';
 ///    - `time`: Time
 ///    - `image`
 ///    - `video`
+///    - 'file'
 /// - **value**: Default value.
 ///    - When `type=date`, the format should be `yyyy-MM-dd` (Ex: 2020-07-30)
 ///    - When `type=time`, the format should be `HH:mm` (Ex: 23:30)
@@ -117,6 +122,9 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
       case 'image':
       case 'video':
         return _ImageWidgetStateful(this);
+
+      case 'file':
+        return _FileWidgetStateful(this);
 
       default:
         return _TextFieldWidgetStateful(this);
@@ -490,5 +498,51 @@ class _ImageWidgetState extends State<_ImageWidgetStateful> {
           .then((value) => delegate.action.execute(context, null));
     }
     return file?.name;
+  }
+}
+
+/// File
+class _FileWidgetStateful extends StatefulWidget {
+  final SDUIInput delegate;
+
+  const _FileWidgetStateful(this.delegate, {Key? key}) : super(key: key);
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<StatefulWidget> createState() => _FileWidgetState(delegate);
+}
+
+class _FileWidgetState extends State<_FileWidgetStateful> {
+  SDUIInput delegate;
+  SDUIButton button = SDUIButton();
+
+  _FileWidgetState(this.delegate);
+
+  @override
+  void initState() {
+    super.initState();
+
+    button = SDUIButton(
+        caption: delegate.caption,
+        type: "text",
+        onPressed: (context) => _onPressed(context));
+    button.action.pageController = delegate.action.pageController;
+  }
+
+  @override
+  Widget build(BuildContext context) => button.toWidget(context);
+
+  Future<String?> _onPressed(BuildContext context) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    File? file = result != null ? File(result.files.single.path!) : null;
+
+    if (file != null) {
+      String? mimeType = lookupMimeType(file.path);
+      Http.getInstance()
+          .uploadStream(delegate.uploadUrl!, delegate.name, file.path,
+              file.readAsBytes().asStream(), mimeType, await file.length())
+          .then((value) => delegate.action.execute(context, null));
+    }
+    return file?.path;
   }
 }

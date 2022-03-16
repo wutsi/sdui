@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.1.45] 2022-03-16
+- ADDED: Input file picker
+
 ## [0.1.44] 2022-03-11
 - FIX: Reload home page
 
