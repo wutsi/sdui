@@ -141,7 +141,7 @@ class SDUIAction {
     }
 
     await Share.share(msg);
-    Future.value(null);
+    return null;
   }
 
   Future<String?> _prompt(BuildContext context) {
