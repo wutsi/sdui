@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.47] 2022-03-17
+
+- FIX: Chip color
+
 ## [0.1.46] 2022-03-16
 
 - ADDED: Input file picker
