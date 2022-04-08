@@ -18,6 +18,9 @@ class SDUIMoneyText extends SDUIWidget {
   String? currency;
   String? color;
   String? numberFormat;
+  double? valueFontSize;
+  double? currencyFontSize;
+  bool? bold;
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -25,6 +28,9 @@ class SDUIMoneyText extends SDUIWidget {
     currency = json?['currency'];
     color = json?['color'];
     numberFormat = json?['numberFormat'];
+    valueFontSize = json?['valueFontSize'];
+    currencyFontSize = json?['currencyFontSize'];
+    bold = json?['bold'];
     return super.fromJson(json);
   }
 
@@ -34,6 +40,9 @@ class SDUIMoneyText extends SDUIWidget {
         currency: currency ?? 'XAF',
         color: toColor(color),
         numberFormat: numberFormat,
+        valueFontSize: valueFontSize ?? 50,
+        currencyFontSize: currencyFontSize ?? 12,
+        bold: bold,
       );
 }
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.48] 2022-04-08
+
+- CHANGE: Improve configuration of MoneyText
+
 ## [0.1.47] 2022-03-17
 
 - FIX: Chip color
