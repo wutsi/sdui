@@ -3,13 +3,6 @@ import 'package:sdui/sdui.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  Http
-      .getInstance()
-      .interceptors = [
-    HttpJsonInterceptor(),
-  ];
-
   runApp(const MyApp());
 }
 
@@ -27,20 +20,15 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Map<String, WidgetBuilder> _routes() =>
-      {
-
+  Map<String, WidgetBuilder> _routes() => {
         '/': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(homeJson)),
-
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(staticJson)),
-
-        '/remote': (context) =>
-        const DynamicRoute(
+        '/remote': (context) => const DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://10.0.2.2:8080/settings/store' /* Remove endpoint - Replace it with your own */
-            )),
+                )),
       };
 }
 
