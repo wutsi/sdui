@@ -9,6 +9,7 @@
 # SDUI
 
 *SDUI* make it easy to implement Server Driven UI pattern on flutter.
+
 - The server decides what to render by describing in a JSON the widgets to render.
 - The Flutter screen parse the JSON and build the widgets
 
@@ -17,80 +18,86 @@ Kind like HTML... but not really.
 ## Example
 
 ### The Server
+
 Here is an example of JSON returned by the URL `POST http://myapp.herokuapp.com/screens/profile`:
+
 ```json
 {
-  "type": "Screen",
-  "appBar": {
-    "type": "AppBar",
-    "attributes": {
-      "title": "Profile"
-    }
-  },
-  "child": {
-    "type": "Form",
-    "attributes": {
-      "padding": 10
+    "type": "Screen",
+    "appBar": {
+        "type": "AppBar",
+        "attributes": {
+            "title": "Profile"
+        }
     },
-    "children": [
-      {
-        "type": "Input",
+    "child": {
+        "type": "Form",
         "attributes": {
-          "name": "first_name",
-          "value": "Ray",
-          "caption": "First Name",
-          "maxLength": 30
-        }
-      },
-      {
-        "type": "Input",
-        "attributes": {
-          "name": "last_name",
-          "value": "Sponsible",
-          "caption": "Last Name",
-          "maxLength": 30
-        }
-      },
-      {
-        "type": "Input",
-        "attributes": {
-          "name": "email",
-          "value": "ray.sponsible@gmail.com",
-          "caption": "Email *",
-          "required": true
-        }
-      },
-      {
-        "type": "Input",
-        "attributes": {
-          "type": "date",
-          "name": "birth_date",
-          "caption": "Date of Birth"
-        }
-      },
-      {
-        "type": "Input",
-        "attributes": {
-          "type": "Submit",
-          "name": "submit",
-          "caption": "Create Profile"
+            "padding": 10
         },
-        "action": {
-          "type": "Command",
-          "url": "http://myapp.herokuapp.com/commands/save-profile",
-          "prompt": {
-            "type": "Confirm",
-            "title": "Confirmation",
-            "message": "Are you sure you want to change your profile?"
-          }
-        }
-      }
-    ]
-  }
+        "children": [
+            {
+                "type": "Input",
+                "attributes": {
+                    "name": "first_name",
+                    "value": "Ray",
+                    "caption": "First Name",
+                    "maxLength": 30
+                }
+            },
+            {
+                "type": "Input",
+                "attributes": {
+                    "name": "last_name",
+                    "value": "Sponsible",
+                    "caption": "Last Name",
+                    "maxLength": 30
+                }
+            },
+            {
+                "type": "Input",
+                "attributes": {
+                    "name": "email",
+                    "value": "ray.sponsible@gmail.com",
+                    "caption": "Email *",
+                    "required": true
+                }
+            },
+            {
+                "type": "Input",
+                "attributes": {
+                    "type": "date",
+                    "name": "birth_date",
+                    "caption": "Date of Birth"
+                }
+            },
+            {
+                "type": "Input",
+                "attributes": {
+                    "type": "Submit",
+                    "name": "submit",
+                    "caption": "Create Profile"
+                },
+                "action": {
+                    "type": "Command",
+                    "url": "https://myapp.herokuapp.com/commands/save-profile",
+                    "prompt": {
+                        "type": "Dialog",
+                        "attributes": {
+                            "type": "confirm",
+                            "title": "Confirmation",
+                            "message": "Are you sure you want to change your profile?"
+                        }
+                    }
+                }
+            }
+        ]
+    }
 }
 ```
 
 ### The UI in Flutter
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
@@ -107,8 +114,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(title: 'Demo', initialRoute: '/', routes: _routes());
   }
 
-  Map<String, WidgetBuilder> _routes() => {
-        '/': (context) => const DynamicRoute(
+  Map<String, WidgetBuilder> _routes() =>
+      {
+        '/': (context) =>
+        const DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://www.myapp.com/screens/profile'))
       };
@@ -116,15 +125,17 @@ class MyApp extends StatelessWidget {
 ```
 
 ### Screenshots
+
 | Screen                            | Date Picker                        | Alert Dialog                        |
 |-----------------------------------|------------------------------------|-------------------------------------|
 | ![](doc/images/screenshot-01.png) | ![](doc/images/screenshot-02.png)  | ![](doc/images/screenshot-03.png)   |
 
 ## Widgets
-In Flutter, UI is composed of a hierarchy of Widgets.
-A widget is a visual element on a screen.
+
+In Flutter, UI is composed of a hierarchy of Widgets. A widget is a visual element on a screen.
 
 *SDUI* described widgets with the following json structure:
+
 ```
 {
     "type": "...",
@@ -144,6 +155,7 @@ A widget is a visual element on a screen.
 - `children`: The list of children widgets
 
 ### Widget Library
+
 - Navigation widgets
     - [Dialog](https://pub.dev/documentation/sdui/latest/sdui/SDUIDialog-class.html)
     - [AppBar](https://pub.dev/documentation/sdui/latest/sdui/SDUIAppBar-class.html)
@@ -192,20 +204,25 @@ A widget is a visual element on a screen.
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)
 
 ### Global Variables
+
 - `sduiErrorState`: Function for building the error state.
 - `sduiLoadingState`: Function for building the loading state.
 - `sduiProgressIndicator`: Function for building the progress indicator.
 - `sduiRouteObserver`: Route observer that reload each page on navigation.
-- `sduiAnalytics`: Analytics class. See [SDUIAnalytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnlytics-class.html)
+- `sduiAnalytics`: Analytics class.
+  See [SDUIAnalytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnlytics-class.html)
 - `sduiCameras`: List of available cameras. Empty by default, must be initialized the application
 
 ## Actions
+
 With actions, you can:
+
 - Execute a command on a server (Ex: Saver User Profile, Delete User Account etc.)
 - Navigate to another screen.
 - Prompt a message to user.
 
 *SDUI* described actions with the following json structure:
+
 ```
 {
     "type": "...",
@@ -227,10 +244,11 @@ With actions, you can:
 ```
 
 - `type`: Defines the type of action:
-  - `Command`: Remote action to execute. The screen is associated with a URL that will execute the command, and redirect the user to the next screen
-  - `Screen`: Screen to render. The screen is associated with a URL that return the content of the screen
-  - `Navigate`: Navigate user to a web page
-  - `Share`: Share a message to user via email/messenger/whatsapp etc.
+    - `Command`: Remote action to execute. The screen is associated with a URL that will execute the command, and
+      redirect the user to the next screen
+    - `Screen`: Screen to render. The screen is associated with a URL that return the content of the screen
+    - `Navigate`: Navigate user to a web page
+    - `Share`: Share a message to user via email/messenger/whatsapp etc.
 - `url`: is the URL associated with the action
 - `message`: Message to share
 - `prompt.type`: The type of prompt (Exemple: `Confirm`, `Error`, `Warning`, `Information`)

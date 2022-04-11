@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.1.49] 2022-04-11
+
+- CHANGE: Log when no attributes found - See https://github.com/wutsi/sdui/issues/15
+- FIX: Fix json in README.md - See  https://github.com/wutsi/sdui/issues/16
+
 ## [0.1.48] 2022-04-08
 
 - CHANGE: Improve configuration of MoneyText

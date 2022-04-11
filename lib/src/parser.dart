@@ -240,6 +240,11 @@ class SDUIParser {
 
     // Attributes
     var attributes = json["attributes"];
+    if (attributes == null) {
+      _logger.i('......$type' +
+          (id == null ? '' : '[id=$id]') +
+          ' has no attributes');
+    }
     if (attributes is Map<String, dynamic>) {
       widget.fromJson(attributes);
     }

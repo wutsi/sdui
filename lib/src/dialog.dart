@@ -13,7 +13,7 @@ import 'widget.dart';
 ///    - `warning`: Show an warning message
 ///    - `information`: Show an information message
 ///    - `alert`: Alert dialog with `OK` button. (default)
-///    - `config`: Confirm dialog with `OK` and `Cancel` buttons.
+///    - `confirm`: Confirm dialog with `OK` and `Cancel` buttons.
 class SDUIDialog extends SDUIWidget {
   String? title;
   String? message;
