@@ -210,7 +210,7 @@ In Flutter, UI is composed of a hierarchy of Widgets. A widget is a visual eleme
 - `sduiProgressIndicator`: Function for building the progress indicator.
 - `sduiRouteObserver`: Route observer that reload each page on navigation.
 - `sduiAnalytics`: Analytics class.
-  See [SDUIAnalytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnlytics-class.html)
+  See [SDUIAnalytics](https://pub.dev/documentation/sdui/latest/sdui/SDUIAnalytics-class.html)
 - `sduiCameras`: List of available cameras. Empty by default, must be initialized the application
 
 ## Actions
