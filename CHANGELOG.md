@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.49] 2022-04-15
+## [0.1.50] 2022-04-15
 
 - ADD: Add `SDUIWidgetRegistry` to integrate 3rd party widgets
 
