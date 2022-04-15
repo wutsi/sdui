@@ -2,6 +2,10 @@
 
 ## [0.1.49] 2022-04-11
 
+- ADD: Add `SDUIWidgetRegistry` to integrate 3rd party widgets
+
+## [0.1.49] 2022-04-11
+
 - CHANGE: Log when no attributes found - See https://github.com/wutsi/sdui/issues/15
 - FIX: Fix json in README.md - See https://github.com/wutsi/sdui/issues/16
 - CHANGE: Added BottomNavigationBarItem in the example - See https://github.com/wutsi/sdui/issues/4
