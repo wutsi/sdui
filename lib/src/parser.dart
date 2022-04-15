@@ -46,6 +46,7 @@ import 'stack.dart';
 import 'tab.dart';
 import 'text.dart';
 import 'widget.dart';
+import 'widget_registry.dart';
 import 'wrap.dart';
 
 //-- Core ------------------------------------
@@ -235,7 +236,10 @@ class SDUIParser {
         widget = SDUIWrap();
         break;
       default:
-        throw Exception("Unsupported node: ${json["type"]}");
+        widget = SDUIWidgetRegistry.getInstance().create(type);
+        if (widget == null) {
+          throw Exception("Unsupported node: ${json["type"]}");
+        }
     }
 
     // Attributes

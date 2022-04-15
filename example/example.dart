@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sdui/sdui.dart';
 
+import 'my_widget.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Register 3rd party widgets
+  SDUIWidgetRegistry.getInstance().register('MyWidget', () => MyWidget());
+
   runApp(const MyApp());
 }
 
@@ -88,9 +94,11 @@ var homeJson = '''
     "type": "Center",
     "children": [
       {
-        "type": "Text",
+        "type": "MyWidget",
         "attributes": {
-          "caption": "Sample Project"
+          "caption": "Sample Project",
+          "padding": 5.0,
+          "margin": 5.0
         }
       }
     ]

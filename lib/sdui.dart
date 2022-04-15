@@ -47,4 +47,5 @@ export 'src/stack.dart';
 export 'src/tab.dart';
 export 'src/text.dart';
 export 'src/widget.dart';
+export 'src/widget_registry.dart';
 export 'src/wrap.dart';

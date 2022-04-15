@@ -182,7 +182,6 @@ In Flutter, UI is composed of a hierarchy of Widgets. A widget is a visual eleme
     - [Image](https://pub.dev/documentation/sdui/latest/sdui/SDUIImage-class.html)
     - [PhotoView](https://pub.dev/documentation/sdui/latest/sdui/SDUIPhotoView-class.html)
 - Input widgets
-    - [Badge](https://pub.dev/documentation/sdui/latest/sdui/SDUIBadge-class.html)
     - [Button](https://pub.dev/documentation/sdui/latest/sdui/SDUIButton-class.html)
     - [Camera](https://pub.dev/documentation/sdui/latest/sdui/SDUICamera-class.html)
     - [DropdownButton](https://pub.dev/documentation/sdui/latest/sdui/SDUIDropdownButton-class.html)
@@ -198,10 +197,14 @@ In Flutter, UI is composed of a hierarchy of Widgets. A widget is a visual eleme
     - [MoneyWithSlider](https://pub.dev/documentation/sdui/latest/sdui/MoneyWithSlider-class.html)
     - [PinWidthKeyboard](https://pub.dev/documentation/sdui/latest/sdui/SDUIPinWidthKeyboard-class.html)
     - [QrImage](https://pub.dev/documentation/sdui/latest/sdui/SDUIQrImage-class.html)
+    - [QrView](https://pub.dev/documentation/sdui/latest/sdui/SDUIQrView-class.html)
     - [Radio](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadio-class.html)
     - [RadioGroup](https://pub.dev/documentation/sdui/latest/sdui/SDUIRadioGroup-class.html)
     - [SearchableDropdown](https://pub.dev/documentation/sdui/latest/sdui/SDUISearchableButton-class.html)
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)
+- Other
+    - [Badge](https://pub.dev/documentation/sdui/latest/sdui/SDUIBadge-class.html)
+    - [Chip](https://pub.dev/documentation/sdui/latest/sdui/SDUIChip-class.html)
 
 ### Global Variables
 
@@ -254,3 +257,99 @@ With actions, you can:
 - `prompt.type`: The type of prompt (Exemple: `Confirm`, `Error`, `Warning`, `Information`)
 - `prompt.title`: Title of the alert box to open
 - `prompt.message`: Message to display to the user
+
+## Build your own Widget
+
+You can integrate your own widget into `sdui`.
+
+### Step 1: Create your instance of ``SDUIWidget``
+
+This is an example of widget that render a text with a margin and padding. The widget has the following attributes
+
+- `text`: The text to display
+- `padding`: The padding value
+- `margin`: The margin value
+
+```dart
+    class MyWidget extends SDUIWidget {
+  String text = '';
+  double padding = 10.0;
+  double margin = 10.0;
+
+  /// This method will be called by [SDUIParser] to read the widget attributes from the JSON data
+  @override
+  SDUIWidget fromJson(Map<String, dynamic>? json) {
+    text = json?['caption'] ?? '';
+    margin = json?['margin'] ?? 10.0;
+    padding = json?['padding'] ?? 10.0;
+    return this;
+  }
+
+  /// This method will be called when rendering the page to create the Flutter widget
+  @override
+  Widget toWidget(BuildContext context) =>
+      Container(
+        padding: EdgeInsets.all(padding),
+        margin: EdgeInsets.all(margin),
+        child: Text(
+          text,
+          style:
+          const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+        ),
+      );
+}
+```
+
+### Step 2: Register the widget
+
+The Widget is registered into SDUI and associated with the type `MyWidget`
+
+```dart
+    void main() async {
+  ...
+
+  // Register 3rd party widget
+  SDUIWidgetRegistry.getInstance().register('MyWidget', () => MyWidget());
+
+  runApp
+  (
+  const
+  MyApp
+  (
+  )
+  );
+}
+
+class MyApp extends StatelessWidget {
+  ...
+}
+```
+
+### Step 3: Add the widget into the JSONs
+
+Here is an example of JSON with our 3rd party widget
+
+```json
+{
+    "type": "Screen",
+    "appBar": {
+        "type": "AppBar",
+        "attributes": {
+            "title": "Home"
+        }
+    },
+    "child": {
+        "type": "Center",
+        "children": [
+            {
+                "type": "MyWidget",
+                "attributes": {
+                    "caption": "3rd Party Widget",
+                    "padding": 5.0,
+                    "margin": 5.0
+                }
+            }
+        ]
+    }
+}
+```
