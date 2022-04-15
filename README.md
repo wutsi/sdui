@@ -305,23 +305,15 @@ This is an example of widget that render a text with a margin and padding. The w
 The Widget is registered into SDUI and associated with the type `MyWidget`
 
 ```dart
-    void main() async {
-  ...
-
+void main() async {
   // Register 3rd party widget
   SDUIWidgetRegistry.getInstance().register('MyWidget', () => MyWidget());
 
-  runApp
-  (
-  const
-  MyApp
-  (
-  )
-  );
+  runApp(constMyApp());
 }
 
 class MyApp extends StatelessWidget {
-  ...
+  // ...
 }
 ```
 
