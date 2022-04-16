@@ -57,7 +57,7 @@ dependencies:
     photo_view: ^0.13.0
     qr_code_scanner: ^0.6.1
     qr_flutter: ^4.0.0
-    share_plus: ^3.0.4
+    share_plus: ^4.0.0
     search_choices: ^2.0.17
     pinput: ^1.2.2
     url_launcher: ^6.0.17
