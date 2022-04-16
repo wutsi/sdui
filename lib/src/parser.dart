@@ -69,6 +69,7 @@ class SDUIParser {
   }
 
   SDUIWidget fromJson(Map<String, dynamic> json) {
+    SDUIScreen? screen;
     var type = json["type"];
     var id = json["attributes"]?["id"];
 
@@ -206,7 +207,7 @@ class SDUIParser {
         widget = SDUISearchableDropdown();
         break;
       case "screen":
-        widget = SDUIScreen();
+        screen = widget = SDUIScreen();
         break;
       case "spacer":
         widget = SDUISpacer();
@@ -256,7 +257,7 @@ class SDUIParser {
     // Action
     var action = json["action"];
     if (action is Map<String, dynamic>) {
-      widget.action = SDUIAction().fromJson(action);
+      widget.action = SDUIAction(screen: screen).fromJson(action);
     }
 
     // Children

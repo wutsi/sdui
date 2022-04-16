@@ -3,16 +3,10 @@
 /// to provide it's own implementation and set the global variable [sduiAnalytics].
 class SDUIAnalytics {
   /// This method will be called when user navigate to a route
-  void onRoute(String id) {}
+  void onRoute(String screenId) {}
 
-  /// Start a trace
-  dynamic startTrace(String id) {}
-
-  /// End a trace
-  void endTrace(dynamic trace) {}
-
-  /// This method will be called when button is clicked
-  void onClick(String id) {}
+  /// This method will be called when action is executed
+  void onAction(String screenId, String event, String? productId) {}
 }
 
 /// Analytics global variable

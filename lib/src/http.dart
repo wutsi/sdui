@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:logger/logger.dart';
 
-import 'analytics.dart';
 import 'logger.dart';
 
 class RequestTemplate {
@@ -74,8 +74,6 @@ class Http {
   static Http getInstance() => _singleton;
 
   Future<String> post(String url, Map<String, dynamic>? data) async {
-    dynamic trace = sduiAnalytics.startTrace(url);
-
     RequestTemplate request = _pre('POST', url, data, []);
     http.Response? response;
     Exception? ex;
@@ -91,8 +89,6 @@ class Http {
         throw ex;
       }
     } finally {
-      sduiAnalytics.endTrace(trace);
-
       // Request headers
       String line = 'POST $url status=${response?.statusCode}';
       request.headers.forEach((key, value) {
@@ -133,8 +129,6 @@ class Http {
 
   Future<void> uploadStream(String url, String name, path,
       Stream<Uint8List> stream, String? contentType, int contentLength) async {
-    dynamic trace = sduiAnalytics.startTrace(url);
-
     RequestTemplate request = _pre('POST', url, {}, [HttpJsonInterceptor]);
     http.StreamedResponse? response;
     Exception? ex;
@@ -150,8 +144,6 @@ class Http {
 
       response = await req.send();
     } finally {
-      sduiAnalytics.endTrace(trace);
-
       // Request headers
       String line = 'POST $url status=${response?.statusCode}';
       request.headers.forEach((key, value) {

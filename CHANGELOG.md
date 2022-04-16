@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.51] 2022-04-16
+
+- ADD: Track action events
+
 ## [0.1.50] 2022-04-15
 
 - ADD: Add `SDUIWidgetRegistry` to integrate 3rd party widgets

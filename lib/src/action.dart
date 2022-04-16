@@ -5,11 +5,13 @@ import 'package:logger/logger.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'analytics.dart';
 import 'dialog.dart';
 import 'http.dart';
 import 'logger.dart';
 import 'parser.dart';
 import 'route.dart';
+import 'widget.dart';
 
 typedef ActionCallback = Future<String?> Function(BuildContext context);
 
@@ -39,6 +41,7 @@ class SDUIAction {
   static final Logger _logger = LoggerFactory.create('SDUIAction');
   static final Future<String?> _emptyFuture = Future(() => null);
 
+  SDUIWidget? screen;
   String? type;
   String url = '';
   String? message;
@@ -46,15 +49,21 @@ class SDUIAction {
   SDUIDialog? prompt;
   Map<String, dynamic>? parameters;
   bool inDialog = false;
+  String? trackEvent;
+  String? trackProductId;
 
   /// controller associated with the action
   PageController? pageController;
+
+  SDUIAction({this.screen});
 
   SDUIAction fromJson(Map<String, dynamic>? attributes) {
     url = attributes?["url"] ?? '';
     type = attributes?["type"];
     message = attributes?['message'];
     replacement = attributes?["replacement"] ?? false;
+    trackEvent = attributes?["trackEvent"];
+    trackProductId = attributes?["trackProductId"];
 
     var prompt = attributes?["prompt"];
     if (prompt is Map<String, dynamic>) {
@@ -76,6 +85,10 @@ class SDUIAction {
       _prompt(context).then((value) => _execute(value, context, data));
 
   Future<String?> handleResult(BuildContext context, String? result) async {
+    /* Analytics */
+    _notifyAnalytics();
+
+    /* handle the result */
     if (result == null) {
       return Future.value(null);
     }
@@ -89,6 +102,19 @@ class SDUIAction {
           .then((value) => handleResult(context, value));
     }
     return Future.value(null);
+  }
+
+  void _notifyAnalytics() {
+    try {
+      if (trackEvent != null) {
+        _logger.i(
+            'Pushing Analytics event. screen=${screen?.id} event=$trackEvent productId=$trackProductId');
+        sduiAnalytics.onAction(
+            screen?.id ?? 'UNKNOWN', trackEvent!, trackProductId);
+      }
+    } catch (e) {
+      _logger.w("Unable to push event to Analytics", e);
+    }
   }
 
   Future<String?> _execute(
