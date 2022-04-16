@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.52] 2022-04-16
+## [0.1.57] 2022-04-16
 
 - ADD: Track action events
 

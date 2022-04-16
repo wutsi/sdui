@@ -44,7 +44,28 @@ var homeJson = '''
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Home"
+      "title": "Home",
+      "actions":[
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 10.0
+          },
+          "children":[
+            {
+              "type": "Icon",
+              "attributes":{
+                "code": "f27b"
+              }
+            }
+          ],
+          "action":{
+            "type": "Route",
+            "url": "route:/static",
+            "trackEvent": "event01"
+          }
+        }
+      ]
     }
   },
   "bottomNavigationBar": {
@@ -63,7 +84,8 @@ var homeJson = '''
         },
         "action":{
           "type": "Route",
-          "url": "route:~/"
+          "url": "route:/~",
+          "trackEvent": "event-home"
         }
       },
       {
@@ -102,6 +124,9 @@ var homeJson = '''
         }
       }
     ]
+  },
+  "attributes":{
+    "id": "page.home"
   }
 }
 ''';
@@ -131,7 +156,7 @@ var staticJson = '''
         },
         "action":{
           "type": "Route",
-          "url": "route:~/"
+          "url": "route:/~"
         }
       },
       {
@@ -209,6 +234,7 @@ var staticJson = '''
         "action": {
           "type": "Command",
           "url": "https://myapp.herokuapp.com/commands/save-profile",
+          "trackEvent": "create-event",
           "prompt": {
             "type": "Dialog",
             "attributes": {
@@ -220,6 +246,9 @@ var staticJson = '''
         }
       }
     ]
+  },
+  "attributes":{
+    "id": "page.static"
   }
 }
 ''';

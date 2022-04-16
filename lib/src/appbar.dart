@@ -17,14 +17,16 @@ class SDUIAppBar extends SDUIWidget {
   double? elevation;
   String? foregroundColor;
   String? backgroundColor;
-  List<SDUIWidget>? actions;
   bool? automaticallyImplyLeading;
+  List<SDUIWidget>? actions;
   SDUIWidget? leading;
   SDUIWidget? bottom;
 
   @override
   Widget toWidget(BuildContext context) => AppBar(
-        title: title == null ? null : Text(title!, style: const TextStyle(fontSize: 12)),
+        title: title == null
+            ? null
+            : Text(title!, style: const TextStyle(fontSize: 12)),
         centerTitle: true,
         elevation: elevation,
         foregroundColor: toColor(foregroundColor),
@@ -65,4 +67,17 @@ class SDUIAppBar extends SDUIWidget {
 
   SDUIWidget? _parse(dynamic it) =>
       it is Map<String, dynamic> ? SDUIParser.getInstance().fromJson(it) : null;
+
+  @override
+  void attachScreen(SDUIWidget screen) {
+    bottom?.attachScreen(screen);
+    leading?.attachScreen(screen);
+    if (actions != null) {
+      for (var element in actions!) {
+        element.attachScreen(screen);
+      }
+    }
+
+    super.attachScreen(screen);
+  }
 }

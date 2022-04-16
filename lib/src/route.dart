@@ -52,7 +52,6 @@ class HttpRouteContentProvider implements RouteContentProvider {
   String toString() => "StaticRouteContentProvider(url=$_url)";
 }
 
-
 /// Dynamic Route
 class DynamicRoute extends StatefulWidget {
   final RouteContentProvider provider;
@@ -64,7 +63,7 @@ class DynamicRoute extends StatefulWidget {
   @override
   DynamicRouteState createState() =>
       // ignore: no_logic_in_create_state
-  DynamicRouteState(provider, pageController);
+      DynamicRouteState(provider, pageController);
 }
 
 class DynamicRouteState extends State<DynamicRoute> with RouteAware {
@@ -101,41 +100,39 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Center(
-          child: FutureBuilder<String>(
-              future: content,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  sduiWidget =
-                      SDUIParser.getInstance().fromJson(
-                          jsonDecode(snapshot.data!));
-                  sduiWidget?.attachPageController(pageController);
-                  _push(sduiWidget?.id);
-                  return sduiWidget!.toWidget(context);
-                } else if (snapshot.hasError) {
-                  // Log
-                  var error = snapshot.error;
-                  if (error is ClientException) {
-                    int? statusCode = int.tryParse(error.message);
-                    if (statusCode != null) {
-                      String? route = statusCodeRoutes[statusCode];
-                      if (route != null) {
-                        _logger.e('status=$statusCode route=$route', error,
-                            snapshot.stackTrace);
-                        Navigator.pushReplacementNamed(context, route);
-                      }
-                    }
+  Widget build(BuildContext context) => Center(
+      child: FutureBuilder<String>(
+          future: content,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              sduiWidget =
+                  SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
+              sduiWidget?.attachPageController(pageController);
+              _push(sduiWidget?.id);
+              return sduiWidget!.toWidget(context);
+            } else if (snapshot.hasError) {
+              // Log
+              var error = snapshot.error;
+              if (error is ClientException) {
+                int? statusCode = int.tryParse(error.message);
+                if (statusCode != null) {
+                  String? route = statusCodeRoutes[statusCode];
+                  if (route != null) {
+                    _logger.e('status=$statusCode route=$route', error,
+                        snapshot.stackTrace);
+                    Navigator.pushReplacementNamed(context, route);
                   }
-
-                  // Error State
-                  _logger.e('provider=$provider', error, snapshot.stackTrace);
-                  return sduiErrorState(context, error);
                 }
+              }
 
-                // Loading state
-                return sduiLoadingState(context);
-              }));
+              // Error State
+              _logger.e('provider=$provider', error, snapshot.stackTrace);
+              return sduiErrorState(context, error);
+            }
+
+            // Loading state
+            return sduiLoadingState(context);
+          }));
 
   void _push(String? pageId) {
     if (pageId != null && pageId != _peek()) {
@@ -156,7 +153,6 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   }
 
   String? _peek() => _history.isEmpty ? null : _history.last;
-
 
   @override
   void didPush() {

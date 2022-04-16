@@ -109,4 +109,11 @@ abstract class SDUIWidget {
       children[i].attachPageController(controller);
     }
   }
+
+  void attachScreen(SDUIWidget screen) {
+    action.screen = screen;
+    for (var element in children) {
+      element.attachScreen(screen);
+    }
+  }
 }

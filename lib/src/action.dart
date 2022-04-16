@@ -55,8 +55,6 @@ class SDUIAction {
   /// controller associated with the action
   PageController? pageController;
 
-  SDUIAction({this.screen});
-
   SDUIAction fromJson(Map<String, dynamic>? attributes) {
     url = attributes?["url"] ?? '';
     type = attributes?["type"];
@@ -97,6 +95,7 @@ class SDUIAction {
     if (json is Map<String, dynamic>) {
       var action = SDUIAction().fromJson(json);
       action.pageController = pageController;
+      action.screen = screen;
       return action
           .execute(context, json)
           .then((value) => handleResult(context, value));

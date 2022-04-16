@@ -21,7 +21,7 @@ class SDUIBottomNavigationBarItem extends SDUIWidget {
   }
 }
 
-class SDUIBottomNavigationBar extends SDUIWidget{
+class SDUIBottomNavigationBar extends SDUIWidget {
   String? background;
   String? selectedItemColor;
   String? unselectedItemColor;
@@ -31,13 +31,12 @@ class SDUIBottomNavigationBar extends SDUIWidget{
 
   @override
   Widget toWidget(BuildContext context) {
-    List<BottomNavigationBarItem> items = children.map((e) =>
-        BottomNavigationBarItem(
+    List<BottomNavigationBarItem> items = children
+        .map((e) => BottomNavigationBarItem(
             icon: toIcon((e as SDUIBottomNavigationBarItem).icon) ??
                 const Icon(Icons.error),
-            label: e.caption
-        )
-    ).toList();
+            label: e.caption))
+        .toList();
     return BottomNavigationBar(
       items: items,
       backgroundColor: toColor(background),
@@ -46,10 +45,11 @@ class SDUIBottomNavigationBar extends SDUIWidget{
       iconSize: iconSize ?? 24.0,
       elevation: elevation,
       currentIndex: currentIndex ?? 0,
-      type : BottomNavigationBarType.fixed,
-      onTap: (index) =>
-          (children[index] as SDUIBottomNavigationBarItem).action.execute(
-              context, {}),
+      type: BottomNavigationBarType.fixed,
+      onTap: (index) => (children[index] as SDUIBottomNavigationBarItem)
+          .action
+          .execute(context, {}).then(
+              (value) => children[index].action.handleResult(context, value)),
     );
   }
 
@@ -59,12 +59,11 @@ class SDUIBottomNavigationBar extends SDUIWidget{
     selectedItemColor = json?["selectedItemColor"];
     unselectedItemColor = json?["unselectedItemColor"];
     iconSize = json?["iconSize"];
-    elevation= json?["elevation"];
-    currentIndex =  json?["currentIndex"];
+    elevation = json?["elevation"];
+    currentIndex = json?["currentIndex"];
     return super.fromJson(json);
   }
 }
-
 
 /// Descriptor of a screen, implemented as [Scaffold]
 ///
@@ -82,26 +81,31 @@ class SDUIScreen extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: toColor(backgroundColor),
-            appBar: appBar == null
-                ? null
-                : (appBar!.toWidget(context) as AppBar),
-            body: safe == true
-                ? SafeArea(child: _child(context))
-                : _child(context),
-            floatingActionButton: floatingActionButton?.toWidget(context),
-            bottomNavigationBar: bottomNavigationBar?.toWidget(context)));
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: toColor(backgroundColor),
+          appBar: appBar == null ? null : (appBar!.toWidget(context) as AppBar),
+          body:
+              safe == true ? SafeArea(child: _child(context)) : _child(context),
+          floatingActionButton: floatingActionButton?.toWidget(context),
+          bottomNavigationBar: bottomNavigationBar?.toWidget(context)));
 
-  Widget _child(BuildContext context) => hasChildren() ? child()!.toWidget(context) : Container();
-
+  Widget _child(BuildContext context) =>
+      hasChildren() ? child()!.toWidget(context) : Container();
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     safe = json?["safe"];
     backgroundColor = json?["backgroundColor"];
     return super.fromJson(json);
+  }
+
+  @override
+  void attachScreen(SDUIWidget screen) {
+    appBar?.attachScreen(screen);
+    bottomNavigationBar?.attachScreen(screen);
+
+    super.attachScreen(screen);
   }
 }

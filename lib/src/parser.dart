@@ -69,11 +69,10 @@ class SDUIParser {
   }
 
   SDUIWidget fromJson(Map<String, dynamic> json) {
-    SDUIScreen? screen;
     var type = json["type"];
     var id = json["attributes"]?["id"];
-
-    _logger.i('...Parsing $type' + (id == null ? '' : ' id=$id'));
+    var widgetString = '$type' + (id == null ? '' : ' id=$id');
+    _logger.i('...Parsing $widgetString');
 
     SDUIWidget? widget;
     switch (type?.toLowerCase()) {
@@ -207,7 +206,7 @@ class SDUIParser {
         widget = SDUISearchableDropdown();
         break;
       case "screen":
-        screen = widget = SDUIScreen();
+        widget = SDUIScreen();
         break;
       case "spacer":
         widget = SDUISpacer();
@@ -246,9 +245,7 @@ class SDUIParser {
     // Attributes
     var attributes = json["attributes"];
     if (attributes == null) {
-      _logger.i('......$type' +
-          (id == null ? '' : '[id=$id]') +
-          ' has no attributes');
+      _logger.i('......$widgetString has no attributes');
     }
     if (attributes is Map<String, dynamic>) {
       widget.fromJson(attributes);
@@ -257,7 +254,7 @@ class SDUIParser {
     // Action
     var action = json["action"];
     if (action is Map<String, dynamic>) {
-      widget.action = SDUIAction(screen: screen).fromJson(action);
+      widget.action = SDUIAction().fromJson(action);
     }
 
     // Children
@@ -295,6 +292,10 @@ class SDUIParser {
           widget.bottomNavigationBar = item;
         }
       }
+
+      // Attach
+      _logger.i('...Attaching $widgetString to its children');
+      widget.attachScreen(widget);
     }
 
     return widget;
