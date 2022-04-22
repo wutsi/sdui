@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.59] 2022-04-22
+
+- CHANGE: Set initial index of tab
+
 ## [0.1.58] 2022-04-16
 
 - CHANGE: Update component dependencies

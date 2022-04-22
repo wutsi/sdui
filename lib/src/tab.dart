@@ -5,18 +5,22 @@ import 'package:sdui/sdui.dart';
 ///
 /// ### JSON Attributes
 /// - **length**: Number of tabs
+/// - **initialIndex**: Initial tab index (default = 0)
 class SDUIDefaultTabController extends SDUIWidget {
   int length = 1;
+  int initialIndex = 0;
 
   @override
   Widget toWidget(BuildContext context) => DefaultTabController(
         length: length,
+        initialIndex: initialIndex,
         child: child()!.toWidget(context),
       );
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
-    length = json?["length"] ?? 0;
+    length = json?["length"] ?? 1;
+    initialIndex = json?["initialIndex"] ?? 0;
     return super.fromJson(json);
   }
 }
