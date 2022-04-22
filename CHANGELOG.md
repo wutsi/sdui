@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.58] 2022-04-16
+
+- CHANGE: Update component dependencies
+
 ## [0.1.57] 2022-04-16
 
 - ADD: Track action events
