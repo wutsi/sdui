@@ -20,6 +20,7 @@ import 'dialog.dart';
 import 'divider.dart';
 import 'dropdown.dart';
 import 'dynamic_widget.dart';
+import 'expandable_panel.dart';
 import 'expanded.dart';
 import 'flexible.dart';
 import 'form.dart';
@@ -135,6 +136,9 @@ class SDUIParser {
         break;
       case "expanded":
         widget = SDUIExpanded();
+        break;
+      case 'expandablepanel':
+        widget = SDUIExpandablePanel();
         break;
       case "flexible":
         widget = SDUIFlexible();

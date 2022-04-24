@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.64] 2022-04-24
+
+- ADD: ExpandablePanel
+
 ## [0.1.59] 2022-04-22
 
 - CHANGE: Set initial index of tab

@@ -20,7 +20,7 @@ description: |
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.59
+version: 0.1.64
 
 environment:
     sdk: ">=2.12.0 <3.0.0"
@@ -44,6 +44,7 @@ dependencies:
     camera: ^0.9.4+5
     carousel_slider: ^4.0.0
     email_validator: ^2.0.1
+    expandable: ^5.0.1
     file_picker: ^4.5.1
     http: ^0.13.4
     http_parser: ^4.0.0
