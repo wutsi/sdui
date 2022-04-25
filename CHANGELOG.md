@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.65] 2022-04-25
+
+- ADD: MoneyText not bold by default
+
 ## [0.1.64] 2022-04-24
 
 - ADD: ExpandablePanel

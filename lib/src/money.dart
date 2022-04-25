@@ -64,7 +64,7 @@ class MoneyText extends StatelessWidget {
       this.valueFontSize = 50,
       this.currencyFontSize = 12,
       this.color,
-      this.bold = true})
+      this.bold = false})
       : super(key: key);
 
   @override
@@ -175,11 +175,11 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
           Container(
             alignment: Alignment.center,
             child: MoneyText(
-              color: delegate.toColor(delegate.moneyColor),
-              value: state.toDouble(),
-              currency: delegate.currency ?? 'XAF',
-              numberFormat: delegate.numberFormat,
-            ),
+                color: delegate.toColor(delegate.moneyColor),
+                value: state.toDouble(),
+                currency: delegate.currency ?? 'XAF',
+                numberFormat: delegate.numberFormat,
+                bold: false),
           ),
           Container(
             alignment: Alignment.bottomCenter,
