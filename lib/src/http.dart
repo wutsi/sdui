@@ -122,27 +122,30 @@ class Http {
     }
   }
 
-  Future<void> upload(String url, String name, XFile file) async {
+  Future<String> upload(String url, String name, XFile file) async {
     return uploadStream(url, name, file.path, file.readAsBytes().asStream(),
         file.mimeType, await file.length());
   }
 
-  Future<void> uploadStream(String url, String name, path,
+  Future<String> uploadStream(String url, String name, path,
       Stream<Uint8List> stream, String? contentType, int contentLength) async {
     RequestTemplate request = _pre('POST', url, {}, [HttpJsonInterceptor]);
     http.StreamedResponse? response;
     Exception? ex;
     try {
-      String filename = path.split('/').last;
+      String filename = path
+          .split('/')
+          .last;
 
       var req = http.MultipartRequest('POST', Uri.parse(url));
       req.headers.addAll(request.headers);
       req.files.add(http.MultipartFile(name, stream, contentLength,
           filename: filename,
           contentType:
-              contentType != null ? MediaType.parse(contentType) : null));
+          contentType != null ? MediaType.parse(contentType) : null));
 
       response = await req.send();
+      return "";
     } finally {
       // Request headers
       String line = 'POST $url status=${response?.statusCode}';

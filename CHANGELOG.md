@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.1.67] 2022-05-10
+
+- UPDATE: route:~ redirect to home page
+
+## [0.1.66] 2022-05-02
+
+- UPDATE: Return string on upload
+
 ## [0.1.65] 2022-04-25
 
 - ADD: MoneyText not bold by default

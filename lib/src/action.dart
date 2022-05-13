@@ -200,6 +200,10 @@ class SDUIAction {
         Navigator.pop(context);
       } else if (route == '/~') {
         Navigator.popUntil(context, (route) => route.isFirst);
+        if (ModalRoute.of(context)?.settings.name != '/') {
+          // Make sure that the top page is '/'
+          Navigator.pushReplacementNamed(context, '/');
+        }
       } else {
         if (replacement) {
           Navigator.pushReplacementNamed(context, route, arguments: parameters);
