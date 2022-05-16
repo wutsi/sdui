@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.1.68] 2022-05-15
+
+- FIX: Initialization of phone number input
+- ADD: Add `initialCountry` for setting the initial flag of phone number
+
 ## [0.1.67] 2022-05-10
 
 - UPDATE: route:~ redirect to home page

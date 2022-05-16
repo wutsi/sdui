@@ -10,6 +10,7 @@ import 'package:logger/logger.dart';
 import 'package:mime/mime.dart';
 
 import 'button.dart';
+import 'countries.dart';
 import 'form.dart';
 import 'http.dart';
 import 'logger.dart';
@@ -42,6 +43,7 @@ import 'widget.dart';
 /// - **maxLength**: Maximum length of the field
 /// - **maxLine**: Maximum number of line  (for multi-line input)
 /// - **minLength**: Minimum length of the field (Default: 0)
+/// - **initialCountry**: Initial country - for `type=phone`
 /// - **countries**: List of country codes - for `type=phone`
 /// - **uploadUrl**: URL where to upload the file. For `type=image` or `type=video`
 /// - **imageSource**: From where to get the image or video. For `type=image` or `type=video`. The possible values
@@ -74,6 +76,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   int? videoMaxDuration;
   String? prefix;
   String? suffix;
+  String? initialCountry;
 
   @override
   Widget toWidget(BuildContext context) => _createWidget(context);
@@ -99,6 +102,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     videoMaxDuration = json?["videoMaxDuration"];
     prefix = json?["prefix"];
     suffix = json?["suffix"];
+    initialCountry = json?["initialCountry"];
 
     var nodes = json?["countries"];
     if (nodes is List<dynamic>) {
@@ -404,6 +408,7 @@ class _PhoneWidgetStateful extends StatefulWidget {
 class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
   String state = '';
   SDUIInput delegate;
+  PhoneNumber? number;
 
   _PhoneWidgetState(this.delegate);
 
@@ -411,8 +416,9 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
   void initState() {
     super.initState();
 
-    delegate.provider?.setData(delegate.name, delegate.value ?? '');
     state = delegate.value ?? '';
+    delegate.provider?.setData(delegate.name, state);
+    number = toPhoneNumber(state);
   }
 
   @override
@@ -423,7 +429,8 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
         formatInput: false,
         isEnabled: delegate.enabled,
         countries: delegate.countries,
-        textFieldController: TextEditingController(text: state),
+        textFieldController: TextEditingController(text: number?.phoneNumber),
+        initialValue: number,
         hintText: delegate.caption,
         onInputChanged: (v) => _onChanged(v),
         validator: (s) => _onValidate(s),
@@ -435,6 +442,30 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
 
   String? _onValidate(String? value) {
     return delegate._onValidate(value);
+  }
+
+  PhoneNumber? toPhoneNumber(String value) {
+    if (value.isEmpty) return PhoneNumber(isoCode: delegate.initialCountry);
+
+    List<Map<String, dynamic>> countries =
+        List<Map<String, dynamic>>.from(Countries.countryList);
+    countries.sort((a, b) => b["dial_code"].length - a["dial_code"].length);
+
+    Map<String, dynamic>? country;
+    for (var element in countries) {
+      if (value.startsWith(element["dial_code"])) {
+        country = element;
+        break;
+      }
+    }
+
+    return country == null
+        ? PhoneNumber(isoCode: delegate.initialCountry)
+        : PhoneNumber(
+            isoCode: country["alpha_2_code"],
+            dialCode: country["dial_code"],
+            phoneNumber:
+                state.substring(country["dial_code"].toString().length));
   }
 }
 

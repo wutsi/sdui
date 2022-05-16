@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             DynamicRoute(provider: StaticRouteContentProvider(staticJson)),
         '/remote': (context) => const DynamicRoute(
             provider: HttpRouteContentProvider(
-                'http://10.0.2.2:8080/settings/store' /* Remove endpoint - Replace it with your own */
+                'http://10.0.2.2:8080/settings' /* Remove endpoint - Replace it with your own */
                 )),
       };
 }
@@ -214,6 +214,17 @@ var staticJson = '''
           "value": "ray.sponsible@gmail.com",
           "caption": "Email *",
           "required": true
+        }
+      },
+      {
+        "type": "Input",
+        "attributes": {
+          "name": "phone",
+          "type": "phone",
+          "caption": "Phone",
+          "required": true,
+          "initialCountry": "CM",
+          "value": "+237690000001"
         }
       },
       {
