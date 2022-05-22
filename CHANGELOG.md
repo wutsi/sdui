@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.69] 2022-05-22
+
+- FIX: State of dropdown on selection
+
 ## [0.1.68] 2022-05-15
 
 - FIX: Initialization of phone number input

@@ -96,9 +96,13 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
   }
 
   void _onChanged(BuildContext context, String? value) {
-    delegate.provider?.setData(delegate.name, value ?? '');
-    delegate.action.execute(context, {delegate.name: value}).then(
-        (value) => delegate.action.handleResult(context, value));
+    setState(() {
+      state = value;
+
+      delegate.provider?.setData(delegate.name, value ?? '');
+      delegate.action.execute(context, {delegate.name: value}).then(
+          (value) => delegate.action.handleResult(context, value));
+    });
   }
 
   String? _onValidate(String? value) {
@@ -168,7 +172,8 @@ class _SearchableDropdownWidget extends StatefulWidget {
 }
 
 class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
-  static final Logger _logger = LoggerFactory.create('_SearchableDropdownState');
+  static final Logger _logger =
+      LoggerFactory.create('_SearchableDropdownState');
   SDUISearchableDropdown delegate;
   String? state;
 
@@ -183,7 +188,10 @@ class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
   }
 
   void _onChanged(String? value) {
-    delegate.provider?.setData(delegate.name, value ?? '');
+    setState(() {
+      state = value;
+      delegate.provider?.setData(delegate.name, value ?? '');
+    });
   }
 
   String? _onValidate(String? value) {
@@ -197,14 +205,15 @@ class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
   Widget build(BuildContext context) => SearchChoices.single(
         items: _toItems(context),
         onChanged: (value) => _onChanged(value),
+        onClear: () => _onChanged(null),
         validator: (value) => _onValidate(value),
         hint: delegate.hint,
-        value: delegate.value,
+        value: state,
         isExpanded: true,
         searchFn: _search,
       );
 
-  List<int> _search(String? keyword, List<DropdownMenuItem<String>> items){
+  List<int> _search(String? keyword, List<DropdownMenuItem<String>> items) {
     _logger.i('...search keyword=$keyword');
     List<int> shownIndexes = [];
     int i = 0;
@@ -217,19 +226,19 @@ class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
     return shownIndexes;
   }
 
-  bool _matches(String keyword, DropdownMenuItem<String> item){
+  bool _matches(String keyword, DropdownMenuItem<String> item) {
     String? text = _toText(item.child);
     _logger.i('......keywordd=$keyword text=$text');
     return text == null || text.toLowerCase().contains(keyword.toLowerCase());
   }
 
-  String? _toText(Widget child){
+  String? _toText(Widget child) {
     Text? text;
-    if (child is Text){
+    if (child is Text) {
       text = child;
-    } else if (child is Row){
+    } else if (child is Row) {
       for (var element in child.children) {
-        if (element is Text){
+        if (element is Text) {
           text = element;
         }
       }

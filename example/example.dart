@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             DynamicRoute(provider: StaticRouteContentProvider(staticJson)),
         '/remote': (context) => const DynamicRoute(
             provider: HttpRouteContentProvider(
-                'http://10.0.2.2:8080/settings' /* Remove endpoint - Replace it with your own */
+                'http://10.0.2.2:8080/onboard' /* Remove endpoint - Replace it with your own */
                 )),
       };
 }
