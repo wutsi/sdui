@@ -75,22 +75,28 @@ class SDUIDialog extends SDUIWidget {
       switch (type?.toLowerCase()) {
         case 'confirm':
           return [
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'ok'),
-              child: const Text('OK'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, null),
-              child: const Text('Cancel'),
-            )
+            SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context, 'ok'),
+                  child: const Text('OK'),
+                )),
+            SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context, null),
+                  child: const Text('Cancel'),
+                ))
           ];
 
         default:
           return [
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'ok'),
-              child: const Text('OK'),
-            )
+            SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context, 'ok'),
+                  child: const Text('OK'),
+                ))
           ];
       }
     }

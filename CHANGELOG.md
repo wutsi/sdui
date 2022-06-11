@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.70] 2022-05-22
+
+- FIX: In dialog box, make buttons larger
+
 ## [0.1.69] 2022-05-22
 
 - FIX: State of dropdown on selection
