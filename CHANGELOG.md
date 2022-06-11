@@ -3,6 +3,7 @@
 ## [0.1.70] 2022-05-22
 
 - FIX: In dialog box, make buttons larger
+- CHANGE: Set HTTP timeout to 60 secs
 
 ## [0.1.69] 2022-05-22
 

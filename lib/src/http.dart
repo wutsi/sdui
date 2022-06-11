@@ -60,10 +60,11 @@ abstract class HttpRequestResponse {
 }
 
 class Http {
+  static final Logger _logger = LoggerFactory.create('Http');
   static final Http _singleton = Http._internal();
 
   List<HttpInterceptor> interceptors = [HttpJsonInterceptor()];
-  final Logger _logger = LoggerFactory.create('Http');
+  Duration timeout = const Duration(seconds: 60);
 
   Http._internal();
 
@@ -78,8 +79,10 @@ class Http {
     http.Response? response;
     Exception? ex;
     try {
-      response = await http.post(Uri.parse(request.url),
-          body: request.body, headers: request.headers);
+      response = await http
+          .post(Uri.parse(request.url),
+              body: request.body, headers: request.headers)
+          .timeout(timeout);
       _post(request, response, []);
       if (response.statusCode / 100 == 2) {
         return response.body;
@@ -133,16 +136,14 @@ class Http {
     http.StreamedResponse? response;
     Exception? ex;
     try {
-      String filename = path
-          .split('/')
-          .last;
+      String filename = path.split('/').last;
 
       var req = http.MultipartRequest('POST', Uri.parse(url));
       req.headers.addAll(request.headers);
       req.files.add(http.MultipartFile(name, stream, contentLength,
           filename: filename,
           contentType:
-          contentType != null ? MediaType.parse(contentType) : null));
+              contentType != null ? MediaType.parse(contentType) : null));
 
       response = await req.send();
       return "";
