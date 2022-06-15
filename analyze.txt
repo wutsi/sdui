@@ -1,0 +1,6 @@
+Running "flutter pub get" in sdui...                                8.9s
+Analyzing sdui...                                               
+
+warning • The '!' will have no effect because the receiver can't be null • lib/src/money.dart:159:28 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null • lib/src/route.dart:83:28 • unnecessary_non_null_assertion
+

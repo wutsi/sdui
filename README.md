@@ -2,8 +2,8 @@
 
 [![pub package](https://img.shields.io/pub/v/sdui.svg)](https://pub.dev/packages/sdui)
 ![](https://img.shields.io/badge/licence-MIT-yellow.svg)
-![](https://img.shields.io/badge/language-flutter-darkblue.svg)
-![](https://img.shields.io/badge/language-dart-darkblue.svg)
+![](https://img.shields.io/badge/language-flutter_3.0-darkblue.svg)
+![](https://img.shields.io/badge/language-dart_2.17-darkblue.svg)
 [![](https://img.shields.io/badge/package-pub.dev-darkblue.svg)](https://pub.dev/packages/sdui)
 
 # SDUI

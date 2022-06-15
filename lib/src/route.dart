@@ -80,7 +80,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
     });
 
