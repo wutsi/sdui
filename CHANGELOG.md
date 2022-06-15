@@ -1,9 +1,9 @@
 # CHANGELOG
 
-## [0.1.71] 2022-06-16
+## [0.1.73] 2022-06-16
 
-- ADD: Timeout compnent
-- CHANGE: Set HTTP timeout to 60 secs
+- ADD: Timeout component
+- CHANGE: Set text capitalization in Input field
 
 ## [0.1.70] 2022-05-22
 

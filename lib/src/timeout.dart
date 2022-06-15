@@ -45,6 +45,7 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
   final SDUITimeout delegate;
   String? _widgetJson;
   Timer? _timer;
+  int count = 0;
 
   _TimeoutState(this.delegate);
 
@@ -75,7 +76,15 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
   void _call() {
     if (delegate.url == null) return;
 
-    Http.getInstance().post(delegate.url!, {}).then((value) => setState(() {
+    var url = delegate.url!;
+    if (url.indexOf("?") > 0) {
+      url += url + "&count=$count";
+    } else {
+      url += url + "?count=$count";
+    }
+
+    count++;
+    Http.getInstance().post(url, {}).then((value) => setState(() {
           _widgetJson = value;
         }));
   }

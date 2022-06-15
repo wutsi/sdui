@@ -196,16 +196,20 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
 
   @override
   Widget build(BuildContext context) => TextFormField(
-      enabled: delegate.enabled,
-      decoration: _toInputDecoration(),
-      controller: TextEditingController(text: state),
-      obscureText: delegate.hideText,
-      readOnly: delegate.readOnly,
-      maxLength: delegate.maxLength,
-      maxLines: delegate.maxLines,
-      keyboardType: _toKeyboardType(),
-      onChanged: (String value) => _onChanged(value),
-      validator: (String? value) => _onValidate(value));
+        enabled: delegate.enabled,
+        decoration: _toInputDecoration(),
+        controller: TextEditingController(text: state),
+        obscureText: delegate.hideText,
+        readOnly: delegate.readOnly,
+        maxLength: delegate.maxLength,
+        maxLines: delegate.maxLines,
+        keyboardType: _toKeyboardType(),
+        onChanged: (String value) => _onChanged(value),
+        validator: (String? value) => _onValidate(value),
+        textCapitalization: delegate.type == 'text'
+            ? TextCapitalization.sentences
+            : TextCapitalization.none,
+      );
 
   TextInputType? _toKeyboardType() {
     switch (delegate.type.toLowerCase()) {
