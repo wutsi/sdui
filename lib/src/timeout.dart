@@ -66,6 +66,7 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
   void _call() {
     if (delegate.url == null) return;
 
+    count++;
     var url = delegate.url!;
     if (url.indexOf("?") > 0) {
       url += "&count=$count";
@@ -73,7 +74,6 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
       url += "?count=$count";
     }
 
-    count++;
     _logger.i('invoking $url');
     Http.getInstance().post(url, {}).then((value) => initWidget(value));
   }

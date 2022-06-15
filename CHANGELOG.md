@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.75] 2022-06-16
+## [0.1.76] 2022-06-16
 
 - ADD: Timeout component
 - CHANGE: Set text capitalization in Input field
