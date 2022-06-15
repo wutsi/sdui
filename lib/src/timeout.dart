@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -6,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'http.dart';
 import 'loading.dart';
 import 'logger.dart';
+import 'noop.dart';
 import 'parser.dart';
 import 'widget.dart';
 
@@ -43,7 +45,7 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
   static final Logger _logger = LoggerFactory.create('_TimeoutState');
 
   final SDUITimeout delegate;
-  String? _widgetJson;
+  SDUIWidget? _widget;
   Timer? _timer;
   int count = 0;
 
@@ -57,21 +59,9 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => _widgetJson == null
+  Widget build(BuildContext context) => _widget == null
       ? Center(child: sduiProgressIndicator(context))
-      : _toWidget(_widgetJson!, context);
-
-  Widget _toWidget(String json, BuildContext context) {
-    try {
-      Widget widget = SDUIParser().parseJson(json, context);
-      _timer?.cancel();
-
-      return widget;
-    } catch (ex) {
-      _logger.w('Unable to parse the widget', ex);
-      return Center(child: sduiProgressIndicator(context));
-    }
-  }
+      : _widget!.toWidget(context);
 
   void _call() {
     if (delegate.url == null) return;
@@ -84,8 +74,20 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
     }
 
     count++;
-    Http.getInstance().post(url, {}).then((value) => setState(() {
-          _widgetJson = value;
-        }));
+    Http.getInstance().post(url, {}).then((value) => initWidget(value));
+  }
+
+  void initWidget(String json) {
+    try {
+      SDUIWidget widget = SDUIParser().fromJson(jsonDecode(json));
+      if (widget is! SDUINoop) {
+        _timer?.cancel();
+        setState(() {
+          _widget = widget;
+        });
+      }
+    } catch (e) {
+      _logger.w('Invalid json: $json', e);
+    }
   }
 }

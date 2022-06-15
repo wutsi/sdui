@@ -32,6 +32,7 @@ import 'input.dart';
 import 'list_view.dart';
 import 'logger.dart';
 import 'money.dart';
+import 'noop.dart';
 import 'page_view.dart';
 import 'photo_view.dart';
 import 'pin_with_keyboard.dart';
@@ -179,6 +180,9 @@ class SDUIParser {
         break;
       case "moneywithslider":
         widget = SDUIMoneyWithSlider().fromJson(json);
+        break;
+      case "noop":
+        widget = SDUINoop().fromJson(json);
         break;
       case "page":
         widget = SDUIPage().fromJson(json);

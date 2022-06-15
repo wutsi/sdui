@@ -156,9 +156,9 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
     state = delegate.value ?? 0;
     delegate.provider?.setData(delegate.name, state.toString());
 
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
+    });
   }
 
   @override
