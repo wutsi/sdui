@@ -68,18 +68,20 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
 
     var url = delegate.url!;
     if (url.indexOf("?") > 0) {
-      url += url + "&count=$count";
+      url += "&count=$count";
     } else {
-      url += url + "?count=$count";
+      url += "?count=$count";
     }
 
     count++;
+    _logger.i('invoking $url');
     Http.getInstance().post(url, {}).then((value) => initWidget(value));
   }
 
   void initWidget(String json) {
     try {
       SDUIWidget widget = SDUIParser().fromJson(jsonDecode(json));
+      _logger.i('widget: $widget');
       if (widget is! SDUINoop) {
         _timer?.cancel();
         setState(() {
