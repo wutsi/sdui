@@ -2,7 +2,7 @@
 
 ## [0.1.71] 2022-06-16
 
-- ADD: Delay compoennt
+- ADD: Timeout compnent
 - CHANGE: Set HTTP timeout to 60 secs
 
 ## [0.1.70] 2022-05-22
