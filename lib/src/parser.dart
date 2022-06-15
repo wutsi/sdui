@@ -46,6 +46,7 @@ import 'spacer.dart';
 import 'stack.dart';
 import 'tab.dart';
 import 'text.dart';
+import 'timeout.dart';
 import 'widget.dart';
 import 'widget_registry.dart';
 import 'wrap.dart';
@@ -235,6 +236,9 @@ class SDUIParser {
         break;
       case "text":
         widget = SDUIText();
+        break;
+      case "timeout":
+        widget = SDUITimeout();
         break;
       case "wrap":
         widget = SDUIWrap();
