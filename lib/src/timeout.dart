@@ -74,19 +74,21 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
       url += "?count=$count";
     }
 
-    _logger.i('invoking $url');
+    _logger.i('$count - Invoking $url');
     Http.getInstance().post(url, {}).then((value) => initWidget(value));
   }
 
   void initWidget(String json) {
     try {
       SDUIWidget widget = SDUIParser().fromJson(jsonDecode(json));
-      _logger.i('widget: $widget');
       if (widget is! SDUINoop) {
+        _logger.i('DONE: widget: $widget');
         _timer?.cancel();
         setState(() {
           _widget = widget;
         });
+      } else {
+        _logger.i('CONTINUE: widget: $widget');
       }
     } catch (e) {
       _logger.w('Invalid json: $json', e);
