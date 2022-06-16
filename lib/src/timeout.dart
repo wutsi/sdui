@@ -46,7 +46,6 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
 
   final SDUITimeout delegate;
   SDUIWidget? _widget;
-  Timer? _timer;
   int count = 0;
 
   _TimeoutState(this.delegate);
@@ -55,7 +54,8 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
   void initState() {
     super.initState();
 
-    _timer = Timer(Duration(seconds: delegate.delay ?? 15), () => _call());
+    Timer.periodic(
+        Duration(seconds: delegate.delay ?? 15), (timer) => _call(timer));
   }
 
   @override
@@ -63,7 +63,7 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
       ? Center(child: sduiProgressIndicator(context))
       : _widget!.toWidget(context);
 
-  void _call() {
+  void _call(Timer timer) {
     if (delegate.url == null) return;
 
     count++;
@@ -75,15 +75,15 @@ class _TimeoutState extends State<_TimeoutStatefulWidget> {
     }
 
     _logger.i('$count - Invoking $url');
-    Http.getInstance().post(url, {}).then((value) => initWidget(value));
+    Http.getInstance().post(url, {}).then((value) => initWidget(value, timer));
   }
 
-  void initWidget(String json) {
+  void initWidget(String json, Timer timer) {
     try {
       SDUIWidget widget = SDUIParser().fromJson(jsonDecode(json));
       if (widget is! SDUINoop) {
         _logger.i('DONE: widget: $widget');
-        _timer?.cancel();
+        timer.cancel();
         setState(() {
           _widget = widget;
         });
