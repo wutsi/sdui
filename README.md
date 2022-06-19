@@ -247,16 +247,25 @@ With actions, you can:
 ```
 
 - `type`: Defines the type of action:
+    - `Route`: To redirect to another route
+    - `Page`: To redirect to another page, in the context of [PageView]
     - `Command`: Remote action to execute. The screen is associated with a URL that will execute the command, and
       redirect the user to the next screen
-    - `Screen`: Screen to render. The screen is associated with a URL that return the content of the screen
-    - `Navigate`: Navigate user to a web page
     - `Share`: Share a message to user via email/messenger/whatsapp etc.
+    - `Navigate`: Navigate user to a web page
 - `url`: is the URL associated with the action
+    - `route:/..`: redirect users to previous route
+    - `route:/~`: redirect users to 1st route
+    - URL starting with `route:/<ROUTE_NAME>` redirect user the a named route. (Ex: ``route:/checkout``)
+    - URL starting with `http://` or `https` redirect user to a server driven page
+    - `page:/<PAGE_NUMBER>`: redirect users to a given page. `<PAGE_NUMBER>` is the page index (starting with `0`).
+- `replacement`: For `type=Route`, this indicate if we replace the current view or navigate.
+- `parameters`: Parameters to add to the URL where to redirect to
 - `message`: Message to share
-- `prompt.type`: The type of prompt (Exemple: `Confirm`, `Error`, `Warning`, `Information`)
-- `prompt.title`: Title of the alert box to open
-- `prompt.message`: Message to display to the user
+- `prompt`: Shows a Dialog before execute the action
+    - `type`: The type of prompt (Exemple: `Confirm`, `Error`, `Warning`, `Information`)
+    - `title`: Title of the alert box to open
+    - `message`: Message to display to the user
 
 ## Build your own Widget
 
