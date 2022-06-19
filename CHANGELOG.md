@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.80] 2022-06-18
+
+- FIX: Update SDK version
+
 ## [0.1.78] 2022-06-17
 
 - ADD: Timeout component

@@ -78,14 +78,22 @@ class _QRViewState extends State<_QRViewStatefulWidget> {
 
   void _onQRViewCreated(BuildContext context, QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((data) {
-      controller.pauseCamera();
-      setState(() {
-        barcode = data;
-      });
 
+    if (Platform.isAndroid) {
+      controller.resumeCamera();
+    }
+
+    controller.scannedDataStream.listen((data) {
+      // controller.pauseCamera();
+      // setState(() {
+      //   barcode = data;
+      // });
+
+      // Flash
       controller.toggleFlash();
       controller.toggleFlash();
+
+      // Navigate to the page that will consume the content
       var provider = HttpRouteContentProvider(delegate.submitUrl,
           data: {'code': data.code, 'format': data.format.formatName});
       Navigator.pushReplacement(
