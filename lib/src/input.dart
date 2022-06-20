@@ -550,6 +550,8 @@ class _FileWidgetStateful extends StatefulWidget {
 class _FileWidgetState extends State<_FileWidgetStateful> {
   SDUIInput delegate;
   SDUIButton button = SDUIButton();
+  String? _filename;
+  bool _loading = false;
 
   _FileWidgetState(this.delegate);
 
@@ -565,19 +567,52 @@ class _FileWidgetState extends State<_FileWidgetStateful> {
   }
 
   @override
-  Widget build(BuildContext context) => button.toWidget(context);
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          button.toWidget(context),
+          if (_loading)
+            const SizedBox(
+                width: 13,
+                height: 13,
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                  strokeWidth: 2,
+                ))
+          else if (_filename != null)
+            Text(_filename!)
+          else
+            Container()
+        ],
+      );
 
   Future<String?> _onPressed(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     File? file = result != null ? File(result.files.single.path!) : null;
 
     if (file != null) {
+      setLoading(true);
       String? mimeType = lookupMimeType(file.path);
       Http.getInstance()
           .uploadStream(delegate.uploadUrl!, delegate.name, file.path,
               file.readAsBytes().asStream(), mimeType, await file.length())
-          .then((value) => delegate.action.execute(context, null));
+          .then((value) => setValue(value))
+          .whenComplete(() => setLoading(false));
     }
     return file?.path;
+  }
+
+  void setValue(String value) {
+    setState(() {
+      _filename = value.substring(value.lastIndexOf("/") + 1);
+      delegate.provider?.setData(delegate.name, value);
+    });
+  }
+
+  void setLoading(bool value) {
+    setState(() {
+      _loading = value;
+    });
   }
 }

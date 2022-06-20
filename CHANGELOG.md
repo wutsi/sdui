@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.81] 2022-06-20
+
+- CHANGE: Show uploaded filename
+
 ## [0.1.80] 2022-06-18
 
 - FIX: Update SDK version
