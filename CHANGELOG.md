@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.81] 2022-06-20
+## [0.1.82] 2022-06-20
 
 - CHANGE: Show uploaded filename
 
