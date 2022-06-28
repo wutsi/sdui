@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:pinput/pin_put/pin_put.dart';
+import 'package:pinput/pinput.dart';
 
 import 'action.dart';
 import 'form.dart';
@@ -23,7 +23,7 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
   Color color = Colors.black;
   bool hideText = false;
   int maxLength = 6;
-  double pinSize = 20.0;
+  double pinSize = 30.0;
   double keyboardButtonSize = 70.0;
 
   @override
@@ -35,7 +35,7 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
     color = toColor(json?["color"]) ?? Colors.black;
     hideText = json?["hideText"] ?? false;
     maxLength = json?["maxLength"] ?? 6;
-    pinSize = json?['pinSize'] ?? 20.0;
+    pinSize = json?['pinSize'] ?? 10.0;
     keyboardButtonSize = json?['keyboardButtonSize'] ?? 70.0;
     return this;
   }
@@ -56,13 +56,6 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
   bool buzy = false;
   TextEditingController controller = TextEditingController();
 
-  BoxDecoration get _pinPutDecoration {
-    return BoxDecoration(
-      border: Border.all(color: delegate.color),
-      borderRadius: BorderRadius.circular(20.0),
-    );
-  }
-
   _PinWithKeyboardState(this.delegate);
 
   @override
@@ -79,20 +72,37 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
             alignment: Alignment.center,
             width: (delegate.pinSize + 20) * delegate.maxLength,
             padding: const EdgeInsets.all(10),
-            child: PinPut(
-              fieldsCount: delegate.maxLength,
+            child: Pinput(
               controller: controller,
-              separator: const SizedBox(width: 5.0),
-              keyboardType: TextInputType.none,
-              eachFieldConstraints:
-                  const BoxConstraints(minHeight: 10.0, minWidth: 10.0),
-              eachFieldWidth: delegate.pinSize,
-              eachFieldPadding: const EdgeInsets.all(2),
-              eachFieldMargin: const EdgeInsets.all(2),
-              submittedFieldDecoration: _pinPutDecoration,
-              selectedFieldDecoration: _pinPutDecoration,
-              followingFieldDecoration: _pinPutDecoration,
-              obscureText: delegate.hideText ? '●' : null,
+              showCursor: false,
+              obscureText: delegate.hideText,
+              length: delegate.maxLength,
+              submittedPinTheme: delegate.hideText
+                  ? PinTheme(
+                      width: delegate.pinSize,
+                      height: delegate.pinSize,
+                      textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: delegate.pinSize,
+                          textBaseline: TextBaseline.alphabetic),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: delegate.color),
+                        color: delegate.color,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ))
+                  : null,
+              defaultPinTheme: PinTheme(
+                width: delegate.pinSize,
+                height: delegate.pinSize,
+                textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: delegate.pinSize,
+                    textBaseline: TextBaseline.alphabetic),
+                decoration: BoxDecoration(
+                  border: Border.all(color: delegate.color),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
             ),
           ),
           Container(

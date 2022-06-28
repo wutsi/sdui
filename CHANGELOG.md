@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.83] 2022-06-28
+
+- CHANGE: Upgrade to pinput v2.0.2
+
 ## [0.1.82] 2022-06-20
 
 - CHANGE: Show uploaded filename
