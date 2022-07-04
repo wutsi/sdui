@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.85] 2022-07-04
+
+- ADD: Html
+
 ## [0.1.84] 2022-07-04
 
 - ADD: FittedBox

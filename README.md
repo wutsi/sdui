@@ -166,6 +166,7 @@ In Flutter, UI is composed of a hierarchy of Widgets. A widget is a visual eleme
     - [Column](https://pub.dev/documentation/sdui/latest/sdui/SDUIColumn-class.html)
     - [Container](https://pub.dev/documentation/sdui/latest/sdui/SDUIContainer-class.html)
     - [Expanded](https://pub.dev/documentation/sdui/latest/sdui/SDUIExpanded-class.html)
+    - [FittedBox](https://pub.dev/documentation/sdui/latest/sdui/SDUIFittedBox-class.html)
     - [Flexible](https://pub.dev/documentation/sdui/latest/sdui/SDUIFlexible-class.html)
     - [GridView](https://pub.dev/documentation/sdui/latest/sdui/SDUIGridView-class.html)
     - [Positioned](https://pub.dev/documentation/sdui/latest/sdui/SDUIPositioned-class.html)
@@ -203,8 +204,9 @@ In Flutter, UI is composed of a hierarchy of Widgets. A widget is a visual eleme
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)
 - Other
     - [Badge](https://pub.dev/documentation/sdui/latest/sdui/SDUIBadge-class.html)
-    - [ExpandablePanel](https://pub.dev/documentation/sdui/latest/sdui/SDUIExpandablePanel-class.html)
     - [Chip](https://pub.dev/documentation/sdui/latest/sdui/SDUIChip-class.html)
+    - [ExpandablePanel](https://pub.dev/documentation/sdui/latest/sdui/SDUIExpandablePanel-class.html)
+    - [Html](https://pub.dev/documentation/sdui/latest/sdui/SDUIHtml-class.html)
 
 ### Global Variables
 

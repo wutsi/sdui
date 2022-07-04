@@ -22,6 +22,7 @@ export 'src/fitted_box.dart';
 export 'src/flexible.dart';
 export 'src/form.dart';
 export 'src/grid_view.dart';
+export 'src/html.dart';
 export 'src/http.dart';
 export 'src/icon.dart';
 export 'src/icon_button.dart';
