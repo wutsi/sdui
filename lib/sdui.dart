@@ -18,6 +18,7 @@ export 'src/dynamic_widget.dart';
 export 'src/error.dart';
 export 'src/expandable_panel.dart';
 export 'src/expanded.dart';
+export 'src/fitted_box.dart';
 export 'src/flexible.dart';
 export 'src/form.dart';
 export 'src/grid_view.dart';

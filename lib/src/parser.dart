@@ -22,6 +22,7 @@ import 'dropdown.dart';
 import 'dynamic_widget.dart';
 import 'expandable_panel.dart';
 import 'expanded.dart';
+import 'fitted_box.dart';
 import 'flexible.dart';
 import 'form.dart';
 import 'grid_view.dart';
@@ -141,6 +142,9 @@ class SDUIParser {
         break;
       case 'expandablepanel':
         widget = SDUIExpandablePanel();
+        break;
+      case "fittedbox":
+        widget = SDUIFittedBox();
         break;
       case "flexible":
         widget = SDUIFlexible();

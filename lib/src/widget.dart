@@ -44,9 +44,10 @@ abstract class SDUIWidget {
     }
   }
 
-  Axis toAxis(String? direction) => direction?.toLowerCase() == "horizontal"
-      ? Axis.horizontal
-      : Axis.vertical;
+  Axis toAxis(String? direction) =>
+      direction?.toLowerCase() == "horizontal"
+          ? Axis.horizontal
+          : Axis.vertical;
 
   Color? toColor(String? hexColor) {
     if (hexColor == null) {
@@ -101,6 +102,80 @@ abstract class SDUIWidget {
         return MainAxisAlignment.spaceBetween;
     }
     return MainAxisAlignment.start;
+  }
+
+  BoxFit? toBoxFit(String? fit) {
+    switch (fit?.toLowerCase()) {
+      case "none":
+        return BoxFit.none;
+      case "contain":
+        return BoxFit.contain;
+      case "cover":
+        return BoxFit.cover;
+      case "fill":
+        return BoxFit.fill;
+      case "fitHeight":
+        return BoxFit.fitHeight;
+      case "fitWidth":
+        return BoxFit.fitWidth;
+      case "scaleDown":
+        return BoxFit.scaleDown;
+    }
+    return null;
+  }
+
+  Alignment? toAlignment(String? alignment) {
+    switch (alignment) {
+      case 'bottom-center':
+      case 'bottomcenter':
+        return Alignment.bottomCenter;
+
+      case 'bottom-left':
+      case 'bottomleft':
+        return Alignment.bottomLeft;
+
+      case 'bottom-right':
+      case 'bottomright':
+        return Alignment.bottomRight;
+
+      case 'center':
+        return Alignment.center;
+
+      case 'center-left':
+      case 'centerleft':
+        return Alignment.centerLeft;
+
+      case 'center-right':
+      case 'centerright':
+        return Alignment.centerRight;
+
+      case 'top-center':
+      case 'topcenter':
+        return Alignment.topCenter;
+
+      case 'top-left':
+      case 'topleft':
+        return Alignment.topLeft;
+
+      case 'top-right':
+      case 'topright':
+        return Alignment.topRight;
+    }
+    return null;
+  }
+
+  Clip? toClip(String? clip) {
+    switch (clip?.toLowerCase()) {
+      case "none":
+        return Clip.none;
+      case "antialias":
+        return Clip.antiAlias;
+      case "antialiaswithsavelayer":
+        return Clip.antiAliasWithSaveLayer;
+      case "hardedge":
+        return Clip.hardEdge;
+    }
+    return null;
   }
 
   void attachPageController(PageController? controller) {

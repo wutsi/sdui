@@ -38,7 +38,7 @@ class SDUIContainer extends SDUIWidget {
         child: child()?.toWidget(context),
         margin: margin == null ? null : EdgeInsets.all(margin!),
         padding: padding == null ? null : EdgeInsets.all(padding!),
-        alignment: _toAlignment(),
+        alignment: toAlignment(alignment),
         decoration: _toBoxDecoration(context),
         width: width,
         height: height,
@@ -48,46 +48,6 @@ class SDUIContainer extends SDUIWidget {
     action
         .execute(context, null)
         .then((value) => action.handleResult(context, value));
-  }
-
-  Alignment? _toAlignment() {
-    switch (alignment) {
-      case 'bottom-center':
-      case 'bottomcenter':
-        return Alignment.bottomCenter;
-
-      case 'bottom-left':
-      case 'bottomleft':
-        return Alignment.bottomLeft;
-
-      case 'bottom-right':
-      case 'bottomright':
-        return Alignment.bottomRight;
-
-      case 'center':
-        return Alignment.center;
-
-      case 'center-left':
-      case 'centerleft':
-        return Alignment.centerLeft;
-
-      case 'center-right':
-      case 'centerright':
-        return Alignment.centerRight;
-
-      case 'top-center':
-      case 'topcenter':
-        return Alignment.topCenter;
-
-      case 'top-left':
-      case 'topleft':
-        return Alignment.topLeft;
-
-      case 'top-right':
-      case 'topright':
-        return Alignment.topRight;
-    }
-    return null;
   }
 
   BoxDecoration _toBoxDecoration(BuildContext context) => BoxDecoration(

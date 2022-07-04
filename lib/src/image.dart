@@ -15,7 +15,7 @@ class SDUIImage extends SDUIWidget {
       imageUrl: url ?? '',
       width: width,
       height: height,
-      fit: _toFit(),
+      fit: toBoxFit(fit),
       placeholder: (context, url) => Container(
           alignment: Alignment.center,
           width: 16.0,
@@ -30,25 +30,5 @@ class SDUIImage extends SDUIWidget {
     height = json?["height"];
     fit = json?["fit"];
     return this;
-  }
-
-  BoxFit? _toFit() {
-    switch (fit?.toLowerCase()) {
-      case "none":
-        return BoxFit.none;
-      case "contain":
-        return BoxFit.contain;
-      case "cover":
-        return BoxFit.cover;
-      case "fill":
-        return BoxFit.fill;
-      case "fitHeight":
-        return BoxFit.fitHeight;
-      case "fitWidth":
-        return BoxFit.fitWidth;
-      case "scaleDown":
-        return BoxFit.scaleDown;
-    }
-    return null;
   }
 }

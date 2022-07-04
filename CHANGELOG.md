@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.84] 2022-07-04
+
+- ADD: FittedBox
+
 ## [0.1.83] 2022-06-28
 
 - CHANGE: Upgrade to pinput v2.0.2
