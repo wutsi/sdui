@@ -41,7 +41,7 @@ dependencies:
 
     badges: ^2.0.2
     cached_network_image: ^3.2.1
-    camera: ^0.9.4+5
+    camera: ^0.10.0
     carousel_slider: ^4.0.0
     email_validator: ^2.0.1
     expandable: ^5.0.1
