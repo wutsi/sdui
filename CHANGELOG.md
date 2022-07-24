@@ -4,6 +4,7 @@
 
 - FIX: Fix validation of email, url
 - FIX: Fix keyboard type for text fields
+- FIX: Trip text field values
 
 ## [0.1.85] 2022-07-04
 
