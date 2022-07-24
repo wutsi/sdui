@@ -136,7 +136,8 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   }
 
   String? _onValidate(String? value) {
-    int length = value?.length ?? 0;
+    String trimmed = value?.trim() ?? '';
+    int length = trimmed.length;
     if (length < minLength) {
       return "This field must have at least $minLength characters";
     }
@@ -144,7 +145,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
       return "This field must have less than $maxLength characters";
     }
 
-    bool empty = (value == null || value.isEmpty);
+    bool empty = (value == null || trimmed.isEmpty);
     if (empty) {
       if (required) {
         return "This field is required";
@@ -254,7 +255,7 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
   String? _onValidate(String? value) => delegate._onValidate(value);
 
   void _onChanged(String value) {
-    delegate.provider?.setData(delegate.name, value);
+    delegate.provider?.setData(delegate.name, value.trim());
   }
 }
 
