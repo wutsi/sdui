@@ -91,7 +91,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     hint = json?["hint"];
     enabled = json?["enabled"] ?? true;
     readOnly = json?["readOnly"] ?? false;
-    type = json?["type"] ?? "text";
+    type = (json?["type"] ?? "text").toString().toLowerCase();
     maxLines = json?["maxLines"];
     maxLength = json?["maxLength"];
     minLength = json?["minLength"] ?? 0;
@@ -136,28 +136,37 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   }
 
   String? _onValidate(String? value) {
-    bool empty = (value == null || value.isEmpty);
-    if (required && empty) {
-      return "This field is required";
-    }
-    if (minLength > 0 && (empty || value.length < minLength)) {
+    int length = value?.length ?? 0;
+    if (length < minLength) {
       return "This field must have at least $minLength characters";
     }
-    if (type == 'email' && !empty && !EmailValidator.validate(value)) {
-      return "Malformed email address";
+    if (maxLength != null && length > maxLength!) {
+      return "This field must have less than $maxLength characters";
     }
-    if (type == 'url' && !empty) {
-      try {
-        if (!Uri.parse(value).isAbsolute) {
-          return "Malformed URL";
-        }
-      } catch (e) {
-        return "Malformed URL";
+
+    bool empty = (value == null || value.isEmpty);
+    if (empty) {
+      if (required) {
+        return "This field is required";
       }
     }
-    if (type == 'number' && !empty) {
-      if (double.tryParse(value) == null) {
-        return "Invalid number";
+    if (!empty) {
+      if (type == 'email' && !EmailValidator.validate(value)) {
+        return "Malformed email address";
+      }
+      if (type == 'url') {
+        try {
+          if (!Uri.parse(value).isAbsolute) {
+            return "Malformed URL";
+          }
+        } catch (e) {
+          return "Malformed URL";
+        }
+      }
+      if (type == 'number') {
+        if (double.tryParse(value) == null) {
+          return "Invalid number";
+        }
       }
     }
     return null;

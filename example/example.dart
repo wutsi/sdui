@@ -195,7 +195,8 @@ var staticJson = '''
           "name": "first_name",
           "value": "Ray",
           "caption": "First Name",
-          "maxLength": 30
+          "maxLength": 30,
+          "minLength": 5
         }
       },
       {
@@ -213,7 +214,16 @@ var staticJson = '''
           "name": "email",
           "value": "ray.sponsible@gmail.com",
           "caption": "Email *",
-          "required": true
+          "required": true,
+          "type": "Email"
+        }
+      },
+      {
+        "type": "Input",
+        "attributes": {
+          "name": "website",
+          "caption": "Website",
+          "type": "Url"
         }
       },
       {

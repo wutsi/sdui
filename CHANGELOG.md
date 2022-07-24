@@ -1,8 +1,13 @@
 # CHANGELOG
 
+## [0.1.86] 2022-07-04
+
+- FIX: Fix validation of email, url
+- FIX: Fix keyboard type for text fields
+
 ## [0.1.85] 2022-07-04
 
-- ADD: Html
+- ADD: Html component
 
 ## [0.1.84] 2022-07-04
 
