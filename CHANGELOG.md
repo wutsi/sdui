@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [0.1.86] 2022-07-04
+## [0.1.88] 2022-07-23
+
+- FIX: PageView scroll physics set to none by default
+
+## [0.1.86] 2022-07-23
 
 - FIX: Fix validation of email, url
 - FIX: Fix keyboard type for text fields

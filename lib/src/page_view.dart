@@ -9,6 +9,7 @@ import 'package:sdui/sdui.dart';
 ///   - `vertical`
 class SDUIPageView extends SDUIWidget {
   String direction = 'horizontal';
+  bool scrollOnUserInput = false;
 
   @override
   Widget toWidget(BuildContext context) => _PageViewWidgetStateful(this);
@@ -17,6 +18,7 @@ class SDUIPageView extends SDUIWidget {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     super.fromJson(json);
     direction = json?['direction'] ?? 'horizontal';
+    direction = json?['scrollOnUserInput'] ?? false;
     return this;
   }
 }
@@ -30,9 +32,10 @@ class SDUIPage extends SDUIWidget {
   String? url;
 
   @override
-  Widget toWidget(BuildContext context) => DynamicRoute(
-      provider: HttpRouteContentProvider(url ?? ''),
-      pageController: action.pageController);
+  Widget toWidget(BuildContext context) =>
+      DynamicRoute(
+          provider: HttpRouteContentProvider(url ?? ''),
+          pageController: action.pageController);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -65,9 +68,11 @@ class _PageViewWidgetState extends State<_PageViewWidgetStateful> {
   }
 
   @override
-  Widget build(BuildContext context) => PageView.builder(
+  Widget build(BuildContext context) =>
+      PageView.builder(
         scrollDirection: _toScrollDirection(),
         controller: controller,
+        physics: _toScrollPhysics(),
         itemBuilder: (context, index) =>
             delegate.children[index].toWidget(context),
       );
@@ -80,4 +85,10 @@ class _PageViewWidgetState extends State<_PageViewWidgetStateful> {
         return Axis.horizontal;
     }
   }
+
+  ScrollPhysics _toScrollPhysics() =>
+      delegate.scrollOnUserInput
+          ? const RangeMaintainingScrollPhysics()
+          : const NeverScrollableScrollPhysics();
+
 }
