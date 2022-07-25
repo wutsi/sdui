@@ -18,7 +18,7 @@ class SDUIPageView extends SDUIWidget {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     super.fromJson(json);
     direction = json?['direction'] ?? 'horizontal';
-    direction = json?['scrollOnUserInput'] ?? false;
+    scrollOnUserInput = json?['scrollOnUserInput'] ?? false;
     return this;
   }
 }
@@ -32,10 +32,9 @@ class SDUIPage extends SDUIWidget {
   String? url;
 
   @override
-  Widget toWidget(BuildContext context) =>
-      DynamicRoute(
-          provider: HttpRouteContentProvider(url ?? ''),
-          pageController: action.pageController);
+  Widget toWidget(BuildContext context) => DynamicRoute(
+      provider: HttpRouteContentProvider(url ?? ''),
+      pageController: action.pageController);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -68,8 +67,7 @@ class _PageViewWidgetState extends State<_PageViewWidgetStateful> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      PageView.builder(
+  Widget build(BuildContext context) => PageView.builder(
         scrollDirection: _toScrollDirection(),
         controller: controller,
         physics: _toScrollPhysics(),
@@ -86,9 +84,7 @@ class _PageViewWidgetState extends State<_PageViewWidgetStateful> {
     }
   }
 
-  ScrollPhysics _toScrollPhysics() =>
-      delegate.scrollOnUserInput
-          ? const RangeMaintainingScrollPhysics()
-          : const NeverScrollableScrollPhysics();
-
+  ScrollPhysics _toScrollPhysics() => delegate.scrollOnUserInput
+      ? const RangeMaintainingScrollPhysics()
+      : const NeverScrollableScrollPhysics();
 }
