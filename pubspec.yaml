@@ -45,7 +45,7 @@ dependencies:
     carousel_slider: ^4.0.0
     email_validator: ^2.0.1
     expandable: ^5.0.1
-    file_picker: ^4.5.1
+    file_picker: ^5.0.0
     flutter_html: ^2.2.1
     http: ^0.13.4
     http_parser: ^4.0.0
