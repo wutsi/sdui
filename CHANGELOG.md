@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.88] 2022-07-23
+## [0.1.87] 2022-07-23
 
 - FIX: PageView scroll physics set to none by default
 
