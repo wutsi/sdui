@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.1.89] 2022-08-12
+
+- FIX: Increase the dialog content max-lines from 3 to 10 - to prevent dialog content to be cut-off
+- CHANGE: Upgrade Android gradle
+- CHANGE: Downgrade file_picker from 5.0.0 to 4.5.1 - to fix iOS build issues
+
 ## [0.1.88] 2022-07-26
 
 - CHANGE: Upgrade to file_picker: ^5.0.0

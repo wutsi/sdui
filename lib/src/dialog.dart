@@ -64,7 +64,7 @@ class SDUIDialog extends SDUIWidget {
       padding: const EdgeInsets.all(10.0),
       child: Text(
         text ?? '',
-        maxLines: 3,
+        maxLines: 10,
         softWrap: true,
       ));
 
