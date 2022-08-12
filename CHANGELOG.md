@@ -2,7 +2,6 @@
 
 ## [0.1.91] 2022-08-90
 
-- CHANGE: Upgrade file_picker from 5.0.1
 - CHANGE: Downgrade url_launcher from 6.5.1
 
 ## [0.1.89] 2022-08-12
