@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [0.1.91] 2022-08-90
+## [0.1.94] 2022-08-13
+
+- CHANGE: Set the PIN text color
+
+## [0.1.91] 2022-08-12
 
 - CHANGE: Downgrade url_launcher from 6.5.1
 
