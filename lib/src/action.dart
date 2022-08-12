@@ -151,8 +151,9 @@ class SDUIAction {
 
   Future<String?> _navigate(BuildContext context) async {
     _logger.i('Navigate to $url');
-    if (await canLaunch(url)) {
-      await launch(url);
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
       return "ok";
     } else {
       return "";

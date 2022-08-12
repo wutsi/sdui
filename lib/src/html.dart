@@ -12,8 +12,11 @@ class SDUIHtml extends SDUIWidget {
   Widget toWidget(BuildContext context) => Html(
       data: data ?? '',
       onLinkTap: (url, _, __, ___) async {
-        if (url != null && await canLaunch(url)) {
-          await launch(url);
+        if (url != null) {
+          Uri uri = Uri.parse(url);
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri);
+          }
         }
       });
 
