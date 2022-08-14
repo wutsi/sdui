@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.95] 2022-08-13
+
+- CHANGE: Add more logs when redirecting to /
+
 ## [0.1.94] 2022-08-13
 
 - CHANGE: Set the PIN text color

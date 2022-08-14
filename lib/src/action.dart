@@ -203,6 +203,8 @@ class SDUIAction {
         Navigator.popUntil(context, (route) => route.isFirst);
         if (ModalRoute.of(context)?.settings.name != '/') {
           // Make sure that the top page is '/'
+          _logger.i(
+              'Redirecting from ${ModalRoute.of(context)?.settings.name} to /');
           Navigator.pushReplacementNamed(context, '/');
         }
       } else {
