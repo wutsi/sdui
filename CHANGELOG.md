@@ -20,6 +20,7 @@
     - PinWidthKeyboard
     - Radio
     - RadioGroup
+    - SearchableDropdown
     - Row
     - Screen
     - Text

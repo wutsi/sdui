@@ -204,6 +204,7 @@ class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
 
   @override
   Widget build(BuildContext context) => SearchChoices.single(
+        key: delegate.id == null ? null : Key(delegate.id!),
         items: _toItems(context),
         onChanged: (value) => _onChanged(value),
         onClear: () => _onChanged(null),
