@@ -83,6 +83,7 @@ class SDUIScreen extends SDUIWidget {
   Widget toWidget(BuildContext context) => GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+          key: id == null ? null : Key(id!),
           resizeToAvoidBottomInset: false,
           backgroundColor: toColor(backgroundColor),
           appBar: appBar == null ? null : (appBar!.toWidget(context) as AppBar),

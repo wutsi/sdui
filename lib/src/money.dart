@@ -35,7 +35,9 @@ class SDUIMoneyText extends SDUIWidget {
   }
 
   @override
-  Widget toWidget(BuildContext context) => MoneyText(
+  Widget toWidget(BuildContext context) =>
+      MoneyText(
+        key: id == null ? null : Key(id!),
         value: value ?? 0,
         currency: currency ?? 'XAF',
         color: toColor(color),
@@ -56,41 +58,44 @@ class MoneyText extends StatelessWidget {
   final Color? color;
   final bool? bold;
 
-  const MoneyText(
-      {Key? key,
-      required this.value,
-      required this.currency,
-      this.numberFormat,
-      this.valueFontSize = 50,
-      this.currencyFontSize = 12,
-      this.color,
-      this.bold = false})
+  const MoneyText({Key? key,
+    required this.value,
+    required this.currency,
+    this.numberFormat,
+    this.valueFontSize = 50,
+    this.currencyFontSize = 12,
+    this.color,
+    this.bold = false})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Text.rich(TextSpan(
-          text: numberFormat == null
-              ? value.toString()
-              : NumberFormat(numberFormat).format(value),
-          style: TextStyle(
-              color: color,
-              fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
-              fontSize: valueFontSize),
-          children: [
-            WidgetSpan(
-              child: Transform.translate(
-                offset: Offset(5.0, currencyFontSize - valueFontSize),
-                child: Text(
-                  currency,
-                  style: TextStyle(
-                      color: color,
-                      fontWeight:
-                          bold == true ? FontWeight.bold : FontWeight.normal,
-                      fontSize: currencyFontSize),
+  Widget build(BuildContext context) =>
+      Text.rich(
+        TextSpan(
+            text: numberFormat == null
+                ? value.toString()
+                : NumberFormat(numberFormat).format(value),
+            style: TextStyle(
+                color: color,
+                fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
+                fontSize: valueFontSize),
+            children: [
+              WidgetSpan(
+                child: Transform.translate(
+                  offset: Offset(5.0, currencyFontSize - valueFontSize),
+                  child: Text(
+                    currency,
+                    style: TextStyle(
+                        color: color,
+                        fontWeight:
+                        bold == true ? FontWeight.bold : FontWeight.normal,
+                        fontSize: currencyFontSize),
+                  ),
                 ),
               ),
-            ),
-          ]));
+            ]),
+        key: key,
+      );
 }
 
 /// Descriptor of [MoneyText] with [NumericKeyboard]
@@ -135,7 +140,7 @@ class SDUIMoneyWithKeyboard extends SDUIWidget with SDUIFormField {
 class _MoneyWithKeyboard extends StatefulWidget {
   final SDUIMoneyWithKeyboard delegate;
 
-  const _MoneyWithKeyboard(this.delegate, {Key? key}) : super(key: key);
+  const _MoneyWithKeyboard(this.delegate);
 
   @override
   // ignore: no_logic_in_create_state
@@ -169,12 +174,14 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
   }
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) =>
+      Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
             alignment: Alignment.center,
             child: MoneyText(
+                key: delegate.id == null ? null : Key('${delegate.id}_money'),
                 color: delegate.toColor(delegate.moneyColor),
                 value: state.toDouble(),
                 currency: delegate.currency ?? 'XAF',
@@ -184,6 +191,7 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
           Container(
             alignment: Alignment.bottomCenter,
             child: NumericKeyboard(
+              key: delegate.id == null ? null : Key('${delegate.id}_keyboard'),
               buttonSize: delegate.keyboardButtonSize,
               textColor: _keyboardColor(),
               onKeyboardTap: (value) => _onKeyboardTap(value),
@@ -207,7 +215,9 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
   }
 
   void _changeText(int value) {
-    if (value.toString().length <= delegate.maxLength) {
+    if (value
+        .toString()
+        .length <= delegate.maxLength) {
       setState(() {
         state = value;
       });
@@ -259,7 +269,7 @@ class SDUIMoneyWithSlider extends SDUIWidget with SDUIFormField {
     numberFormat = json?['numberFormat'];
     maxValue = json?['maxValue'];
 
-    return this;
+    return super.fromJson(json);
   }
 
   @override
@@ -291,11 +301,13 @@ class _MoneyWithSliderState extends State<_MoneyWithSlider> {
   }
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) =>
+      Column(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             child: MoneyText(
+              key: delegate.id == null ? null : Key('${delegate.id}_money'),
               color: delegate.toColor(delegate.moneyColor),
               value: state.toDouble(),
               currency: delegate.currency ?? 'XAF',
@@ -303,6 +315,7 @@ class _MoneyWithSliderState extends State<_MoneyWithSlider> {
             ),
           ),
           Slider(
+            key: delegate.id == null ? null : Key('${delegate.id}_key'),
             value: state,
             min: 0,
             max: delegate.maxValue?.toDouble() ?? 100000,

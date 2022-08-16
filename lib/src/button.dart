@@ -95,24 +95,28 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
     switch (delegate.type?.toLowerCase()) {
       case 'text':
         return TextButton(
+          key: delegate.id == null ? null : Key(delegate.id!),
           child: _createText(),
           onPressed: () => _onSubmit(context),
         );
 
       case 'outlined':
         return OutlinedButton(
+          key: delegate.id == null ? null : Key(delegate.id!),
           child: _createText(),
           onPressed: () => _onSubmit(context),
         );
 
       case "floatable":
         return FloatingActionButton(
+          key: delegate.id == null ? null : Key(delegate.id!),
           child: _createText(),
           onPressed: () => _onSubmit(context),
         );
 
       default:
         return ElevatedButton(
+          key: delegate.id == null ? null : Key(delegate.id!),
           child: _createText(),
           onPressed: () => _onSubmit(context),
         );

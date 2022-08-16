@@ -14,6 +14,7 @@ class SDUIChip extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => Chip(
+        key: id == null ? null : Key(id!),
         elevation: elevation,
         backgroundColor: toColor(backgroundColor) ?? Colors.red,
         shadowColor: toColor(shadowColor),

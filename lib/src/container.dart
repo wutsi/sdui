@@ -35,6 +35,7 @@ class SDUIContainer extends SDUIWidget {
           onTap: () => _onTap(context), child: _createContainer(context));
 
   Container _createContainer(BuildContext context) => Container(
+        key: id == null ? null : Key(id!),
         child: child()?.toWidget(context),
         margin: margin == null ? null : EdgeInsets.all(margin!),
         padding: padding == null ? null : EdgeInsets.all(padding!),
@@ -77,6 +78,6 @@ class SDUIContainer extends SDUIWidget {
     backgroundImageUrl = json?["backgroundImageUrl"];
     width = json?["width"];
     height = json?["height"];
-    return this;
+    return super.fromJson(json);
   }
 }

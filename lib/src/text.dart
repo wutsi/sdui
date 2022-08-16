@@ -31,6 +31,7 @@ class SDUIText extends SDUIWidget {
         style: _toTextStyle(),
         textAlign: _toTextAlign(),
         maxLines: maxLines,
+        key: id == null ? null : Key(id!),
       );
 
   @override
@@ -44,7 +45,7 @@ class SDUIText extends SDUIWidget {
     alignment = json?['alignment'];
     decoration = json?['decoration'];
     maxLines = json?['maxLines'];
-    return this;
+    return super.fromJson(json);
   }
 
   TextOverflow? _toTextOverflow() {

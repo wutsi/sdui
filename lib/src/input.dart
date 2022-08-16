@@ -206,6 +206,7 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
 
   @override
   Widget build(BuildContext context) => TextFormField(
+        key: delegate.id == null ? null : Key(delegate.id!),
         enabled: delegate.enabled,
         decoration: _toInputDecoration(),
         controller: TextEditingController(text: state),
@@ -340,6 +341,7 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
   Widget build(BuildContext context) => SizedBox(
       width: double.infinity,
       child: Column(
+        key: delegate.id == null ? null : Key(delegate.id!),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -437,6 +439,7 @@ class _PhoneWidgetState extends State<_PhoneWidgetStateful> {
 
   @override
   Widget build(BuildContext context) => InternationalPhoneNumberInput(
+        key: delegate.id == null ? null : Key(delegate.id!),
         selectorConfig:
             const SelectorConfig(selectorType: PhoneInputSelectorType.DIALOG),
         ignoreBlank: true,
@@ -508,6 +511,7 @@ class _ImageWidgetState extends State<_ImageWidgetStateful> {
         caption: delegate.caption,
         type: "text",
         onPressed: (context) => _onPressed(context));
+    button.id = delegate.id;
     button.action.pageController = delegate.action.pageController;
   }
 
@@ -573,6 +577,7 @@ class _FileWidgetState extends State<_FileWidgetStateful> {
         caption: delegate.caption,
         type: "text",
         onPressed: (context) => _onPressed(context));
+    button.id = delegate.id;
     button.action.pageController = delegate.action.pageController;
   }
 

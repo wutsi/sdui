@@ -118,6 +118,7 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
       : _button();
 
   DropdownButtonFormField _button() => DropdownButtonFormField<String>(
+        key: delegate.id == null ? null : Key(delegate.id!),
         value: state,
         hint: delegate.hint == null ? null : Text(delegate.hint!),
         decoration: delegate.outlinedBorder ?? true

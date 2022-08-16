@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## [0.1.96] 2022-08-16
+
+- CHANGE: Maps id to key on
+    - Badge
+    - Chip
+    - Column
+    - Container
+    - CircleAvatar
+    - Button
+    - Dropdown
+    - Image
+    - Input
+    - ListView
+    - ListItem
+    - Money
+    - MoneyWithKeyboard
+    - MoneyWithSlide
+    - PinWidthKeyboard
+    - Radio
+    - RadioGroup
+    - Row
+    - Screen
+    - Text
+
 ## [0.1.95] 2022-08-13
 
 - CHANGE: Add more logs when redirecting to /

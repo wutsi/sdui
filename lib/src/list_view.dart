@@ -20,7 +20,7 @@ class SDUIListView extends SDUIWidget {
     direction = json?["direction"];
     separator = json?["separator"];
     separatorColor = json?["separatorColor"];
-    return this;
+    return super.fromJson(json);
   }
 
   Widget _toListItem(Widget item) {
@@ -54,14 +54,16 @@ class SDUIListItem extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => ListTile(
+        key: id == null ? null : Key(id!),
         title: Text(caption ?? '<NO-TITLE>'),
         subtitle: subCaption == null ? null : Text(subCaption!),
         leading: leading?.toWidget(context) ?? toIcon(iconLeft, size: 48),
         trailing: trailing?.toWidget(context) ?? toIcon(iconRight, size: 48),
         contentPadding: padding == null ? null : EdgeInsets.all(padding!),
         onTap: () {
-          action.execute(context, null)
-            .then((value) => action.handleResult(context, value));
+          action
+              .execute(context, null)
+              .then((value) => action.handleResult(context, value));
         },
       );
 
@@ -74,7 +76,7 @@ class SDUIListItem extends SDUIWidget {
     padding = json?["padding"];
     leading = _parseWidget('leading', json);
     trailing = _parseWidget('trailing', json);
-    return this;
+    return super.fromJson(json);
   }
 
   SDUIWidget? _parseWidget(String name, Map<String, dynamic>? json) {
@@ -108,7 +110,7 @@ class SDUIListItemSwitch extends SDUIWidget with SDUIFormField {
     icon = json?["leftIcon"];
     name = json?["name"] ?? '_no_name_';
     selected = json?["selected"] ?? false;
-    return this;
+    return super.fromJson(json);
   }
 
   void submit(BuildContext context, String value) {
@@ -145,6 +147,7 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
 
   @override
   Widget build(BuildContext context) => SwitchListTile(
+        key: delegate.id == null ? null : Key(delegate.id!),
         value: state,
         title: Text(delegate.caption ?? '<NO-TITLE>'),
         subtitle:

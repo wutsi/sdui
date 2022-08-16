@@ -37,14 +37,14 @@ class SDUIPinWidthKeyboard extends SDUIWidget with SDUIFormField {
     maxLength = json?["maxLength"] ?? 6;
     pinSize = json?['pinSize'] ?? 10.0;
     keyboardButtonSize = json?['keyboardButtonSize'] ?? 70.0;
-    return this;
+    return super.fromJson(json);
   }
 }
 
 class _PinWithKeyboard extends StatefulWidget {
   final SDUIPinWidthKeyboard delegate;
 
-  const _PinWithKeyboard(this.delegate, {Key? key}) : super(key: key);
+  const _PinWithKeyboard(this.delegate);
 
   @override
   // ignore: no_logic_in_create_state
@@ -73,6 +73,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
             width: (delegate.pinSize + 20) * delegate.maxLength,
             padding: const EdgeInsets.all(10),
             child: Pinput(
+              key: delegate.id == null ? null : Key('${delegate.id}_pinput'),
               controller: controller,
               showCursor: false,
               obscureText: delegate.hideText,
@@ -112,6 +113,9 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
             child: buzy
                 ? Center(child: sduiProgressIndicator(context))
                 : NumericKeyboard(
+                    key: delegate.id == null
+                        ? null
+                        : Key('${delegate.id}_keyboard'),
                     textColor: delegate.color,
                     buttonSize: delegate.keyboardButtonSize,
                     onKeyboardTap: (value) => _onKeyboardTap(context, value),

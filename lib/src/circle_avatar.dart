@@ -14,6 +14,7 @@ class SDUICircleAvatar extends SDUIWidget {
   Widget toWidget(BuildContext context) => GestureDetector(
       onTap: () => _onTap(context),
       child: CircleAvatar(
+        key: id == null ? null : Key(id!),
         radius: radius,
         backgroundColor: toColor(backgroundColor),
         child: ClipRRect(

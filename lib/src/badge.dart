@@ -17,6 +17,7 @@ class SDUIBadge extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => Badge(
+        key: id == null ? null : Key(id!),
         elevation: elevation ?? 2,
         badgeColor: toColor(backgroundColor) ?? Colors.red,
         borderRadius: borderRadius == null

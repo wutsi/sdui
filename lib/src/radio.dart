@@ -12,6 +12,7 @@ class SDUIRadio extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => RadioListTile<String>(
+        key: id == null ? null : Key(id!),
         title: Text(caption ?? '<NO-TITLE>'),
         subtitle: subCaption == null ? null : Text(subCaption ?? ''),
         value: value ?? '',
@@ -25,7 +26,7 @@ class SDUIRadio extends SDUIWidget {
     caption = json?["caption"];
     subCaption = json?["subCaption"];
     value = json?["value"];
-    return this;
+    return super.fromJson(json);
   }
 }
 
@@ -46,14 +47,14 @@ class SDUIRadioGroup extends SDUIWidget with SDUIFormField {
     value = json?["value"];
     separator = json?["separator"];
     separatorColor = json?["separatorColor"];
-    return this;
+    return super.fromJson(json);
   }
 }
 
 class _RadioGroupWidget extends StatefulWidget {
   final SDUIRadioGroup delegate;
 
-  const _RadioGroupWidget(this.delegate, {Key? key}) : super(key: key);
+  const _RadioGroupWidget(this.delegate);
 
   @override
   // ignore: no_logic_in_create_state
@@ -75,10 +76,10 @@ class _RadioGroupState extends State<_RadioGroupWidget> {
 
   @override
   Widget build(BuildContext context) => ListView(
-          children: delegate.children.map((e) {
+      key: delegate.id == null ? null : Key(delegate.id!),
+      children: delegate.children.map((e) {
         if (e is SDUIRadio) {
-          return _toListItem(
-              RadioListTile<String>(
+          return _toListItem(RadioListTile<String>(
               title: Text(e.caption ?? '<NO-TITLE>'),
               subtitle: e.subCaption == null ? null : Text(e.subCaption ?? ''),
               value: e.value ?? '',

@@ -11,6 +11,7 @@ class SDUIColumn extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => Column(
+      key: id == null ? null : Key(id!),
       mainAxisSize: toMainAxisSize(mainAxisSize),
       crossAxisAlignment: toCrossAxisAlignment(crossAxisAlignment),
       mainAxisAlignment: toMainAxisAlignment(mainAxisAlignment),

@@ -18,6 +18,7 @@ class SDUIIconButton extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => IconButton(
+        key: id == null ? null : Key(id!),
         iconSize: size ?? 24.0,
         icon: icon == null ? const Icon(Icons.warning) : toIcon(icon)!,
         color: toColor(color),
@@ -33,6 +34,6 @@ class SDUIIconButton extends SDUIWidget {
     tooltip = json?["tooltip"];
     size = json?["size"];
     color = json?["color"];
-    return this;
+    return super.fromJson(json);
   }
 }

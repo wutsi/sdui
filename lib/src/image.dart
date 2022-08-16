@@ -12,6 +12,7 @@ class SDUIImage extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => CachedNetworkImage(
+      key: id == null ? null : Key(id!),
       imageUrl: url ?? '',
       width: width,
       height: height,
@@ -29,6 +30,6 @@ class SDUIImage extends SDUIWidget {
     width = json?["width"];
     height = json?["height"];
     fit = json?["fit"];
-    return this;
+    return super.fromJson(json);
   }
 }

@@ -26,15 +26,17 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Map<String, WidgetBuilder> _routes() => {
+  Map<String, WidgetBuilder> _routes() =>
+      {
         '/': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(homeJson)),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(staticJson)),
-        '/remote': (context) => const DynamicRoute(
+        '/remote': (context) =>
+        const DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://10.0.2.2:8080/onboard' /* Remove endpoint - Replace it with your own */
-                )),
+            )),
       };
 }
 
@@ -186,12 +188,14 @@ var staticJson = '''
   "child": {
     "type": "Form",
     "attributes": {
+      "id": "form",
       "padding": 10
     },
     "children": [
       {
         "type": "Input",
         "attributes": {
+          "id": "first_name",
           "name": "first_name",
           "value": "Ray",
           "caption": "First Name",
@@ -202,6 +206,7 @@ var staticJson = '''
       {
         "type": "Input",
         "attributes": {
+          "id": "last_name",
           "name": "last_name",
           "value": "Sponsible",
           "caption": "Last Name",
@@ -211,6 +216,7 @@ var staticJson = '''
       {
         "type": "Input",
         "attributes": {
+          "id": "email",
           "name": "email",
           "value": "ray.sponsible@gmail.com",
           "caption": "Email *",
@@ -221,6 +227,7 @@ var staticJson = '''
       {
         "type": "Input",
         "attributes": {
+          "id": "website",
           "name": "website",
           "caption": "Website",
           "type": "Url"
@@ -229,6 +236,7 @@ var staticJson = '''
       {
         "type": "Input",
         "attributes": {
+          "id": "phone",
           "name": "phone",
           "type": "phone",
           "caption": "Phone",
@@ -240,6 +248,7 @@ var staticJson = '''
       {
         "type": "Input",
         "attributes": {
+          "id": "date",
           "type": "date",
           "name": "birth_date",
           "caption": "Date of Birth"
@@ -248,6 +257,7 @@ var staticJson = '''
       {
         "type": "Input",
         "attributes": {
+          "id": "submit",
           "type": "Submit",
           "name": "submit",
           "caption": "Create Profile"
