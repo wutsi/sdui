@@ -68,6 +68,7 @@ class _PageViewWidgetState extends State<_PageViewWidgetStateful> {
 
   @override
   Widget build(BuildContext context) => PageView.builder(
+        key: delegate.id == null ? null : Key(delegate.id!),
         scrollDirection: _toScrollDirection(),
         controller: controller,
         physics: _toScrollPhysics(),

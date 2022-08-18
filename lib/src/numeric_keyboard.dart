@@ -41,11 +41,16 @@ class NumericKeyboard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _NumericKeyboardState();
+    // ignore: no_logic_in_create_state
+    return _NumericKeyboardState(this);
   }
 }
 
 class _NumericKeyboardState extends State<NumericKeyboard> {
+  final NumericKeyboard delegate;
+
+  _NumericKeyboardState(this.delegate);
+
   @override
   Widget build(BuildContext context) => Container(
       alignment: Alignment.center,
@@ -59,17 +64,17 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
               crossAxisCount: 3),
           itemBuilder: (BuildContext context, int index) {
             if (index == 9) {
-              return _button(widget.leftButton, widget.leftButtonFn);
+              return _button(999, widget.leftButton, widget.leftButtonFn);
             } else if (index == 10) {
-              return _calcButton('0');
+              return _calcButton(0, '0');
             } else if (index == 11) {
-              return _button(widget.rightButton, widget.rightButtonFn);
+              return _button(111, widget.rightButton, widget.rightButtonFn);
             } else {
-              return _calcButton((index + 1).toString());
+              return _calcButton((index + 1), (index + 1).toString());
             }
           }));
 
-  Widget _calcButton(String value) => Container(
+  Widget _calcButton(int index, String value) => Container(
       width: widget.buttonSize,
       height: widget.buttonSize,
       alignment: Alignment.center,
@@ -78,15 +83,17 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
           width: double.infinity,
           height: double.infinity,
           child: TextButton(
+              key: delegate.key == null ? null : Key('${delegate.key}_$index'),
               onPressed: () => widget.onKeyboardTap(value),
               child: Text(value,
                   style: TextStyle(
                       color: widget.textColor, fontSize: widget.fontSize)))));
 
-  Widget _button(Widget? button, Function()? callback) {
+  Widget _button(int index, Widget? button, Function()? callback) {
     Widget? child;
     if (button is Icon) {
       child = IconButton(
+          key: delegate.key == null ? null : Key('${delegate.key}_$index'),
           icon:
               Icon(button.icon, size: widget.fontSize, color: widget.textColor),
           onPressed: callback);

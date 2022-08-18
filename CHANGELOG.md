@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.1.97] 2022-08-16
+
+- CHANGE: Maps id to key on
+    - NumericKeyboard
+    - PageView
+
 ## [0.1.96] 2022-08-16
 
 - CHANGE: Maps id to key on
