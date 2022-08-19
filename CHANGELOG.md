@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.1.100] 2022-08-19
+
+- CHANGE: Add support for deeplinks
+
+## [0.1.98] 2022-08-19
+
+- CHANGE: Improve navigation to home page
+
 ## [0.1.97] 2022-08-16
 
 - CHANGE: Maps id to key on

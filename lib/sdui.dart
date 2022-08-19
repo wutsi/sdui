@@ -11,6 +11,7 @@ export 'src/chip.dart';
 export 'src/circle_avatar.dart';
 export 'src/column.dart';
 export 'src/container.dart';
+export 'src/deeplink.dart';
 export 'src/dialog.dart';
 export 'src/divider.dart';
 export 'src/dropdown.dart';

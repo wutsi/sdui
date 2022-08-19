@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'analytics.dart';
+import 'deeplink.dart';
 import 'error.dart';
 import 'http.dart';
 import 'loading.dart';
@@ -71,10 +74,11 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   static Map<int, String?> statusCodeRoutes = {};
   static final List<String> _history = [];
 
-  final RouteContentProvider provider;
+  RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
   SDUIWidget? sduiWidget;
+  StreamSubscription? _streamSubscription;
 
   DynamicRouteState(this.provider, this.pageController);
 
@@ -84,19 +88,65 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
       sduiRouteObserver.subscribe(this, ModalRoute.of(context)!);
     });
 
-    super.initState();
     content = provider.getContent();
+    _deepLinkInit();
+    _deepLinkHandle();
+
+    super.initState();
   }
 
   @override
   void dispose() {
     sduiRouteObserver.unsubscribe(this);
+    _streamSubscription?.cancel();
 
     super.dispose();
   }
 
-  void _reload() {
-    content = provider.getContent();
+  ///
+  /// Handle initial deep links
+  ///
+  void _deepLinkInit() async {
+    // Initial URL
+    try {
+      final initialURI = await getInitialUri();
+      _logger.i("initial: deep_link=$initialURI");
+
+      if (initialURI != null) {
+        String? url = sduiDeeplinkHandler(initialURI);
+        _logger.i("deep_link=$initialURI url=$url");
+        if (url != null) {
+          setState(() {
+            provider = HttpRouteContentProvider(url);
+            content = provider.getContent();
+          });
+        }
+      }
+    } catch (ex) {
+      _logger.w("Failed to receive initial uri", ex);
+    }
+  }
+
+  ///
+  ///Handle incoming deep links
+  ///
+  void _deepLinkHandle() async {
+    _streamSubscription = uriLinkStream.listen((Uri? uri) {
+      _logger.i("received: deep_link=$uri");
+      if (uri != null) {
+        String? url = sduiDeeplinkHandler(uri);
+        _logger.i("deep_link=$uri url=$url");
+
+        if (url != null) {
+          setState(() {
+            provider = HttpRouteContentProvider(url);
+            content = provider.getContent();
+          });
+        }
+      }
+    }, onError: (Object err) {
+      _logger.w('Deeplink error', err);
+    });
   }
 
   @override
@@ -133,6 +183,10 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
             // Loading state
             return sduiLoadingState(context);
           }));
+
+  void _reload() {
+    content = provider.getContent();
+  }
 
   void _push(String? pageId) {
     if (pageId != null && pageId != _peek()) {
