@@ -26,17 +26,15 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Map<String, WidgetBuilder> _routes() =>
-      {
+  Map<String, WidgetBuilder> _routes() => {
         '/': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(homeJson)),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(staticJson)),
-        '/remote': (context) =>
-        const DynamicRoute(
+        '/remote': (context) => const DynamicRoute(
             provider: HttpRouteContentProvider(
-                'http://10.0.2.2:8080/onboard' /* Remove endpoint - Replace it with your own */
-            )),
+                'http://10.0.2.2:8080/settings/profile' /* Remove endpoint - Replace it with your own */
+                )),
       };
 }
 
@@ -243,6 +241,18 @@ var staticJson = '''
           "required": true,
           "initialCountry": "CM",
           "value": "+237690000001"
+        }
+      },
+      {
+        "type": "Input",
+        "attributes": {
+          "id": "age",
+          "name": "age",
+          "type": "age",
+          "caption": "Age",
+          "inputFormatterRegex": "[0-9]",
+          "maxLength": 3,
+          "value": 12
         }
       },
       {

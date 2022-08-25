@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -77,6 +78,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
   String? prefix;
   String? suffix;
   String? initialCountry;
+  String? inputFormatterRegex;
 
   @override
   Widget toWidget(BuildContext context) => _createWidget(context);
@@ -103,6 +105,7 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
     prefix = json?["prefix"];
     suffix = json?["suffix"];
     initialCountry = json?["initialCountry"];
+    inputFormatterRegex = json?["inputFormatterRegex"];
 
     var nodes = json?["countries"];
     if (nodes is List<dynamic>) {
@@ -206,21 +209,26 @@ class _TextFieldWidgetState extends State<_TextFieldWidgetStateful> {
 
   @override
   Widget build(BuildContext context) => TextFormField(
-        key: delegate.id == null ? null : Key(delegate.id!),
-        enabled: delegate.enabled,
-        decoration: _toInputDecoration(),
-        controller: TextEditingController(text: state),
-        obscureText: delegate.hideText,
-        readOnly: delegate.readOnly,
-        maxLength: delegate.maxLength,
-        maxLines: delegate.maxLines,
-        keyboardType: _toKeyboardType(),
-        onChanged: (String value) => _onChanged(value),
-        validator: (String? value) => _onValidate(value),
-        textCapitalization: delegate.type == 'text'
-            ? TextCapitalization.sentences
-            : TextCapitalization.none,
-      );
+      key: delegate.id == null ? null : Key(delegate.id!),
+      enabled: delegate.enabled,
+      decoration: _toInputDecoration(),
+      controller: TextEditingController(text: state),
+      obscureText: delegate.hideText,
+      readOnly: delegate.readOnly,
+      maxLength: delegate.maxLength,
+      maxLines: delegate.maxLines,
+      keyboardType: _toKeyboardType(),
+      onChanged: (String value) => _onChanged(value),
+      validator: (String? value) => _onValidate(value),
+      textCapitalization: delegate.type == 'text'
+          ? TextCapitalization.sentences
+          : TextCapitalization.none,
+      inputFormatters: delegate.inputFormatterRegex == null
+          ? null
+          : <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(
+                  RegExp(delegate.inputFormatterRegex!))
+            ]);
 
   TextInputType? _toKeyboardType() {
     switch (delegate.type.toLowerCase()) {

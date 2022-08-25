@@ -112,14 +112,6 @@ class SDUIListItemSwitch extends SDUIWidget with SDUIFormField {
     selected = json?["selected"] ?? false;
     return super.fromJson(json);
   }
-
-  void submit(BuildContext context, String value) {
-    var data = <String, String>{};
-    data[name] = value;
-    action
-        .execute(context, data)
-        .then((value) => action.handleResult(context, value));
-  }
 }
 
 class _ListItemSwitchWidget extends StatefulWidget {
@@ -134,6 +126,7 @@ class _ListItemSwitchWidget extends StatefulWidget {
 
 class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   bool state = false;
+  bool buzy = false;
   SDUIListItemSwitch delegate;
 
   _ListItemSwitchState(this.delegate);
@@ -153,12 +146,24 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
         subtitle:
             delegate.subCaption == null ? null : Text(delegate.subCaption!),
         secondary: delegate.toIcon(delegate.icon),
-        onChanged: (bool value) => _changeState(value),
+        onChanged: buzy ? null : (bool value) => _changeState(value),
       );
 
   void _changeState(bool value) {
-    setState(() => state = value);
-    delegate.submit(context, value.toString());
+    setState(() {
+      state = value;
+      buzy = true;
+      submit(context, value.toString());
+    });
+  }
+
+  void submit(BuildContext context, String value) {
     delegate.provider?.setData(delegate.name, value.toString());
+    delegate.action
+        .execute(context, delegate.provider?.getData())
+        .then((value) {
+      delegate.action.handleResult(context, value);
+      buzy = false;
+    });
   }
 }

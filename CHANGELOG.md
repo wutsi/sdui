@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.1.102] 2022-08-26
+
+- CHANGE: add `inputFormatterRegex` to `Input`
+
+## [0.1.101] 2022-08-25
+
+- FIX: SwitchListTile - disable the control when executing the action
+
 ## [0.1.100] 2022-08-19
 
 - CHANGE: Add support for deeplinks
