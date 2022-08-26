@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.1.106] 2022-08-26
+
+- CHANGE: Improve logs
+- CHANGE: Set the key for Default
+
 ## [0.1.103] 2022-08-26
 
 - CHANGE: Fix execution of ListItemSwitch

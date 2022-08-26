@@ -157,8 +157,9 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
             if (snapshot.hasData) {
               sduiWidget =
                   SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
-              sduiWidget?.attachPageController(pageController);
-              _push(sduiWidget?.id);
+              String? id = sduiWidget!.id;
+              sduiWidget!.attachPageController(pageController);
+              _push(id);
               return sduiWidget!.toWidget(context);
             } else if (snapshot.hasError) {
               // Log
@@ -191,10 +192,9 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   void _push(String? pageId) {
     if (pageId != null && pageId != _peek()) {
       _history.add(pageId);
-      _logger.i('...push($pageId) - history=$_history');
-
       _notifyAnalytics();
     }
+    _logger.i('...push($pageId) - history=$_history');
   }
 
   void _pop() {

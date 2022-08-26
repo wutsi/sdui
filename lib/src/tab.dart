@@ -12,6 +12,7 @@ class SDUIDefaultTabController extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => DefaultTabController(
+        key: id == null ? null : Key(id!),
         length: length,
         initialIndex: initialIndex,
         child: child()!.toWidget(context),
