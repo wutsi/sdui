@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## [0.1.102] 2022-08-26
+## [0.1.103] 2022-08-26
+
+- CHANGE: Fix execution of ListItemSwitch
+
+## [0.1.102] 2022-08-25
 
 - CHANGE: add `inputFormatterRegex` to `Input`
 

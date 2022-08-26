@@ -158,10 +158,8 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   }
 
   void submit(BuildContext context, String value) {
-    delegate.provider?.setData(delegate.name, value.toString());
-    delegate.action
-        .execute(context, delegate.provider?.getData())
-        .then((value) {
+    delegate.provider?.setData(delegate.name, value);
+    delegate.action.execute(context, {delegate.name: value}).then((value) {
       delegate.action.handleResult(context, value);
       buzy = false;
     });
