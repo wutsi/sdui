@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.107] 2022-08-28
+
+- CHANGE: Improve button action handling
+
 ## [0.1.106] 2022-08-26
 
 - CHANGE: Improve logs

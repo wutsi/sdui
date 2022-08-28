@@ -46,8 +46,11 @@ class SDUIButton extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) => _ButtonWidgetStateful(this);
 
-  Future<String?> _onSubmit(BuildContext context) =>
-      onPressed == null ? action.execute(context, null) : onPressed!(context);
+  Future<String?> _onSubmit(BuildContext context) => onPressed == null
+      ? action
+          .execute(context, null)
+          .then((value) => action.handleResult(context, value))
+      : onPressed!(context);
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
