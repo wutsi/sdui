@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.111] 2022-08-31
+
+- CHANGE: Fix the state of ListItemSwitch
+
 ## [0.1.107] 2022-08-28
 
 - CHANGE: Improve button action handling

@@ -125,7 +125,6 @@ class _ListItemSwitchWidget extends StatefulWidget {
 }
 
 class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
-  bool state = false;
   bool buzy = false;
   SDUIListItemSwitch delegate;
 
@@ -134,34 +133,35 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   @override
   void initState() {
     super.initState();
-    state = delegate.selected;
-    delegate.provider?.setData(delegate.name, state.toString());
+
+    delegate.provider?.setData(delegate.name, delegate.selected.toString());
   }
 
   @override
-  Widget build(BuildContext context) => SwitchListTile(
-        key: delegate.id == null ? null : Key(delegate.id!),
-        value: state,
-        title: Text(delegate.caption ?? '<NO-TITLE>'),
-        subtitle:
-            delegate.subCaption == null ? null : Text(delegate.subCaption!),
-        secondary: delegate.toIcon(delegate.icon),
-        onChanged: buzy ? null : (bool value) => _changeState(value),
-      );
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      key: delegate.id == null ? null : Key(delegate.id!),
+      value: delegate.selected,
+      title: Text(delegate.caption ?? '<NO-TITLE>'),
+      subtitle: delegate.subCaption == null ? null : Text(delegate.subCaption!),
+      secondary: delegate.toIcon(delegate.icon),
+      onChanged: buzy ? null : (bool value) => _changeState(value),
+    );
+  }
 
   void _changeState(bool value) {
     setState(() {
-      state = value;
       buzy = true;
-      submit(context, value.toString());
+      submit(context, value);
     });
   }
 
-  void submit(BuildContext context, String value) {
-    delegate.provider?.setData(delegate.name, value);
+  void submit(BuildContext context, bool value) {
+    delegate.provider?.setData(delegate.name, value.toString());
+
     delegate.action.execute(context, {delegate.name: value}).then((value) {
-      delegate.action.handleResult(context, value);
       buzy = false;
+      delegate.action.handleResult(context, value);
     });
   }
 }
