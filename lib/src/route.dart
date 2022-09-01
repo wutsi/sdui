@@ -66,13 +66,14 @@ class DynamicRoute extends StatefulWidget {
   @override
   DynamicRouteState createState() =>
       // ignore: no_logic_in_create_state
-      DynamicRouteState(provider, pageController);
+  DynamicRouteState(provider, pageController);
 }
 
 class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   static final Logger _logger = LoggerFactory.create('DynamicRouteState');
   static Map<int, String?> statusCodeRoutes = {};
   static final List<String> _history = [];
+  static bool initialURIHandled = false;
 
   RouteContentProvider provider;
   final PageController? pageController;
@@ -107,15 +108,21 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   /// Handle initial deep links
   ///
   void _deepLinkInit() async {
+    // Already handled
+    if (initialURIHandled) return;
+
     // Initial URL
     try {
-      final initialURI = await getInitialUri();
+      Uri? initialURI = await getInitialUri();
       _logger.i("initial: deep_link=$initialURI");
 
       if (initialURI != null) {
         String? url = sduiDeeplinkHandler(initialURI);
         _logger.i("deep_link=$initialURI url=$url");
         if (url != null) {
+          initialURIHandled =
+          true; // Make sure we handle the initial URL only ONCE!
+
           setState(() {
             provider = HttpRouteContentProvider(url);
             content = provider.getContent();
@@ -150,40 +157,42 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   }
 
   @override
-  Widget build(BuildContext context) => Center(
-      child: FutureBuilder<String>(
-          future: content,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              sduiWidget =
-                  SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
-              String? id = sduiWidget!.id;
-              sduiWidget!.attachPageController(pageController);
-              _push(id);
-              return sduiWidget!.toWidget(context);
-            } else if (snapshot.hasError) {
-              // Log
-              var error = snapshot.error;
-              if (error is ClientException) {
-                int? statusCode = int.tryParse(error.message);
-                if (statusCode != null) {
-                  String? route = statusCodeRoutes[statusCode];
-                  if (route != null) {
-                    _logger.e('status=$statusCode route=$route', error,
-                        snapshot.stackTrace);
-                    Navigator.pushReplacementNamed(context, route);
+  Widget build(BuildContext context) =>
+      Center(
+          child: FutureBuilder<String>(
+              future: content,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  sduiWidget =
+                      SDUIParser.getInstance().fromJson(
+                          jsonDecode(snapshot.data!));
+                  String? id = sduiWidget!.id;
+                  sduiWidget!.attachPageController(pageController);
+                  _push(id);
+                  return sduiWidget!.toWidget(context);
+                } else if (snapshot.hasError) {
+                  // Log
+                  var error = snapshot.error;
+                  if (error is ClientException) {
+                    int? statusCode = int.tryParse(error.message);
+                    if (statusCode != null) {
+                      String? route = statusCodeRoutes[statusCode];
+                      if (route != null) {
+                        _logger.e('status=$statusCode route=$route', error,
+                            snapshot.stackTrace);
+                        Navigator.pushReplacementNamed(context, route);
+                      }
+                    }
                   }
+
+                  // Error State
+                  _logger.e('provider=$provider', error, snapshot.stackTrace);
+                  return sduiErrorState(context, error);
                 }
-              }
 
-              // Error State
-              _logger.e('provider=$provider', error, snapshot.stackTrace);
-              return sduiErrorState(context, error);
-            }
-
-            // Loading state
-            return sduiLoadingState(context);
-          }));
+                // Loading state
+                return sduiLoadingState(context);
+              }));
 
   void _reload() {
     content = provider.getContent();

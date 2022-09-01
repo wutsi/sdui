@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.113] 2022-09-01
+
+- FIX: Handle iniatial deeplinks only once
+
 ## [0.1.111] 2022-08-31
 
 - CHANGE: Fix the state of ListItemSwitch
