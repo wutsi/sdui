@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## [0.1.114] 2022-09-08
+
+- CHANGE: Use cached images for Icons
+
 ## [0.1.113] 2022-09-01
 
-- FIX: Handle iniatial deeplinks only once
+- FIX: Handle initial deep-links only once
 
 ## [0.1.111] 2022-08-31
 

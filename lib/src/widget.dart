@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'action.dart';
@@ -32,11 +33,11 @@ abstract class SDUIWidget {
   Widget? toIcon(String? code, {double? size, String? color}) {
     if (code?.startsWith("http://") == true ||
         code?.startsWith("https://") == true) {
-      return Image.network(
-        code!,
-        width: size,
-        height: size,
-      );
+      return CachedNetworkImage(
+          imageUrl: code!,
+          width: size,
+          height: size,
+          errorWidget: (context, url, error) => const Icon(Icons.error));
     } else {
       return code == null
           ? null
