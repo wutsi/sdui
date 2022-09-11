@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.116] 2022-09-10
+
+- CHANGE: Update the font size of PinWithKeyboard
+
 ## [0.1.114] 2022-09-08
 
 - CHANGE: Use cached images for Icons

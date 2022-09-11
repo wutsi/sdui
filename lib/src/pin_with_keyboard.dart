@@ -83,8 +83,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
                       width: delegate.pinSize,
                       height: delegate.pinSize,
                       textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: delegate.pinSize,
+                          fontSize: delegate.pinSize / 2,
                           textBaseline: TextBaseline.alphabetic,
                           color: delegate.color),
                       decoration: BoxDecoration(
@@ -97,8 +96,7 @@ class _PinWithKeyboardState extends State<_PinWithKeyboard> {
                 width: delegate.pinSize,
                 height: delegate.pinSize,
                 textStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: delegate.pinSize,
+                    fontSize: delegate.pinSize / 2,
                     textBaseline: TextBaseline.alphabetic,
                     color: delegate.color),
                 decoration: BoxDecoration(
