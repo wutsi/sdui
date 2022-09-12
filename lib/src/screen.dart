@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import 'appbar.dart';
 import 'button.dart';
@@ -80,17 +81,20 @@ class SDUIScreen extends SDUIWidget {
   SDUIBottomNavigationBar? bottomNavigationBar;
 
   @override
-  Widget toWidget(BuildContext context) => GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-          key: id == null ? null : Key(id!),
-          resizeToAvoidBottomInset: false,
-          backgroundColor: toColor(backgroundColor),
-          appBar: appBar == null ? null : (appBar!.toWidget(context) as AppBar),
-          body:
-              safe == true ? SafeArea(child: _child(context)) : _child(context),
-          floatingActionButton: floatingActionButton?.toWidget(context),
-          bottomNavigationBar: bottomNavigationBar?.toWidget(context)));
+  Widget toWidget(BuildContext context) => OverlaySupport(
+      child: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Scaffold(
+              key: id == null ? null : Key(id!),
+              resizeToAvoidBottomInset: false,
+              backgroundColor: toColor(backgroundColor),
+              appBar:
+                  appBar == null ? null : (appBar!.toWidget(context) as AppBar),
+              body: safe == true
+                  ? SafeArea(child: _child(context))
+                  : _child(context),
+              floatingActionButton: floatingActionButton?.toWidget(context),
+              bottomNavigationBar: bottomNavigationBar?.toWidget(context))));
 
   Widget _child(BuildContext context) =>
       hasChildren() ? child()!.toWidget(context) : Container();

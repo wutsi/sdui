@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.117] 2022-09-12
+
+- CHANGE: Wrap `Scaffold` and `DefaultTabController` in `OverlaySupport` so that we can display push notification
+
 ## [0.1.116] 2022-09-10
 
 - CHANGE: Update the font size of PinWithKeyboard

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:sdui/sdui.dart';
 
 /// Descriptor of an [DefaultTabController].
@@ -11,12 +12,13 @@ class SDUIDefaultTabController extends SDUIWidget {
   int initialIndex = 0;
 
   @override
-  Widget toWidget(BuildContext context) => DefaultTabController(
+  Widget toWidget(BuildContext context) => OverlaySupport(
+          child: DefaultTabController(
         key: id == null ? null : Key(id!),
         length: length,
         initialIndex: initialIndex,
         child: child()!.toWidget(context),
-      );
+      ));
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
