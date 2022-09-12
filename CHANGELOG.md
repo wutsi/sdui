@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.118] 2022-09-12
+
+- CHANGE: remove `OverlaySupport`
+
 ## [0.1.117] 2022-09-12
 
 - CHANGE: Wrap `Scaffold` and `DefaultTabController` in `OverlaySupport` so that we can display push notification
