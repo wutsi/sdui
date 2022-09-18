@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -10,6 +11,7 @@ import 'package:uni_links/uni_links.dart';
 import 'analytics.dart';
 import 'deeplink.dart';
 import 'error.dart';
+import 'firebase_messaging.dart';
 import 'http.dart';
 import 'loading.dart';
 import 'logger.dart';
@@ -59,29 +61,37 @@ class HttpRouteContentProvider implements RouteContentProvider {
 class DynamicRoute extends StatefulWidget {
   final RouteContentProvider provider;
   final PageController? pageController;
+  final bool handleFirebaseMessages;
 
-  const DynamicRoute({Key? key, this.pageController, required this.provider})
+  const DynamicRoute(
+      {Key? key,
+      this.pageController,
+      required this.provider,
+      this.handleFirebaseMessages = true})
       : super(key: key);
 
   @override
   DynamicRouteState createState() =>
       // ignore: no_logic_in_create_state
-  DynamicRouteState(provider, pageController);
+      DynamicRouteState(provider, pageController, handleFirebaseMessages);
 }
 
 class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   static final Logger _logger = LoggerFactory.create('DynamicRouteState');
   static Map<int, String?> statusCodeRoutes = {};
   static final List<String> _history = [];
-  static bool initialURIHandled = false;
+  static bool _initialURIHandled = false;
+  static bool _firebaseMessagingInitialized = false;
 
   RouteContentProvider provider;
   final PageController? pageController;
   late Future<String> content;
   SDUIWidget? sduiWidget;
   StreamSubscription? _streamSubscription;
+  bool handleFirebaseMessages;
 
-  DynamicRouteState(this.provider, this.pageController);
+  DynamicRouteState(
+      this.provider, this.pageController, this.handleFirebaseMessages);
 
   @override
   void initState() {
@@ -90,8 +100,9 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     });
 
     content = provider.getContent();
-    _deepLinkInit();
-    _deepLinkHandle();
+    _handleFirstUriLink();
+    _initializeUriLink();
+    _initializeFirebase();
 
     super.initState();
   }
@@ -107,9 +118,9 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   ///
   /// Handle initial deep links
   ///
-  void _deepLinkInit() async {
+  void _handleFirstUriLink() async {
     // Already handled
-    if (initialURIHandled) return;
+    if (_initialURIHandled) return;
 
     // Initial URL
     try {
@@ -120,8 +131,8 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
         String? url = sduiDeeplinkHandler(initialURI);
         _logger.i("deep_link=$initialURI url=$url");
         if (url != null) {
-          initialURIHandled =
-          true; // Make sure we handle the initial URL only ONCE!
+          _initialURIHandled =
+              true; // Make sure we handle the initial URL only ONCE!
 
           setState(() {
             provider = HttpRouteContentProvider(url);
@@ -137,7 +148,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   ///
   ///Handle incoming deep links
   ///
-  void _deepLinkHandle() async {
+  void _initializeUriLink() async {
     _streamSubscription = uriLinkStream.listen((Uri? uri) {
       _logger.i("received: deep_link=$uri");
       if (uri != null) {
@@ -156,43 +167,69 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     });
   }
 
+  void _initializeFirebase() async {
+    if (_firebaseMessagingInitialized || !handleFirebaseMessages) return;
+
+    // Get permission
+    NotificationSettings settings = await FirebaseMessaging.instance
+        .requestPermission(alert: true, badge: true, sound: true);
+    _logger.i('Notification permission=${settings.authorizationStatus}');
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      // Background messages
+      _logger.i('Listening to Firebase background messages');
+      FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+        _logger.i('Background - Message received: ${message.messageId}');
+        sduiFirebaseMessagingBackgroundHandler(message);
+      });
+
+      // Foreground messages
+      _logger.i('Listening to Firebase foreground messages');
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        _logger.i('Foreground - Message received: ${message.messageId}');
+        sduiFirebaseMessagingForegroundHandler(message);
+      });
+    } else {
+      _logger.i('User declined or has not accepted permission');
+    }
+    _firebaseMessagingInitialized = true;
+  }
+
   @override
-  Widget build(BuildContext context) =>
-      Center(
-          child: FutureBuilder<String>(
-              future: content,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  sduiWidget =
-                      SDUIParser.getInstance().fromJson(
-                          jsonDecode(snapshot.data!));
-                  String? id = sduiWidget!.id;
-                  sduiWidget!.attachPageController(pageController);
-                  _push(id);
-                  return sduiWidget!.toWidget(context);
-                } else if (snapshot.hasError) {
-                  // Log
-                  var error = snapshot.error;
-                  if (error is ClientException) {
-                    int? statusCode = int.tryParse(error.message);
-                    if (statusCode != null) {
-                      String? route = statusCodeRoutes[statusCode];
-                      if (route != null) {
-                        _logger.e('status=$statusCode route=$route', error,
-                            snapshot.stackTrace);
-                        Navigator.pushReplacementNamed(context, route);
-                      }
-                    }
+  Widget build(BuildContext context) => Center(
+      child: FutureBuilder<String>(
+          future: content,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              sduiWidget =
+                  SDUIParser.getInstance().fromJson(jsonDecode(snapshot.data!));
+              String? id = sduiWidget!.id;
+              sduiWidget!.attachPageController(pageController);
+              _push(id);
+              return sduiWidget!.toWidget(context);
+            } else if (snapshot.hasError) {
+              // Log
+              var error = snapshot.error;
+              if (error is ClientException) {
+                int? statusCode = int.tryParse(error.message);
+                if (statusCode != null) {
+                  String? route = statusCodeRoutes[statusCode];
+                  if (route != null) {
+                    _logger.e('status=$statusCode route=$route', error,
+                        snapshot.stackTrace);
+                    Navigator.pushReplacementNamed(context, route);
                   }
-
-                  // Error State
-                  _logger.e('provider=$provider', error, snapshot.stackTrace);
-                  return sduiErrorState(context, error);
                 }
+              }
 
-                // Loading state
-                return sduiLoadingState(context);
-              }));
+              // Error State
+              _logger.e('provider=$provider', error, snapshot.stackTrace);
+              return sduiErrorState(context, error);
+            }
+
+            // Loading state
+            return sduiLoadingState(context);
+          }));
 
   void _reload() {
     content = provider.getContent();

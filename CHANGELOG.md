@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.123] 2022-09-16
+
+- CHANGE: Integrate firebase messaging
+
 ## [0.1.118] 2022-09-12
 
 - CHANGE: remove `OverlaySupport`
