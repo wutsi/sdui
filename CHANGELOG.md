@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## [0.1.123] 2022-09-16
+## [0.1.125] 2022-09-18
 
-- CHANGE: Integrate firebase messaging
+- CHANGE: Integrate firebase messaging with Android
 
 ## [0.1.118] 2022-09-12
 

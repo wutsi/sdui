@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +12,7 @@ import 'package:uni_links/uni_links.dart';
 import 'analytics.dart';
 import 'deeplink.dart';
 import 'error.dart';
-import 'firebase_messaging.dart';
+import 'firebase.dart';
 import 'http.dart';
 import 'loading.dart';
 import 'logger.dart';
@@ -168,7 +169,9 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   }
 
   void _initializeFirebase() async {
-    if (_firebaseMessagingInitialized || !handleFirebaseMessages) return;
+    if (!Platform.isAndroid ||
+        _firebaseMessagingInitialized ||
+        !handleFirebaseMessages) return;
 
     // Get permission
     NotificationSettings settings = await FirebaseMessaging.instance
@@ -180,14 +183,20 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
       _logger.i('Listening to Firebase background messages');
       FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
         _logger.i('Background - Message received: ${message.messageId}');
-        sduiFirebaseMessagingBackgroundHandler(message);
+        sduiFirebaseBackgroundMessageHandler(message);
       });
 
       // Foreground messages
       _logger.i('Listening to Firebase foreground messages');
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         _logger.i('Foreground - Message received: ${message.messageId}');
-        sduiFirebaseMessagingForegroundHandler(message);
+        sduiFirebaseForegroundMessageHandler(message);
+      });
+
+      // Token
+      FirebaseMessaging.instance.getToken().then((token) {
+        _logger.i('Token: $token');
+        sduiFirebaseTokenHandler(token);
       });
     } else {
       _logger.i('User declined or has not accepted permission');
