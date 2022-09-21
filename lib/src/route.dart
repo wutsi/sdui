@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
 import 'package:uni_links/uni_links.dart';
@@ -18,6 +18,9 @@ import 'loading.dart';
 import 'logger.dart';
 import 'parser.dart';
 import 'widget.dart';
+
+final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 /// Route observer to track route navigation so that we can reload screens when poped.
 /// See DynamicRouteState.didPopNext().
@@ -169,9 +172,17 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   }
 
   void _initializeFirebase() async {
-    if (!Platform.isAndroid ||
-        _firebaseMessagingInitialized ||
-        !handleFirebaseMessages) return;
+    if (_firebaseMessagingInitialized || !handleFirebaseMessages) return;
+
+    // Initialize local notifications
+    _flutterLocalNotificationsPlugin.initialize(
+        InitializationSettings(
+          android: AndroidInitializationSettings(sduiFirebaseIconAndroid),
+          iOS: const IOSInitializationSettings(),
+        ), onSelectNotification: (payload) {
+      _logger.i('Message selected: $payload');
+      sduiSelectionHandler(payload, context);
+    });
 
     // Get permission
     NotificationSettings settings = await FirebaseMessaging.instance
@@ -183,14 +194,14 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
       _logger.i('Listening to Firebase background messages');
       FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
         _logger.i('Background - Message received: ${message.messageId}');
-        sduiFirebaseBackgroundMessageHandler(message);
+        sduiFirebaseMessageHandler(message, false);
       });
 
       // Foreground messages
       _logger.i('Listening to Firebase foreground messages');
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         _logger.i('Foreground - Message received: ${message.messageId}');
-        sduiFirebaseForegroundMessageHandler(message);
+        sduiFirebaseMessageHandler(message, true);
       });
 
       // Token
