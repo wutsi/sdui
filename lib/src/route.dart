@@ -19,7 +19,8 @@ import 'logger.dart';
 import 'parser.dart';
 import 'widget.dart';
 
-final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+/// Instance of FlutterLocalNotificationsPlugin
+final FlutterLocalNotificationsPlugin sduiLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 /// Route observer to track route navigation so that we can reload screens when poped.
@@ -175,7 +176,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     if (_firebaseMessagingInitialized || !handleFirebaseMessages) return;
 
     // Initialize local notifications
-    _flutterLocalNotificationsPlugin.initialize(
+    sduiLocalNotificationsPlugin.initialize(
         InitializationSettings(
           android: AndroidInitializationSettings(sduiFirebaseIconAndroid),
           iOS: const IOSInitializationSettings(),
