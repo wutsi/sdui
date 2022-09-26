@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart';
@@ -20,7 +20,7 @@ import 'parser.dart';
 import 'widget.dart';
 
 /// Instance of FlutterLocalNotificationsPlugin
-final FlutterLocalNotificationsPlugin sduiLocalNotificationsPlugin =
+final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 /// Route observer to track route navigation so that we can reload screens when poped.
@@ -121,7 +121,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   }
 
   ///
-  /// Handle initial deep links
+  /// Deeplink
   ///
   void _handleFirstUriLink() async {
     // Already handled
@@ -150,15 +150,12 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     }
   }
 
-  ///
-  ///Handle incoming deep links
-  ///
   void _initializeUriLink() async {
     _streamSubscription = uriLinkStream.listen((Uri? uri) {
       _logger.i("received: deep_link=$uri");
       if (uri != null) {
         String? url = sduiDeeplinkHandler(uri);
-        _logger.i("deep_link=$uri url=$url");
+        _logger.i("deep_link=$uri -> $url");
 
         if (url != null) {
           setState(() {
@@ -172,39 +169,40 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     });
   }
 
+  ///
+  /// Firebase Messaging
+  ///
   void _initializeFirebase() async {
     if (_firebaseMessagingInitialized || !handleFirebaseMessages) return;
 
+    // Init Firebase
+    Firebase.initializeApp();
+
     // Initialize local notifications
-    sduiLocalNotificationsPlugin.initialize(InitializationSettings(
-      android: AndroidInitializationSettings(sduiFirebaseIconAndroid),
-      iOS: const IOSInitializationSettings(),
-    ));
+    _localNotificationsPlugin.initialize(
+        InitializationSettings(
+          android: AndroidInitializationSettings(sduiFirebaseIconAndroid),
+          iOS: const IOSInitializationSettings(),
+        ),
+        onSelectNotification: (payload) => _onNotificationSelected(payload));
 
     // Get permission
     NotificationSettings settings = await FirebaseMessaging.instance
         .requestPermission(alert: true, badge: true, sound: true);
     _logger.i('Notification permission=${settings.authorizationStatus}');
-
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       // Background messages
       _logger.i('Listening to Firebase background messages');
       FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
-        _logger.i('Background - Message received: ${message.messageId}');
-        sduiFirebaseMessageHandler(message, false);
+        _logger.i('onBackgroundMessage: ${message.messageId}');
+        _onFirebaseMessage(message, true);
       });
 
       // Foreground messages
       _logger.i('Listening to Firebase foreground messages');
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        _logger.i('Foreground - Message received: ${message.messageId}');
-        sduiFirebaseMessageHandler(message, true);
-      });
-
-      // Open Message
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        _logger.i('Opening App: ${message.messageId}');
-        sduiFirebaseOpenAppHandler(message, context);
+        _logger.i('onMessage: ${message.messageId}');
+        _onFirebaseMessage(message, false);
       });
 
       // Token
@@ -216,6 +214,62 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
       _logger.i('User declined or has not accepted permission');
     }
     _firebaseMessagingInitialized = true;
+  }
+
+  Future<void> _onFirebaseMessage(
+      RemoteMessage message, bool background) async {
+    _logger.i(
+        '_onFirebaseMessage id=${message.messageId} data=${message.data} background=$background');
+
+    if (background) {
+      await Firebase.initializeApp();
+    }
+
+    // Show notification
+    await _localNotificationsPlugin.show(
+        message.hashCode,
+        message.notification?.title,
+        message.notification?.body,
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+              'wutsi_channel',
+              'wutsi_channel',
+              priority: Priority.max,
+              importance: Importance.max,
+              playSound: true,
+              enableVibration: true,
+              icon: sduiFirebaseIconAndroid,
+            ),
+            iOS: const IOSNotificationDetails(
+                presentAlert: true, presentBadge: true, presentSound: true)),
+        payload: jsonEncode(message.data));
+  }
+
+  Future<void> _onNotificationSelected(String? payload) async {
+    _logger.i('_onNotificationSelected $payload');
+    if (payload == null) return;
+
+    var data = jsonDecode(payload);
+    if (data is Map<String, dynamic>) {
+      _onNotificationData(data);
+    }
+  }
+
+  void _onNotificationData(Map<String, dynamic> data) {
+    String? url = data['url'];
+    if (url != null) {
+      String? xurl = sduiDeeplinkHandler(Uri.parse(url));
+      _logger.i("deep_link: $url -> $xurl");
+
+      if (xurl != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  DynamicRoute(provider: HttpRouteContentProvider(xurl))),
+        );
+      }
+    }
   }
 
   @override

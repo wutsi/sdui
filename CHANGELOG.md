@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.129] 2022-09-22
+## [0.1.140] 2022-09-22
 
 - CHANGE: Handle opening app from push notification
 
