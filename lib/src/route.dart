@@ -262,12 +262,12 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
       _logger.i("deep_link: $url -> $xurl");
 
       if (xurl != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  DynamicRoute(provider: HttpRouteContentProvider(xurl))),
-        );
+        Future(() => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      DynamicRoute(provider: HttpRouteContentProvider(xurl))),
+            ));
       }
     }
   }
