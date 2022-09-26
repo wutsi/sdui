@@ -176,14 +176,10 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     if (_firebaseMessagingInitialized || !handleFirebaseMessages) return;
 
     // Initialize local notifications
-    sduiLocalNotificationsPlugin.initialize(
-        InitializationSettings(
-          android: AndroidInitializationSettings(sduiFirebaseIconAndroid),
-          iOS: const IOSInitializationSettings(),
-        ), onSelectNotification: (payload) {
-      _logger.i('Message selected: $payload');
-      sduiSelectionHandler(payload, context);
-    });
+    sduiLocalNotificationsPlugin.initialize(InitializationSettings(
+      android: AndroidInitializationSettings(sduiFirebaseIconAndroid),
+      iOS: const IOSInitializationSettings(),
+    ));
 
     // Get permission
     NotificationSettings settings = await FirebaseMessaging.instance
@@ -203,6 +199,12 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         _logger.i('Foreground - Message received: ${message.messageId}');
         sduiFirebaseMessageHandler(message, true);
+      });
+
+      // Open Message
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        _logger.i('Opening App: ${message.messageId}');
+        sduiFirebaseOpenAppHandler(message, context);
       });
 
       // Token

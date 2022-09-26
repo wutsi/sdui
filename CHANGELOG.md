@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.129] 2022-09-22
+
+- CHANGE: Handle opening app from push notification
+
 ## [0.1.128] 2022-09-20
 
 - CHANGE: Integrate firebase messaging with iOS
