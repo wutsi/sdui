@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.142] 2022-10-01
+
+- ADD: Chat component
+
 ## [0.1.141] 2022-09-22
 
 - CHANGE: Handle opening app from push notification

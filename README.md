@@ -204,6 +204,7 @@ In Flutter, UI is composed of a hierarchy of Widgets. A widget is a visual eleme
     - [Text](https://pub.dev/documentation/sdui/latest/sdui/SDUIText-class.html)
 - Other
     - [Badge](https://pub.dev/documentation/sdui/latest/sdui/SDUIBadge-class.html)
+    - [Chat](https://pub.dev/documentation/sdui/latest/sdui/SDUIChat-class.html)
     - [Chip](https://pub.dev/documentation/sdui/latest/sdui/SDUIChip-class.html)
     - [ExpandablePanel](https://pub.dev/documentation/sdui/latest/sdui/SDUIExpandablePanel-class.html)
     - [Html](https://pub.dev/documentation/sdui/latest/sdui/SDUIHtml-class.html)
