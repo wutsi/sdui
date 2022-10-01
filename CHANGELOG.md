@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [0.1.142] 2022-10-01
+## [0.1.143] 2022-10-01
 
 - ADD: Chat component
+- CHANGE: Remove button padding when not provided
 
 ## [0.1.141] 2022-09-22
 

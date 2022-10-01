@@ -25,6 +25,7 @@ import 'widget.dart';
 /// - iconColor: Icon color
 class SDUIButton extends SDUIWidget {
   String? caption;
+  double? fontSize;
   String? type;
   double? padding;
   bool? stretched;
@@ -41,7 +42,8 @@ class SDUIButton extends SDUIWidget {
       this.onPressed,
       this.stretched,
       this.iconSize,
-      this.icon});
+      this.icon,
+      this.fontSize});
 
   @override
   Widget toWidget(BuildContext context) => _ButtonWidgetStateful(this);
@@ -62,6 +64,7 @@ class SDUIButton extends SDUIWidget {
     iconSize = json?["iconSize"];
     color = json?["color"];
     iconColor = json?["iconColor"];
+    fontSize = json?["fontSize"];
     return super.fromJson(json);
   }
 }
@@ -127,7 +130,7 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
   }
 
   Widget _createText() {
-    Widget child;
+    Widget? child;
 
     if (busy) {
       child = SizedBox(
@@ -141,29 +144,38 @@ class _ButtonWidgetState extends State<_ButtonWidgetStateful> {
             strokeWidth: 2,
           ));
     } else {
-      Widget text = Text(delegate.caption ?? '',
-          style: TextStyle(color: delegate.toColor(delegate.color)));
+      Widget? text =
+          delegate.caption != null && delegate.caption?.isEmpty == true
+              ? null
+              : Text(delegate.caption ?? '',
+                  style: TextStyle(
+                      color: delegate.toColor(delegate.color),
+                      fontSize: delegate.fontSize));
       if (delegate.icon == null) {
         child = text;
       } else {
-        Widget icon = delegate.toIcon(delegate.icon,
-            size: delegate.iconSize, color: delegate.iconColor)!;
-        if (delegate.caption != null && delegate.caption?.isNotEmpty == true) {
+        Widget? icon = delegate.toIcon(delegate.icon,
+            size: delegate.iconSize, color: delegate.iconColor);
+        if (icon != null && text != null) {
           child = Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
             children: [icon, text],
           );
         } else {
-          return icon;
+          child = icon;
         }
       }
     }
 
-    return delegate.type?.toLowerCase() == 'floatable'
-        ? child
-        : Padding(
-            padding: EdgeInsets.all(delegate.padding ?? 15), child: child);
+    if (child == null) {
+      return const Text('');
+    } else {
+      return (delegate.type?.toLowerCase() == 'floatable' ||
+              delegate.padding == null)
+          ? child
+          : Padding(padding: EdgeInsets.all(delegate.padding!), child: child);
+    }
   }
 
   void _onSubmit(BuildContext context) {
