@@ -26,6 +26,7 @@ class SDUIBottomNavigationBar extends SDUIWidget {
   String? selectedItemColor;
   String? unselectedItemColor;
   double? iconSize;
+  double? fontSize;
   double? elevation;
   int? currentIndex;
 
@@ -42,7 +43,9 @@ class SDUIBottomNavigationBar extends SDUIWidget {
       backgroundColor: toColor(background),
       selectedItemColor: toColor(selectedItemColor),
       unselectedItemColor: toColor(unselectedItemColor),
-      iconSize: iconSize ?? 24.0,
+      iconSize: iconSize ?? 18.0,
+      unselectedFontSize: fontSize ?? 10.0,
+      selectedFontSize: fontSize ?? 10.0,
       elevation: elevation,
       currentIndex: currentIndex ?? 0,
       type: BottomNavigationBarType.fixed,
@@ -61,6 +64,7 @@ class SDUIBottomNavigationBar extends SDUIWidget {
     iconSize = json?["iconSize"];
     elevation = json?["elevation"];
     currentIndex = json?["currentIndex"];
+    fontSize = json?["fontSize"];
     return super.fromJson(json);
   }
 }

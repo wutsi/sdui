@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## [0.1.143] 2022-10-01
+## [0.1.146] 2022-10-01
 
 - ADD: Chat component
 - CHANGE: Remove button padding when not provided
+- CHANGE: Add font size to bottom bar
 
 ## [0.1.141] 2022-09-22
 

@@ -1,12 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
 import 'package:uuid/uuid.dart';
 
 /// Chat widget based on [flutter_chat_ui](https://pub.dev/packages/flutter_chat_ui)
 class SDUIChat extends SDUIWidget {
   String? sendMessageUrl;
+  String? fetchMessageUrl;
+  String? roomId;
   String? userId;
   String? userFirstName;
   String? userLastName;
@@ -15,7 +20,9 @@ class SDUIChat extends SDUIWidget {
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     sendMessageUrl = json?["sendMessageUrl"];
+    fetchMessageUrl = json?["fetchMessageUrl"];
     userId = json?["userId"];
+    roomId = json?["roomId"];
     userFirstName = json?["userFirstName"];
     userLastName = json?["userLastName"];
     userPictureUrl = json?["userPictureUrl"];
@@ -37,6 +44,7 @@ class _ChatWidgetStateful extends StatefulWidget {
 }
 
 class _ChatWidgetState extends State<_ChatWidgetStateful> {
+  final Logger _logger = LoggerFactory.create('_ChatWidgetState');
   final SDUIChat _delegate;
   List<types.Message> _messages = [];
   types.User _user = const types.User(id: '');
@@ -47,12 +55,12 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   void initState() {
     super.initState();
 
-    _messages = [];
     _user = types.User(
         id: _delegate.userId ?? "",
         firstName: _delegate.userFirstName,
         lastName: _delegate.userLastName,
         imageUrl: _delegate.userPictureUrl);
+    _fetchMessages();
   }
 
   @override
@@ -64,15 +72,41 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
       onSendPressed: (message) => _onSend(message));
 
   void _onSend(types.PartialText message) {
-    final msg = types.TextMessage(
-      author: _user,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: const Uuid().v4(),
-      text: message.text,
-    );
+    _logger.i('_onSend');
+    if (_delegate.sendMessageUrl == null) {
+      return;
+    }
 
-    setState(() {
-      _messages.insert(0, msg);
+    final msg = types.TextMessage(
+        author: _user,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: message.text,
+        roomId: _delegate.roomId);
+
+    Http.getInstance().post(_delegate.sendMessageUrl!, {
+      'author': _user,
+      'createdAt': msg.createdAt,
+      'id': msg.id,
+      'text': msg.text,
+      'roomId': msg.roomId
+    }).then((value) {
+      setState(() {
+        _messages.insert(0, msg);
+      });
+    });
+  }
+
+  void _fetchMessages() {
+    if (_delegate.fetchMessageUrl == null) return;
+
+    Http.getInstance().post(_delegate.fetchMessageUrl!, {}).then((value) {
+      final messages = (jsonDecode(value) as List)
+          .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
+          .toList();
+      setState(() {
+        _messages = messages;
+      });
     });
   }
 }
