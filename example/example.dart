@@ -31,6 +31,8 @@ class MyApp extends StatelessWidget {
             DynamicRoute(provider: StaticRouteContentProvider(homeJson)),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(staticJson)),
+        '/chat': (context) =>
+            DynamicRoute(provider: StaticRouteContentProvider(chatJson)),
         '/remote': (context) => const DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://10.0.2.2:8080' /* Remove endpoint - Replace it with your own */
@@ -109,6 +111,17 @@ var homeJson = '''
           "type": "Route",
           "url": "route:/remote"
         }
+      },
+      {
+        "type": "BottomNavigationBarItem",
+        "attributes": {
+          "icon": "ef42",
+          "caption": "Chat"
+        },
+        "action":{
+          "type": "Route",
+          "url": "route:/chat"
+        }
       }
     ]
   },
@@ -179,6 +192,17 @@ var staticJson = '''
         "action":{
           "type": "Route",
           "url": "route:/remote"
+        }
+      },
+      {
+        "type": "BottomNavigationBarItem",
+        "attributes": {
+          "icon": "ef42",
+          "caption": "Chat"
+        },
+        "action":{
+          "type": "Route",
+          "url": "route:/chat"
         }
       }
     ]
@@ -290,6 +314,26 @@ var staticJson = '''
   },
   "attributes":{
     "id": "page.static"
+  }
+}
+''';
+
+var chatJson = '''
+{
+  "type": "Screen",
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "title": "Chat"
+    }
+  },
+  "child": {
+    "type": "Chat",
+    "attributes": {
+    }
+  },
+  "attributes":{
+    "id": "page.chat"
   }
 }
 ''';

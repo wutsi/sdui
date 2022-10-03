@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.148] 2022-10-03
+
+- CHANGE: Improve chat UI
+
 ## [0.1.146] 2022-10-01
 
 - ADD: Chat component
