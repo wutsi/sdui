@@ -193,6 +193,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   void _fetchMessages() {
     if (_delegate.fetchMessageUrl == null) return;
 
+    _logger.i('Loading messages: ${_delegate.fetchMessageUrl}');
     Http.getInstance().post(_delegate.fetchMessageUrl!, {}).then((value) {
       final messages = (jsonDecode(value) as List)
           .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
@@ -206,6 +207,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   void _connectToRTM() {
     if (_delegate.rtmUrl == null) return;
 
+    _logger.i('Connecting to RTM: ${_delegate.rtmUrl}');
     var channel = IOWebSocketChannel.connect(Uri.parse(_delegate.rtmUrl!));
     channel.stream.listen((message) {
       channel.sink.add('received $message');

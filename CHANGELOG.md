@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.149] 2022-10-03
+## [0.1.15-] 2022-10-03
 
 - CHANGE: Add support for Chat Websocket RTM API
 
