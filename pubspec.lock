@@ -1043,6 +1043,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  web_socket_channel:
+    dependency: "direct main"
+    description:
+      name: web_socket_channel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   webview_flutter:
     dependency: transitive
     description:

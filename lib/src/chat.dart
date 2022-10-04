@@ -6,11 +6,14 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:logger/logger.dart';
 import 'package:sdui/sdui.dart';
 import 'package:uuid/uuid.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status;
 
 /// Chat widget based on [flutter_chat_ui](https://pub.dev/packages/flutter_chat_ui)
 class SDUIChat extends SDUIWidget {
   String? sendMessageUrl;
   String? fetchMessageUrl;
+  String? rtmUrl;
   String? roomId;
   String? userId;
   String? userFirstName;
@@ -28,6 +31,7 @@ class SDUIChat extends SDUIWidget {
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     sendMessageUrl = json?["sendMessageUrl"];
+    rtmUrl = json?["rtmUrl"];
     fetchMessageUrl = json?["fetchMessageUrl"];
     userId = json?["userId"];
     roomId = json?["roomId"];
@@ -71,65 +75,70 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   void initState() {
     super.initState();
 
+    // Current user
     _user = types.User(
         id: _delegate.userId ?? "",
         firstName: _delegate.userFirstName,
         lastName: _delegate.userLastName,
         imageUrl: _delegate.userPictureUrl);
+
+    // Fetch messages
     _fetchMessages();
+
+    // Connect to RTM API
+    _connectToRTM();
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Chat(
-          showUserAvatars: _delegate.showUserAvatars ?? true,
-          showUserNames: _delegate.showUserNames ?? true,
-          messages: _messages,
-          user: _user,
-          l10n: _toL10(),
-          theme: DefaultChatTheme(
-            primaryColor: _primaryColor(),
-            secondaryColor: _secondaryColor(),
-            dateDividerMargin: const EdgeInsets.only(bottom: 5.0, top: 5),
-            dateDividerTextStyle:
+  Widget build(BuildContext context) => Chat(
+      showUserAvatars: _delegate.showUserAvatars ?? true,
+      showUserNames: _delegate.showUserNames ?? true,
+      messages: _messages,
+      user: _user,
+      l10n: _toL10(),
+      theme: DefaultChatTheme(
+        primaryColor: _primaryColor(),
+        secondaryColor: _secondaryColor(),
+        dateDividerMargin: const EdgeInsets.only(bottom: 5.0, top: 5),
+        dateDividerTextStyle:
             TextStyle(fontSize: _fontSize(), fontWeight: FontWeight.bold),
-            errorIcon: const Icon(Icons.error, size: 8.0, color: Colors.red),
-            errorColor: Colors.red,
-            inputPadding: const EdgeInsets.all(5.0),
-            inputMargin: const EdgeInsets.all(1.0),
-            inputBorderRadius: BorderRadius.zero,
-            inputTextStyle: TextStyle(
-                fontFamily: null,
-                fontWeight: FontWeight.normal,
-                fontSize: _fontSize()),
-            messageBorderRadius: 5.0,
-            messageInsetsHorizontal: 5.0,
-            messageInsetsVertical: 5.0,
-            receivedEmojiMessageTextStyle: TextStyle(fontSize: _fontSize()),
-            receivedMessageBodyTextStyle: TextStyle(
-              color: _delegate.toColor(_delegate.receivedMessageTextColor) ??
-                  Colors.black,
-              fontSize: _fontSize(),
-            ),
-            seenIcon: const Icon(Icons.check, size: 8.0),
-            sentEmojiMessageTextStyle: TextStyle(fontSize: _fontSize()),
-            sentMessageBodyTextStyle: TextStyle(
-              color: _delegate.toColor(_delegate.sentMessageTextColor) ??
-                  Colors.white,
-              fontSize: _fontSize(),
-            ),
-          ),
-          onSendPressed: (message) => _onSend(message));
+        errorIcon: const Icon(Icons.error, size: 12.0, color: Colors.red),
+        errorColor: Colors.red,
+        inputPadding: const EdgeInsets.all(5.0),
+        inputMargin: const EdgeInsets.all(1.0),
+        inputBorderRadius: BorderRadius.zero,
+        inputTextStyle: TextStyle(
+            fontFamily: null,
+            fontWeight: FontWeight.normal,
+            fontSize: _fontSize()),
+        messageBorderRadius: 5.0,
+        messageInsetsHorizontal: 5.0,
+        messageInsetsVertical: 5.0,
+        receivedEmojiMessageTextStyle: TextStyle(fontSize: _fontSize()),
+        receivedMessageBodyTextStyle: TextStyle(
+          color: _delegate.toColor(_delegate.receivedMessageTextColor) ??
+              Colors.black,
+          fontSize: _fontSize(),
+        ),
+        seenIcon: const Icon(Icons.check, size: 12.0),
+        sentEmojiMessageTextStyle: TextStyle(fontSize: _fontSize()),
+        sentMessageBodyTextStyle: TextStyle(
+          color:
+              _delegate.toColor(_delegate.sentMessageTextColor) ?? Colors.white,
+          fontSize: _fontSize(),
+        ),
+      ),
+      onSendPressed: (message) => _onSend(message));
 
   double _fontSize() => _delegate.fontSize ?? 12.0;
 
   Color _primaryColor() =>
       _delegate.toColor(_delegate.sentMessageBackground) ??
-          Color(int.parse('FF1D7EDF', radix: 16));
+      Color(int.parse('FF1D7EDF', radix: 16));
 
   Color _secondaryColor() =>
       _delegate.toColor(_delegate.receivedMessageBackground) ??
-          Color(int.parse('FFe4edf7', radix: 16));
+      Color(int.parse('FFe4edf7', radix: 16));
 
   ChatL10n _toL10() {
     switch (_delegate.language?.toLowerCase()) {
@@ -149,9 +158,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 
     final msg = types.TextMessage(
         author: _user,
-        createdAt: DateTime
-            .now()
-            .millisecondsSinceEpoch,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
         id: const Uuid().v4(),
         text: message.text,
         roomId: _delegate.roomId,
@@ -195,16 +202,26 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
       });
     });
   }
+
+  void _connectToRTM() {
+    if (_delegate.rtmUrl == null) return;
+
+    var channel = IOWebSocketChannel.connect(Uri.parse(_delegate.rtmUrl!));
+    channel.stream.listen((message) {
+      channel.sink.add('received $message');
+      channel.sink.close(status.goingAway);
+    });
+  }
 }
 
 @immutable
 class ChatL10nFr extends ChatL10n {
   const ChatL10nFr()
       : super(
-    attachmentButtonAccessibilityLabel: 'Envoyez media',
-    emptyChatPlaceholder: 'Aucun message',
-    fileButtonAccessibilityLabel: 'Fichier',
-    inputPlaceholder: 'Message',
-    sendButtonAccessibilityLabel: 'Envoyez',
-  );
+          attachmentButtonAccessibilityLabel: 'Envoyez media',
+          emptyChatPlaceholder: 'Aucun message',
+          fileButtonAccessibilityLabel: 'Fichier',
+          inputPlaceholder: 'Message',
+          sendButtonAccessibilityLabel: 'Envoyez',
+        );
 }
