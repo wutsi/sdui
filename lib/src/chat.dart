@@ -68,6 +68,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   final SDUIChat _delegate;
   List<types.Message> _messages = [];
   types.User _user = const types.User(id: '');
+  IOWebSocketChannel? _channel;
+  RTM? _rtm;
 
   _ChatWidgetState(this._delegate);
 
@@ -87,6 +89,12 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 
     // Connect to RTM API
     _connectToRTM();
+  }
+
+  @override
+  void dispose() {
+    _channel?.sink.close();
+    super.dispose();
   }
 
   @override
@@ -207,12 +215,18 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   void _connectToRTM() {
     if (_delegate.rtmUrl == null) return;
 
-    _logger.i('Connecting to RTM: ${_delegate.rtmUrl}');
-    var channel = IOWebSocketChannel.connect(Uri.parse(_delegate.rtmUrl!));
-    channel.stream.listen((message) {
-      channel.sink.add('received $message');
-      channel.sink.close(status.goingAway);
-    });
+    // Create the channel
+    _channel = IOWebSocketChannel.connect(Uri.parse(_delegate.rtmUrl!));
+    _channel?.stream.listen((message) => _handleRTMMessage(message));
+
+    // Hello
+    _rtm = RTM(_delegate.roomId ?? '', _delegate.rtmUrl!, _channel!);
+    _rtm?.hello();
+  }
+
+  void _handleRTMMessage(dynamic message) {
+    _channel?.sink.add('_handleRTMMessage $message');
+    _channel?.sink.close(status.goingAway);
   }
 }
 
@@ -227,3 +241,33 @@ class ChatL10nFr extends ChatL10n {
           sendButtonAccessibilityLabel: 'Envoyez',
         );
 }
+
+class RTM {
+  final String roomId;
+  final String url;
+  final IOWebSocketChannel channel;
+
+  const RTM(this.roomId, this.url, this.channel);
+
+  void hello() {
+    var data = {'type': MessageType.hello, 'roomId': roomId};
+    channel.sink.add(data);
+  }
+
+  void send(Message message, String sessionId) {
+    var data = {
+      'type': MessageType.send,
+      'roomId': roomId,
+      'sessionId': sessionId,
+      'chatMessage': message
+    };
+    channel.sink.add(data);
+  }
+
+  void bye() {
+    var data = {'type': MessageType.bye, 'roomId': roomId};
+    channel.sink.add(data);
+  }
+}
+
+enum MessageType { hello, send, bye }

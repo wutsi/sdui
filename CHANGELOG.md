@@ -1,8 +1,12 @@
 # CHANGELOG
 
-## [0.1.15-] 2022-10-03
+## [0.1.151] 2022-10-03
 
-- CHANGE: Add support for Chat Websocket RTM API
+- CHANGE: Handle RTM events
+
+## [0.1.150] 2022-10-03
+
+- CHANGE: Add support for Chat Websocket RTM API (Real Time Messaging)
 
 ## [0.1.148] 2022-10-03
 

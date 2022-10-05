@@ -330,6 +330,7 @@ var chatJson = '''
   "child": {
     "type": "Chat",
     "attributes": {
+      "rtmUrl": "ws://10.0.0.2:8080"
     }
   },
   "attributes":{
