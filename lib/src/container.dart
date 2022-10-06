@@ -35,15 +35,14 @@ class SDUIContainer extends SDUIWidget {
           onTap: () => _onTap(context), child: _createContainer(context));
 
   Container _createContainer(BuildContext context) => Container(
-        key: id == null ? null : Key(id!),
-        child: child()?.toWidget(context),
-        margin: margin == null ? null : EdgeInsets.all(margin!),
-        padding: padding == null ? null : EdgeInsets.all(padding!),
-        alignment: toAlignment(alignment),
-        decoration: _toBoxDecoration(context),
-        width: width,
-        height: height,
-      );
+      key: id == null ? null : Key(id!),
+      margin: margin == null ? null : EdgeInsets.all(margin!),
+      padding: padding == null ? null : EdgeInsets.all(padding!),
+      alignment: toAlignment(alignment),
+      decoration: _toBoxDecoration(context),
+      width: width,
+      height: height,
+      child: child()?.toWidget(context));
 
   void _onTap(BuildContext context) {
     action

@@ -182,9 +182,10 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     _localNotificationsPlugin.initialize(
         InitializationSettings(
           android: AndroidInitializationSettings(sduiFirebaseIconAndroid),
-          iOS: const IOSInitializationSettings(),
+          iOS: const DarwinInitializationSettings(),
         ),
-        onSelectNotification: (payload) => _onNotificationSelected(payload));
+        onDidReceiveBackgroundNotificationResponse: (response) =>
+            _onNotificationSelected(response));
 
     // Get permission
     NotificationSettings settings = await FirebaseMessaging.instance
@@ -240,16 +241,16 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
               enableVibration: true,
               icon: sduiFirebaseIconAndroid,
             ),
-            iOS: const IOSNotificationDetails(
+            iOS: const DarwinNotificationDetails(
                 presentAlert: true, presentBadge: true, presentSound: true)),
         payload: jsonEncode(message.data));
   }
 
-  Future<void> _onNotificationSelected(String? payload) async {
-    _logger.i('_onNotificationSelected $payload');
-    if (payload == null) return;
+  Future<void> _onNotificationSelected(NotificationResponse response) async {
+    _logger.i('_onNotificationSelected payload=${response.payload}');
+    if (response.payload != null) return;
 
-    var data = jsonDecode(payload);
+    var data = jsonDecode(response.payload!);
     if (data is Map<String, dynamic>) {
       _onNotificationData(data);
     }

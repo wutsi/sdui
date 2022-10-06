@@ -99,10 +99,9 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
           onPressed: callback);
     } else if (button is Text) {
       child = TextButton(
-        onPressed: callback,
-        child: button,
-        style: TextButton.styleFrom(primary: widget.textColor),
-      );
+          onPressed: callback,
+          style: TextButton.styleFrom(foregroundColor: widget.textColor),
+          child: button);
     }
 
     return Container(

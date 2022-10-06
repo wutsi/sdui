@@ -528,14 +528,14 @@ class _ImageWidgetState extends State<_ImageWidgetStateful> {
 
   Future<String?> _onPressed(BuildContext context) async {
     XFile? file;
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     final ImageSource source = delegate.imageSource?.toLowerCase() == 'gallery'
         ? ImageSource.gallery
         : ImageSource.camera;
 
     switch (delegate.type.toLowerCase()) {
       case 'video':
-        file = await _picker.pickVideo(
+        file = await picker.pickVideo(
             source: source,
             maxDuration: delegate.videoMaxDuration == null
                 ? null
@@ -543,7 +543,7 @@ class _ImageWidgetState extends State<_ImageWidgetStateful> {
         break;
 
       default:
-        file = await _picker.pickImage(
+        file = await picker.pickImage(
             source: source,
             maxHeight: delegate.imageMaxHeight?.toDouble(),
             maxWidth: delegate.imageMaxWidth?.toDouble());

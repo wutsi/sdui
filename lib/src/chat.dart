@@ -211,13 +211,9 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   Future<void> _fetchMessages(int page) {
     if (_delegate.fetchMessageUrl == null) return Future.value();
 
-    var url = _delegate.fetchMessageUrl! +
-        (_delegate.fetchMessageUrl?.contains('?') == true ? '&' : '?') +
-        "page=$page";
-
+    var url = _fetchUrl(page);
     _logger.i('Loading messages: $url');
-    return Http.getInstance()
-        .post(_delegate.fetchMessageUrl!, {}).then((value) {
+    return Http.getInstance().post(url, {}).then((value) {
       final messages = (jsonDecode(value) as List)
           .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
           .toList();
@@ -234,6 +230,14 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
     });
   }
 
+  String _fetchUrl(int page) {
+    var buff = StringBuffer();
+    buff.write(_delegate.fetchMessageUrl);
+    buff.write(_delegate.fetchMessageUrl?.contains('?') == true ? '&' : '?');
+    buff.write("page=$page");
+    return buff.toString();
+  }
+
   void _handleRTMMessage(dynamic message) {
     _logger.i('_handleRTMMessage $message');
   }
@@ -243,12 +247,12 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 class ChatL10nFr extends ChatL10n {
   const ChatL10nFr()
       : super(
-          attachmentButtonAccessibilityLabel: 'Envoyez media',
-          emptyChatPlaceholder: 'Aucun message',
-          fileButtonAccessibilityLabel: 'Fichier',
-          inputPlaceholder: 'Message',
-          sendButtonAccessibilityLabel: 'Envoyez',
-        );
+            attachmentButtonAccessibilityLabel: 'Envoyez media',
+            emptyChatPlaceholder: 'Aucun message',
+            fileButtonAccessibilityLabel: 'Fichier',
+            inputPlaceholder: 'Message',
+            sendButtonAccessibilityLabel: 'Envoyez',
+            unreadMessagesLabel: 'Messages non lus');
 }
 
 enum MessageType { hello, send, bye }

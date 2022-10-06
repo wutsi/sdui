@@ -16,7 +16,7 @@ class SDUIFlexible extends SDUIWidget {
   Widget toWidget(context) => children.isEmpty
       ? Container()
       : Flexible(
-          child: child()!.toWidget(context), flex: flex, fit: _toFlexFit());
+          flex: flex, fit: _toFlexFit(), child: child()!.toWidget(context));
 
   FlexFit _toFlexFit() {
     switch (fit.toLowerCase()) {

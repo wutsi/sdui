@@ -12,8 +12,8 @@ class SDUIListView extends SDUIWidget {
 
   @override
   Widget toWidget(BuildContext context) => ListView(
-      children: childrenWidgets(context).map((e) => _toListItem(e)).toList(),
-      scrollDirection: toAxis(direction));
+      scrollDirection: toAxis(direction),
+      children: childrenWidgets(context).map((e) => _toListItem(e)).toList());
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {

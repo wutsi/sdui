@@ -250,7 +250,7 @@ class SDUIAction {
         String key = keys[i];
         String? value = parameters?[key]?.toString();
         if (value != null) {
-          query += '$key=' + Uri.encodeComponent(value) + '&';
+          query += '$key=${Uri.encodeComponent(value)}&';
         }
       }
       result = query.isEmpty ? url : '$url?$query';

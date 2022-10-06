@@ -77,8 +77,7 @@ class SDUIParser {
   SDUIWidget fromJson(Map<String, dynamic> json) {
     var type = json["type"];
     var id = json["attributes"]?["id"];
-    var widgetString = '$type' + (id == null ? '' : ' id=$id');
-    _logger.i('...Parsing $widgetString');
+    _logger.i('...Parsing $type id=$id');
 
     SDUIWidget? widget;
     switch (type?.toLowerCase()) {
@@ -269,7 +268,7 @@ class SDUIParser {
     // Attributes
     var attributes = json["attributes"];
     if (attributes == null) {
-      _logger.i('......$widgetString has no attributes');
+      _logger.i('......$type has no attributes');
     }
     if (attributes is Map<String, dynamic>) {
       widget.fromJson(attributes);
@@ -318,7 +317,7 @@ class SDUIParser {
       }
 
       // Attach
-      _logger.i('...Attaching $widgetString to its children');
+      _logger.i('...Attaching $type to its children');
       widget.attachScreen(widget);
     }
 

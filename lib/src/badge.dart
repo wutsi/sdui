@@ -25,7 +25,6 @@ class SDUIBadge extends SDUIWidget {
             : BorderRadius.all(Radius.circular(borderRadius!)),
         shape: _toBadgeShape(shape),
         position: _toBadgePosition(position),
-        child: child()?.toWidget(context),
         padding: EdgeInsets.all(padding ?? 5.0),
         badgeContent: caption != null
             ? Text(
@@ -34,6 +33,7 @@ class SDUIBadge extends SDUIWidget {
                     color: toColor(color) ?? Colors.white, fontSize: fontSize),
               )
             : null,
+        child: child()?.toWidget(context),
       );
 
   @override
