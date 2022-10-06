@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## [0.1.155] 2022-10-06
+## [0.1.157] 2022-10-06
 
+- CHANGE: Add `tenantId` and `deviceId`
 - CHANGE: Update dependencies
 - CHANGE: Disable `search_choices` because of https://github.com/lcuis/search_choices/issues/91
 
