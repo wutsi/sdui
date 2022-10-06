@@ -103,7 +103,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   }
 
   @override
-  Widget build(BuildContext context) => Chat(
+  Widget build(BuildContext context) =>
+      Chat(
         showUserAvatars: _delegate.showUserAvatars ?? true,
         showUserNames: _delegate.showUserNames ?? true,
         messages: _messages,
@@ -114,7 +115,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
           secondaryColor: _secondaryColor(),
           dateDividerMargin: const EdgeInsets.only(bottom: 5.0, top: 5),
           dateDividerTextStyle:
-              TextStyle(fontSize: _fontSize(), fontWeight: FontWeight.bold),
+          TextStyle(fontSize: _fontSize(), fontWeight: FontWeight.bold),
           errorColor: Colors.red,
           inputPadding: const EdgeInsets.all(5.0),
           inputMargin: const EdgeInsets.all(1.0),
@@ -147,11 +148,11 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 
   Color _primaryColor() =>
       _delegate.toColor(_delegate.sentMessageBackground) ??
-      Color(int.parse('FF1D7EDF', radix: 16));
+          Color(int.parse('FF1D7EDF', radix: 16));
 
   Color _secondaryColor() =>
       _delegate.toColor(_delegate.receivedMessageBackground) ??
-      Color(int.parse('FFe4edf7', radix: 16));
+          Color(int.parse('FFe4edf7', radix: 16));
 
   ChatL10n _toL10() {
     switch (_delegate.language?.toLowerCase()) {
@@ -172,7 +173,9 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
     // Create the message
     final msg = types.TextMessage(
         author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
+        createdAt: DateTime
+            .now()
+            .millisecondsSinceEpoch,
         id: const Uuid().v4(),
         text: message.text,
         roomId: _delegate.roomId,
@@ -247,12 +250,12 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 class ChatL10nFr extends ChatL10n {
   const ChatL10nFr()
       : super(
-            attachmentButtonAccessibilityLabel: 'Envoyez media',
-            emptyChatPlaceholder: 'Aucun message',
-            fileButtonAccessibilityLabel: 'Fichier',
-            inputPlaceholder: 'Message',
-            sendButtonAccessibilityLabel: 'Envoyez',
-            unreadMessagesLabel: 'Messages non lus');
+      attachmentButtonAccessibilityLabel: 'Envoyez media',
+      emptyChatPlaceholder: 'Aucun message',
+      fileButtonAccessibilityLabel: 'Fichier',
+      inputPlaceholder: 'Message',
+      sendButtonAccessibilityLabel: 'Envoyez',
+      unreadMessagesLabel: 'Messages non lus');
 }
 
 enum MessageType { hello, send, bye }
@@ -274,7 +277,7 @@ class RTM {
 
     // Reconnect if needed every 30 seconds
     _timer =
-        Timer.periodic(const Duration(seconds: 5), (timer) => _reconnect());
+        Timer.periodic(const Duration(seconds: 30), (timer) => _reconnect());
   }
 
   void hello() {
@@ -292,23 +295,26 @@ class RTM {
     };
     _logger.i('send - $data');
 
-    if (_connected) {
-      _logger.i('No connection with server');
+    if (!_connected) {
+      _logger.i('Not connected to server');
       return false;
-    } else {
-      _channel?.sink.add(jsonEncode(data));
-      return true;
     }
+
+    _channel?.sink.add(jsonEncode(data));
+    return true;
   }
 
   void bye() {
+    // Send message
     var data = {'type': MessageType.bye.name, 'roomId': roomId};
     _logger.i('bye - $data');
-
     _channel?.sink.add(jsonEncode(data));
-    _channel?.sink.close(); // Close the channel
 
-    _timer?.cancel(); // Stop the timer
+    // Close the channel
+    _channel?.sink.close();
+
+    // Stop the timer
+    _timer?.cancel();
   }
 
   void _onError(error) {

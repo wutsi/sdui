@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.154] 2022-10-06
+## [0.1.155] 2022-10-06
 
 - CHANGE: Update dependencies
 - CHANGE: Disable `search_choices` because of https://github.com/lcuis/search_choices/issues/91
