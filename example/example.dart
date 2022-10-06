@@ -26,17 +26,19 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Map<String, WidgetBuilder> _routes() => {
+  Map<String, WidgetBuilder> _routes() =>
+      {
         '/': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(homeJson)),
         '/static': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(staticJson)),
         '/chat': (context) =>
             DynamicRoute(provider: StaticRouteContentProvider(chatJson)),
-        '/remote': (context) => const DynamicRoute(
+        '/remote': (context) =>
+        const DynamicRoute(
             provider: HttpRouteContentProvider(
                 'http://10.0.2.2:8080' /* Remove endpoint - Replace it with your own */
-                )),
+            )),
       };
 }
 
@@ -330,7 +332,13 @@ var chatJson = '''
   "child": {
     "type": "Chat",
     "attributes": {
-      "rtmUrl": "ws://10.0.0.2:8080"
+      "roomId": "100,101",
+      "userId": "100",
+      "userFirstName": "Roger",
+      "userLastName": "Milla",
+      "recipientUserId": "101",
+      "language":"fr",
+      "rtmUrl": "ws://10.0.2.2:8080/rtm"
     }
   },
   "attributes":{

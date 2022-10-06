@@ -20,7 +20,7 @@ description: |
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.151
+version: 0.1.152
 
 environment:
     sdk: ">=2.12.0 <3.0.0"
@@ -49,7 +49,7 @@ dependencies:
     firebase_core: ^1.18.0
     firebase_messaging: ^11.2.11
     flutter_chat_types: ^3.4.5
-    flutter_chat_ui: ^1.6.4
+    flutter_chat_ui: ^1.6.5
     flutter_html: ^2.2.1
     flutter_local_notifications: ^9.9.1
     http: ^0.13.4
