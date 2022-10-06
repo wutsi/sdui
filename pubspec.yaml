@@ -47,7 +47,7 @@ dependencies:
     expandable: ^5.0.1
     file_picker: ^4.5.1
     firebase_core: ^1.18.0
-    firebase_messaging: ^11.2.11
+    firebase_messaging: ^13.0.0
     flutter_chat_types: ^3.4.5
     flutter_chat_ui: ^1.6.5
     flutter_html: ^2.2.1
