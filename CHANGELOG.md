@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.152] 2022-10-03
+## [0.1.153] 2022-10-03
 
 - CHANGE: Handle RTM events
 
