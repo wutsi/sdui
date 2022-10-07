@@ -315,7 +315,7 @@ packages:
     source: hosted
     version: "1.0.6"
   flutter_link_previewer:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_link_previewer
       url: "https://pub.dartlang.org"

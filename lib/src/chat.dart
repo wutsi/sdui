@@ -113,6 +113,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
         showUserNames: _delegate.showUserNames ?? true,
         messages: _messages,
         user: _user,
+        usePreviewData: true,
         l10n: _toL10(),
         theme: DefaultChatTheme(
           primaryColor: _primaryColor(),
@@ -146,6 +147,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
         ),
         onSendPressed: (message) => _onSend(message),
         onEndReached: () => _fetchMessages(_page + 1),
+        onPreviewDataFetched: (msg, preview) =>
+            _onPreviewDataFetched(msg, preview),
       );
 
   double _fontSize() => _delegate.fontSize ?? 12.0;
@@ -169,6 +172,18 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
       default:
         return const ChatL10nEn();
     }
+  }
+
+  void _onPreviewDataFetched(
+      types.TextMessage message, types.PreviewData previewData) {
+    final index = _messages.indexWhere((element) => element.id == message.id);
+    final updatedMessage = (_messages[index] as types.TextMessage).copyWith(
+      previewData: previewData,
+    );
+
+    setState(() {
+      _messages[index] = updatedMessage;
+    });
   }
 
   void _onSend(types.PartialText message) {
@@ -205,17 +220,10 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   }
 
   void _updateStatus(types.Message msg, types.Status status) {
-    var result = _messages.where((element) => msg.id == element.id);
-    if (result.isEmpty) return;
-
-    var message = result.toList()[0];
-    var i = _messages.indexOf(message);
-    if (i >= 0) {
-      setState(() {
-        _messages.remove(message);
-        _messages.insert(i, message.copyWith(status: status));
-      });
-    }
+    final index = _messages.indexWhere((element) => element.id == msg.id);
+    setState(() {
+      _messages[index] = _messages[index].copyWith(status: status);
+    });
   }
 
   Future<void> _fetchMessages(int page) {
