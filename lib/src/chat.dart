@@ -95,6 +95,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
     if (_delegate.rtmUrl != null) {
       _rtm = RTM(
           roomId: _delegate.roomId ?? const Uuid().toString(),
+          userId: _delegate.userId ?? '',
           url: _delegate.rtmUrl!,
           messageHandler: (message) => _handleRTMMessage(message));
     }
@@ -207,13 +208,17 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   }
 
   void _updateStatus(types.Message msg, types.Status status) {
-    setState(() {
-      var i = _messages.indexOf(msg);
-      if (i >= 0) {
-        _messages.remove(msg);
-        _messages.insert(i, msg.copyWith(status: status));
-      }
-    });
+    var result = _messages.where((element) => msg.id == element.id);
+    if (result.isEmpty) return;
+
+    var message = result.toList()[0];
+    var i = _messages.indexOf(message);
+    if (i >= 0) {
+      setState(() {
+        _messages.remove(message);
+        _messages.insert(i, message.copyWith(status: status));
+      });
+    }
   }
 
   Future<void> _fetchMessages(int page) {
@@ -248,6 +253,29 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 
   void _handleRTMMessage(dynamic message) {
     _logger.i('_handleRTMMessage $message');
+
+    var json = jsonDecode(message);
+    var type = json['type'];
+    var msg = json["chatMessage"];
+    var chatMessage = msg == null
+        ? null
+        : types.Message.fromJson(msg as Map<String, dynamic>);
+
+    if (type == MessageType.send.name) {
+      if (chatMessage != null) _handleRTMSendMessage(chatMessage);
+    } else if (type == MessageType.received.name) {
+      if (chatMessage != null) _updateStatus(chatMessage, types.Status.seen);
+    }
+  }
+
+  void _handleRTMSendMessage(types.Message message) {
+    // Add the message
+    setState(() {
+      _messages.insert(0, message);
+    });
+
+    // Received
+    _rtm?.received(message);
   }
 }
 
@@ -263,20 +291,25 @@ class ChatL10nFr extends ChatL10n {
             unreadMessagesLabel: 'Messages non lus');
 }
 
-enum MessageType { hello, send, bye }
+enum MessageType { hello, send, bye, received }
 
 typedef MessageHandler = void Function(dynamic message);
 
 class RTM {
   final Logger _logger = LoggerFactory.create('RTM');
   final String roomId;
+  final String userId;
   final String url;
   final MessageHandler messageHandler;
   bool _connected = false;
   WebSocketChannel? _channel;
   Timer? _timer;
 
-  RTM({required this.roomId, required this.url, required this.messageHandler}) {
+  RTM(
+      {required this.roomId,
+      required this.userId,
+      required this.url,
+      required this.messageHandler}) {
     // Connect
     _connect();
 
@@ -286,7 +319,11 @@ class RTM {
   }
 
   void hello() {
-    var data = {'type': MessageType.hello.name, 'roomId': roomId};
+    var data = {
+      'type': MessageType.hello.name,
+      'roomId': roomId,
+      'userId': userId
+    };
     _logger.i('hello - $data');
 
     _channel?.sink.add(jsonEncode(data));
@@ -296,6 +333,7 @@ class RTM {
     var data = {
       'type': MessageType.send.name,
       'roomId': roomId,
+      'userId': userId,
       'chatMessage': message.toJson()
     };
     _logger.i('send - $data');
@@ -311,7 +349,11 @@ class RTM {
 
   void bye() {
     // Send message
-    var data = {'type': MessageType.bye.name, 'roomId': roomId};
+    var data = {
+      'type': MessageType.bye.name,
+      'roomId': roomId,
+      'userId': userId
+    };
     _logger.i('bye - $data');
     _channel?.sink.add(jsonEncode(data));
 
@@ -320,6 +362,18 @@ class RTM {
 
     // Stop the timer
     _timer?.cancel();
+  }
+
+  void received(types.Message message) {
+    var data = {
+      'type': MessageType.received.name,
+      'roomId': roomId,
+      'userId': userId,
+      'chatMessage': message.toJson()
+    };
+    _logger.i('received - $data');
+
+    _channel?.sink.add(jsonEncode(data));
   }
 
   void _onError(error) {

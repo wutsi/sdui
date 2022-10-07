@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.157] 2022-10-06
+## [0.1.158] 2022-10-06
 
 - CHANGE: Add `tenantId` and `deviceId`
 - CHANGE: Update dependencies
