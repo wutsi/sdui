@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.159] 2022-10-06
+
+- FIX: https://github.com/lcuis/search_choices/issues/91
+
 ## [0.1.158] 2022-10-06
 
 - CHANGE: Add `tenantId` and `deviceId`

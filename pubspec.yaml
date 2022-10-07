@@ -20,7 +20,7 @@ description: |
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.158
+version: 0.1.159
 
 environment:
     sdk: ">=2.12.0 <3.0.0"
@@ -65,13 +65,7 @@ dependencies:
     qr_code_scanner: ^1.0.0
     qr_flutter: ^4.0.0
     share_plus: ^4.0.4
-
-    # Disabling search_choices because SDUI required Gradle Plugin 1.5.20, but this component used 1.3.50
-    # FIX: The implementation of this component uses DropdownButton, so this component is rendered as normal dropdown
-    #
-    # See https://github.com/lcuis/search_choices/issues/91
-    # search_choices: ^2.1.3
-
+    search_choices: ^2.1.3
     pinput: ^2.0.2
     uuid: ^3.0.5
     uni_links: ^0.5.1
