@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.159] 2022-10-06
+## [0.1.160] 2022-10-07
 
 - FIX: https://github.com/lcuis/search_choices/issues/91
 

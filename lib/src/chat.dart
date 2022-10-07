@@ -196,11 +196,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 
     // Send to backend
     try {
-      if (_rtm?.send(msg) == true) {
-        _updateStatus(msg, types.Status.sent);
-      } else {
-        _updateStatus(msg, types.Status.error);
-      }
+      _rtm?.send(msg).then((value) =>
+          _updateStatus(msg, value ? types.Status.sent : types.Status.error));
     } catch (e) {
       _logger.e('Unable to send the message', e);
       _updateStatus(msg, types.Status.error);
@@ -236,7 +233,12 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
           if (_page == 0) {
             _messages = messages;
           } else {
-            _messages.addAll(messages);
+            var messageIds = messages.map((e) => e.id);
+            for (var message in messages) {
+              if (!messageIds.contains(message.id)) {
+                _messages.add(message);
+              }
+            }
           }
         });
       }
@@ -262,9 +264,13 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
         : types.Message.fromJson(msg as Map<String, dynamic>);
 
     if (type == MessageType.send.name) {
-      if (chatMessage != null) _handleRTMSendMessage(chatMessage);
+      if (chatMessage != null) {
+        _handleRTMSendMessage(chatMessage);
+      }
     } else if (type == MessageType.received.name) {
-      if (chatMessage != null) _updateStatus(chatMessage, types.Status.seen);
+      if (chatMessage != null) {
+        _updateStatus(chatMessage, types.Status.delivered);
+      }
     }
   }
 
@@ -296,6 +302,7 @@ enum MessageType { hello, send, bye, received }
 typedef MessageHandler = void Function(dynamic message);
 
 class RTM {
+  final int reconnectDelaySeconds = 15;
   final Logger _logger = LoggerFactory.create('RTM');
   final String roomId;
   final String userId;
@@ -314,8 +321,8 @@ class RTM {
     _connect();
 
     // Reconnect if needed every 30 seconds
-    _timer =
-        Timer.periodic(const Duration(seconds: 30), (timer) => _reconnect());
+    _timer = Timer.periodic(
+        Duration(seconds: reconnectDelaySeconds), (timer) => _reconnect());
   }
 
   void hello() {
@@ -329,7 +336,7 @@ class RTM {
     _channel?.sink.add(jsonEncode(data));
   }
 
-  bool send(types.Message message) {
+  Future<bool> send(types.Message message) async {
     var data = {
       'type': MessageType.send.name,
       'roomId': roomId,
@@ -338,11 +345,13 @@ class RTM {
     };
     _logger.i('send - $data');
 
-    if (!_connected) {
+    // Reconnect if needed
+    if ((await _waitForReconnection()) == false) {
       _logger.i('Not connected to server');
       return false;
     }
 
+    // Send message
     _channel?.sink.add(jsonEncode(data));
     return true;
   }
@@ -355,16 +364,16 @@ class RTM {
       'userId': userId
     };
     _logger.i('bye - $data');
+
+    // Send message
     _channel?.sink.add(jsonEncode(data));
 
-    // Close the channel
-    _channel?.sink.close();
-
-    // Stop the timer
+    // Stop the timer and channel
     _timer?.cancel();
+    _channel?.sink.close();
   }
 
-  void received(types.Message message) {
+  Future<bool> received(types.Message message) async {
     var data = {
       'type': MessageType.received.name,
       'roomId': roomId,
@@ -373,7 +382,14 @@ class RTM {
     };
     _logger.i('received - $data');
 
+    // Reconnect if needed
+    if ((await _waitForReconnection()) == false) {
+      _logger.i('Not connected to server');
+      return false;
+    }
+
     _channel?.sink.add(jsonEncode(data));
+    return true;
   }
 
   void _onError(error) {
@@ -401,5 +417,16 @@ class RTM {
     if (!_connected) {
       _connect();
     }
+  }
+
+  Future<bool> _waitForReconnection() async {
+    if (_connected) return true;
+
+    for (var i = 0; i < 2; i++) {
+      _logger.i('...Waiting for reconnection');
+      await Future.delayed(Duration(seconds: reconnectDelaySeconds));
+      if (_connected) return true;
+    }
+    return _connected;
   }
 }
