@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.162] 2022-10-07
+
+- CHANGE: Improve error handling
+
 ## [0.1.161] 2022-10-07
 
 - ADD: Link preview
