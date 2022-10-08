@@ -215,7 +215,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
       _logger.i('Listening to Firebase foreground messages');
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         _logger.i('onMessage: ${message.messageId}');
-        _onFirebaseMessage(message, false);
+        sduiFirebaseMessageHandler(message);
       });
 
       // Token

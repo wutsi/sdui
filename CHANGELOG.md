@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.163] 2022-10-08
+
+- CHANGE: Add message handle to handle FCM local message
+
 ## [0.1.162] 2022-10-07
 
 - CHANGE: Improve error handling
