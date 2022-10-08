@@ -105,9 +105,21 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     });
 
     content = provider.getContent();
-    _handleFirstUriLink();
-    _initializeUriLink();
-    _initializeFirebase();
+
+    // UniLink
+    try {
+      _handleFirstUriLink();
+      _initializeUriLink();
+    } catch (e) {
+      _logger.w('Unable to initiaizliae firebase', e);
+    }
+
+    // Firebase
+    try {
+      _initializeFirebase();
+    } catch (e) {
+      _logger.w('Unable to initiaizliae firebase', e);
+    }
 
     super.initState();
   }
