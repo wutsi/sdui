@@ -253,9 +253,10 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 
         // Notify received
         for (var message in messages) {
+          _logger.i(
+              'Message fetched. id=${message.id} authorId=${message.author.id} status=${message.status}');
           if (message.author.id != _delegate.userId &&
-              message.status != types.Status.seen &&
-              message.status != types.Status.delivered) {
+              message.status == types.Status.sent) {
             _rtm?.received(message);
           }
         }
