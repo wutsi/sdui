@@ -400,7 +400,7 @@ class RTM {
     _logger.i('received - $data');
 
     // Reconnect if needed
-    if ((await _waitForReconnection()) == false) {
+    if (_connected) {
       _logger.i('Not connected to server');
       return false;
     }
