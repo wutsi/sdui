@@ -252,8 +252,9 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
         });
 
         // Notify received
-        for (var message in _messages) {
-          if (message.status != types.Status.seen &&
+        for (var message in messages) {
+          if (message.author.id != _delegate.userId &&
+              message.status != types.Status.seen &&
               message.status != types.Status.delivered) {
             _rtm?.received(message);
           }
