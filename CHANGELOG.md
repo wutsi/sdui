@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [0.1.163] 2022-10-08
+## [0.1.164] 2022-10-08
 
 - CHANGE: Add message handle to handle FCM local message
+- CHANGE: Send receive notification on loaded messages
 
 ## [0.1.162] 2022-10-07
 

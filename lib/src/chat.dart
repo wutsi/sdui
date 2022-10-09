@@ -236,6 +236,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
           .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
           .toList();
       if (messages.isNotEmpty) {
+        // Set the messages
         setState(() {
           _page = page;
           if (_page == 0) {
@@ -249,6 +250,14 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
             }
           }
         });
+
+        // Notify received
+        for (var message in _messages) {
+          if (message.status != types.Status.seen &&
+              message.status != types.Status.delivered) {
+            _rtm?.received(message);
+          }
+        }
       }
     });
   }
