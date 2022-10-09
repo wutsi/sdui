@@ -108,7 +108,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   }
 
   @override
-  Widget build(BuildContext context) => Chat(
+  Widget build(BuildContext context) =>
+      Chat(
         showUserAvatars: _delegate.showUserAvatars ?? true,
         showUserNames: _delegate.showUserNames ?? true,
         messages: _messages,
@@ -120,7 +121,7 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
           secondaryColor: _secondaryColor(),
           dateDividerMargin: const EdgeInsets.only(bottom: 5.0, top: 5),
           dateDividerTextStyle:
-              TextStyle(fontSize: _fontSize(), fontWeight: FontWeight.bold),
+          TextStyle(fontSize: _fontSize(), fontWeight: FontWeight.bold),
           errorColor: Colors.red,
           inputPadding: const EdgeInsets.all(5.0),
           inputMargin: const EdgeInsets.all(1.0),
@@ -155,11 +156,11 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
 
   Color _primaryColor() =>
       _delegate.toColor(_delegate.sentMessageBackground) ??
-      Color(int.parse('FF1D7EDF', radix: 16));
+          Color(int.parse('FF1D7EDF', radix: 16));
 
   Color _secondaryColor() =>
       _delegate.toColor(_delegate.receivedMessageBackground) ??
-      Color(int.parse('FFe4edf7', radix: 16));
+          Color(int.parse('FFe4edf7', radix: 16));
 
   ChatL10n _toL10() {
     switch (_delegate.language?.toLowerCase()) {
@@ -174,8 +175,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
     }
   }
 
-  void _onPreviewDataFetched(
-      types.TextMessage message, types.PreviewData previewData) {
+  void _onPreviewDataFetched(types.TextMessage message,
+      types.PreviewData previewData) {
     final index = _messages.indexWhere((element) => element.id == message.id);
     final updatedMessage = (_messages[index] as types.TextMessage).copyWith(
       previewData: previewData,
@@ -192,7 +193,9 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
     // Create the message
     final msg = types.TextMessage(
         author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
+        createdAt: DateTime
+            .now()
+            .millisecondsSinceEpoch,
         id: const Uuid().v4(),
         text: message.text,
         roomId: _delegate.roomId,
@@ -254,7 +257,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
         // Notify received
         for (var message in messages) {
           _logger.i(
-              'Message fetched. id=${message.id} authorId=${message.author.id} status=${message.status}');
+              'Message fetched. id=${message.id} authorId=${message.author
+                  .id} status=${message.status}');
           if (message.author.id != _delegate.userId &&
               message.status == types.Status.delivered) {
             _rtm?.received(message);
@@ -288,12 +292,14 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
       }
     } else if (type == MessageType.received.name) {
       if (chatMessage != null) {
-        _updateStatus(chatMessage, types.Status.delivered);
+        _handleRTMReceivedMessage(message);
       }
     }
   }
 
   void _handleRTMSendMessage(types.Message message) {
+    _logger.i('_handleRTMSendMessage messageId=${message.id}');
+
     // Add the message
     setState(() {
       _messages.insert(0, message);
@@ -302,18 +308,23 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
     // Received
     _rtm?.received(message);
   }
+
+  void _handleRTMReceivedMessage(types.Message message) {
+    _logger.i('_handleRTMReceivedMessage messageId=${message.id}');
+    _updateStatus(message, types.Status.delivered);
+  }
 }
 
 @immutable
 class ChatL10nFr extends ChatL10n {
   const ChatL10nFr()
       : super(
-            attachmentButtonAccessibilityLabel: 'Envoyez media',
-            emptyChatPlaceholder: 'Aucun message',
-            fileButtonAccessibilityLabel: 'Fichier',
-            inputPlaceholder: 'Message',
-            sendButtonAccessibilityLabel: 'Envoyez',
-            unreadMessagesLabel: 'Messages non lus');
+      attachmentButtonAccessibilityLabel: 'Envoyez media',
+      emptyChatPlaceholder: 'Aucun message',
+      fileButtonAccessibilityLabel: 'Fichier',
+      inputPlaceholder: 'Message',
+      sendButtonAccessibilityLabel: 'Envoyez',
+      unreadMessagesLabel: 'Messages non lus');
 }
 
 enum MessageType { hello, send, bye, received }
@@ -331,11 +342,10 @@ class RTM {
   WebSocketChannel? _channel;
   Timer? _timer;
 
-  RTM(
-      {required this.roomId,
-      required this.userId,
-      required this.url,
-      required this.messageHandler}) {
+  RTM({required this.roomId,
+    required this.userId,
+    required this.url,
+    required this.messageHandler}) {
     // Connect
     _connect();
 
