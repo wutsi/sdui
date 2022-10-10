@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.171] 2022-10-09
+
+- CHANGE: Initialize the chat text
+
 ## [0.1.170] 2022-10-08
 
 - CHANGE: Add message handle to handle FCM local message

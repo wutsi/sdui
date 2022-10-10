@@ -29,6 +29,7 @@ class SDUIChat extends SDUIWidget {
   bool? showUserAvatars;
   String? tenantId;
   String? deviceId;
+  String? text;
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -50,6 +51,7 @@ class SDUIChat extends SDUIWidget {
     showUserAvatars = json?["showUserAvatars"];
     tenantId = json?["tenantId"];
     deviceId = json?["deviceId"];
+    text = json?["text"];
     return super.fromJson(json);
   }
 
@@ -70,6 +72,8 @@ class _ChatWidgetStateful extends StatefulWidget {
 class _ChatWidgetState extends State<_ChatWidgetStateful> {
   final Logger _logger = LoggerFactory.create('_ChatWidgetState');
   final SDUIChat _delegate;
+  final _textEditingController = InputTextFieldController();
+
   List<types.Message> _messages = [];
   types.User _user = const types.User(id: '');
   RTM? _rtm;
@@ -80,6 +84,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
   @override
   void initState() {
     super.initState();
+
+    _textEditingController.text = (_delegate.text ?? "");
 
     // Current user
     _user = types.User(
@@ -115,6 +121,8 @@ class _ChatWidgetState extends State<_ChatWidgetStateful> {
         user: _user,
         usePreviewData: true,
         l10n: _toL10(),
+        inputOptions:
+            InputOptions(textEditingController: _textEditingController),
         theme: DefaultChatTheme(
           primaryColor: _primaryColor(),
           secondaryColor: _secondaryColor(),
