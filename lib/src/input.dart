@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:logger/logger.dart';
 import 'package:mime/mime.dart';
+import 'package:sdui/src/l10n.dart';
 
 import 'button.dart';
 import 'countries.dart';
@@ -140,36 +141,28 @@ class SDUIInput extends SDUIWidget with SDUIFormField {
 
   String? _onValidate(String? value) {
     String trimmed = value?.trim() ?? '';
-    int length = trimmed.length;
-    if (length < minLength) {
-      return "This field must have at least $minLength characters";
-    }
-    if (maxLength != null && length > maxLength!) {
-      return "This field must have less than $maxLength characters";
-    }
-
     bool empty = (value == null || trimmed.isEmpty);
     if (empty) {
       if (required) {
-        return "This field is required";
+        return sduiL10.validationMissingField;
       }
     }
     if (!empty) {
       if (type == 'email' && !EmailValidator.validate(value)) {
-        return "Malformed email address";
+        return sduiL10.validationMalformedEmail;
       }
       if (type == 'url') {
         try {
           if (!Uri.parse(value).isAbsolute) {
-            return "Malformed URL";
+            return sduiL10.validationMalformedURL;
           }
         } catch (e) {
-          return "Malformed URL";
+          return sduiL10.validationMalformedURL;
         }
       }
       if (type == 'number') {
         if (double.tryParse(value) == null) {
-          return "Invalid number";
+          return sduiL10.validationInvalidNumber;
         }
       }
     }

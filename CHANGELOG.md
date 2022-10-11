@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.173] 2022-10-09
+
+- CHANGE: Add localized text
+
 ## [0.1.171] 2022-10-09
 
 - CHANGE: Initialize the chat text

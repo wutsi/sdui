@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:sdui/src/l10n.dart';
 import 'package:sdui/src/logger.dart';
 import 'package:search_choices/search_choices.dart';
 
@@ -200,7 +201,7 @@ class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
   String? _onValidate(Object? value) {
     if (delegate.required == true &&
         (value == null || value.toString().isEmpty)) {
-      return 'This field is required';
+      return sduiL10.validationMissingField;
     }
     return null;
   }

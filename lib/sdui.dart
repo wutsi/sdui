@@ -31,6 +31,7 @@ export 'src/icon.dart';
 export 'src/icon_button.dart';
 export 'src/image.dart';
 export 'src/input.dart';
+export 'src/l10n.dart';
 export 'src/list_view.dart';
 export 'src/loading.dart';
 export 'src/logger.dart';

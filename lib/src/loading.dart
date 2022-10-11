@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sdui/src/l10n.dart';
 
 typedef LoadingStateBuilder = Widget Function(BuildContext context);
 
@@ -12,9 +13,9 @@ LoadingStateBuilder sduiProgressIndicator =
 // ignore: prefer_function_declarations_over_variables
 LoadingStateBuilder sduiLoadingState = (context) => Scaffold(
     appBar: AppBar(
-      title: const Text('Loading...',
-          style:
-              TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent)),
+      title: Text(sduiL10.loading,
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.blueAccent)),
       centerTitle: true,
       automaticallyImplyLeading: false,
       elevation: 0.0,

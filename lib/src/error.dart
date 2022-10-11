@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sdui/src/l10n.dart';
 
 typedef ErrorStateBuilder = Widget Function(
     BuildContext context, Object? error);
@@ -10,9 +11,9 @@ ErrorStateBuilder sduiErrorState = (context, error) => Scaffold(
     appBar: AppBar(
       backgroundColor: Colors.white,
       foregroundColor: const Color(0xff8B0000),
-      title: const Text('Error',
-          style:
-              TextStyle(fontWeight: FontWeight.bold, color: Color(0xff8B0000))),
+      title: Text(sduiL10.error,
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, color: Color(0xff8B0000))),
       centerTitle: true,
       elevation: 0.0,
     ),
