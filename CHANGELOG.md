@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## [0.1.175] 2022-11-18
+
+- FIX: Fix icon of SwitchListTile
+
 ## [0.1.174] 2022-11-18
 
-- CHANGE: Add foregroudColor to AvararCircle
+- CHANGE: Add foregroundColor to AvararCircle
 
 ## [0.1.173] 2022-10-09
 

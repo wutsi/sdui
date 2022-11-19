@@ -107,7 +107,7 @@ class SDUIListItemSwitch extends SDUIWidget with SDUIFormField {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     caption = json?["caption"];
     subCaption = json?["subCaption"];
-    icon = json?["leftIcon"];
+    icon = json?["icon"];
     name = json?["name"] ?? '_no_name_';
     selected = json?["selected"] ?? false;
     return super.fromJson(json);
