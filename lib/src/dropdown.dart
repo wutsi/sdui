@@ -21,22 +21,23 @@ class SDUIDropdownMenuItem extends SDUIWidget {
   String? icon;
 
   @override
-  Widget toWidget(BuildContext context) => DropdownMenuItem<String>(
-      enabled: enabled,
-      value: value,
-      alignment: Alignment.centerLeft,
-      child: icon == null
-          ? Text(caption)
-          : Row(children: [
-              SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: FittedBox(child: toIcon(icon!, size: 24)!)),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                child: Text(caption),
-              )
-            ]));
+  Widget toWidget(BuildContext context) =>
+      DropdownMenuItem<String>(
+          enabled: enabled,
+          value: value,
+          alignment: Alignment.centerLeft,
+          child: icon == null
+              ? Text(caption)
+              : Row(children: [
+            SizedBox(
+                width: 24,
+                height: 24,
+                child: FittedBox(child: toIcon(icon!, size: 24)!)),
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: Text(caption),
+            )
+          ]));
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -102,7 +103,7 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
 
       delegate.provider?.setData(delegate.name, value ?? '');
       delegate.action.execute(context, {delegate.name: value}).then(
-          (value) => delegate.action.handleResult(context, value));
+              (value) => delegate.action.handleResult(context, value));
     });
   }
 
@@ -114,11 +115,13 @@ class _DropdownButtonWidgetState extends State<_DropdownButtonWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => delegate.stretched ?? true
-      ? SizedBox(width: double.infinity, child: _button())
-      : _button();
+  Widget build(BuildContext context) =>
+      delegate.stretched ?? true
+          ? SizedBox(width: double.infinity, child: _button())
+          : _button();
 
-  DropdownButtonFormField _button() => DropdownButtonFormField<String>(
+  DropdownButtonFormField _button() =>
+      DropdownButtonFormField<String>(
         key: delegate.id == null ? null : Key(delegate.id!),
         value: state,
         hint: delegate.hint == null ? null : Text(delegate.hint!),
@@ -149,6 +152,7 @@ class SDUISearchableDropdown extends SDUIWidget with SDUIFormField {
   String? value;
   String? hint;
   bool? required;
+  String? url;
 
   @override
   Widget toWidget(BuildContext context) => _SearchableDropdownWidget(this);
@@ -159,12 +163,11 @@ class SDUISearchableDropdown extends SDUIWidget with SDUIFormField {
     value = json?["value"];
     required = json?["required"];
     hint = json?["hint"];
+    url = json?["url"];
     return super.fromJson(json);
   }
 }
 
-// Disabling this component for the moment
-// See https://github.com/lcuis/search_choices/issues/91
 class _SearchableDropdownWidget extends StatefulWidget {
   final SDUISearchableDropdown delegate;
 
@@ -177,7 +180,7 @@ class _SearchableDropdownWidget extends StatefulWidget {
 
 class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
   static final Logger _logger =
-      LoggerFactory.create('_SearchableDropdownState');
+  LoggerFactory.create('_SearchableDropdownState');
   SDUISearchableDropdown delegate;
   String? state;
 
@@ -200,14 +203,17 @@ class _SearchableDropdownState extends State<_SearchableDropdownWidget> {
 
   String? _onValidate(Object? value) {
     if (delegate.required == true &&
-        (value == null || value.toString().isEmpty)) {
+        (value == null || value
+            .toString()
+            .isEmpty)) {
       return sduiL10.validationMissingField;
     }
     return null;
   }
 
   @override
-  Widget build(BuildContext context) => SearchChoices.single(
+  Widget build(BuildContext context) =>
+      SearchChoices.single(
         key: delegate.id == null ? null : Key(delegate.id!),
         items: _toItems(context),
         onChanged: (value) => _onChanged(value),

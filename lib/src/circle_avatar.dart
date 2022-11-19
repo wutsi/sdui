@@ -9,6 +9,7 @@ import 'package:sdui/sdui.dart';
 class SDUICircleAvatar extends SDUIWidget {
   double? radius;
   String? backgroundColor;
+  String? foregroundColor;
 
   @override
   Widget toWidget(BuildContext context) => GestureDetector(
@@ -17,6 +18,7 @@ class SDUICircleAvatar extends SDUIWidget {
         key: id == null ? null : Key(id!),
         radius: radius,
         backgroundColor: toColor(backgroundColor),
+        foregroundColor: toColor(foregroundColor),
         child: ClipRRect(
           borderRadius: radius != null ? BorderRadius.circular(radius!) : null,
           child: child()?.toWidget(context),
@@ -27,6 +29,7 @@ class SDUICircleAvatar extends SDUIWidget {
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     radius = json?["radius"];
     backgroundColor = json?["backgroundColor"];
+    foregroundColor = json?["foregroundColor"];
     return super.fromJson(json);
   }
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.174] 2022-11-18
+
+- CHANGE: Add foregroudColor to AvararCircle
+
 ## [0.1.173] 2022-10-09
 
 - CHANGE: Add localized text
