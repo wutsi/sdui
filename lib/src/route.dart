@@ -118,7 +118,7 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
     try {
       _initializeFirebase();
     } catch (e) {
-      _logger.w('Unable to initiaizliae firebase', e);
+      _logger.w('Unable to initialiaze firebase', e);
     }
 
     super.initState();
@@ -186,9 +186,6 @@ class DynamicRouteState extends State<DynamicRoute> with RouteAware {
   ///
   void _initializeFirebase() async {
     if (_firebaseMessagingInitialized || !handleFirebaseMessages) return;
-
-    // Init Firebase
-    Firebase.initializeApp();
 
     // Initialize local notifications
     _localNotificationsPlugin.initialize(

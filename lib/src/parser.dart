@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 
 import 'action.dart';
 import 'appbar.dart';
@@ -32,7 +31,6 @@ import 'icon_button.dart';
 import 'image.dart';
 import 'input.dart';
 import 'list_view.dart';
-import 'logger.dart';
 import 'money.dart';
 import 'noop.dart';
 import 'page_view.dart';
@@ -57,7 +55,7 @@ import 'wrap.dart';
 //-- Core ------------------------------------
 /// Parser that convert JSON to flutter [Widget]
 class SDUIParser {
-  static final Logger _logger = LoggerFactory.create('SDUIParser');
+  // static final Logger _logger = LoggerFactory.create('SDUIParser');
   static final SDUIParser _singleton = SDUIParser._internal();
 
   SDUIParser._internal();
@@ -75,8 +73,8 @@ class SDUIParser {
 
   SDUIWidget fromJson(Map<String, dynamic> json) {
     var type = json["type"];
-    var id = json["attributes"]?["id"];
-    _logger.i('...Parsing $type id=$id');
+    // var id = json["attributes"]?["id"];
+    // _logger.i('...Parsing $type id=$id');
 
     SDUIWidget? widget;
     switch (type?.toLowerCase()) {
@@ -263,9 +261,9 @@ class SDUIParser {
 
     // Attributes
     var attributes = json["attributes"];
-    if (attributes == null) {
-      _logger.i('......$type has no attributes');
-    }
+    // if (attributes == null) {
+    //   _logger.i('......$type has no attributes');
+    // }
     if (attributes is Map<String, dynamic>) {
       widget.fromJson(attributes);
     }
@@ -313,7 +311,7 @@ class SDUIParser {
       }
 
       // Attach
-      _logger.i('...Attaching $type to its children');
+      // _logger.i('...Attaching $type to its children');
       widget.attachScreen(widget);
     }
 

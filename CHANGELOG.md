@@ -4,6 +4,7 @@
 
 - CHANGE: Remove HTML component
 - CHANGE: Update dependencies
+- CHANGE: Cleanup logs
 
 ## [0.1.175] 2022-11-18
 
