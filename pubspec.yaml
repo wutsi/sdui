@@ -45,7 +45,7 @@ dependencies:
     carousel_slider: ^4.0.0
     email_validator: ^2.0.1
     expandable: ^5.0.1
-    file_picker: ^4.5.1
+    file_picker: ^5.0.0
     firebase_core: ^1.18.0
     firebase_messaging: ^14.0.0
     flutter_chat_types: ^3.4.5
