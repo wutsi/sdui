@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.176] 2022-11-20
+
+- CHANGE: Update dependencies
+
 ## [0.1.175] 2022-11-18
 
 - FIX: Fix icon of SwitchListTile
