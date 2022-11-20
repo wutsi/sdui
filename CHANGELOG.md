@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## [0.1.176] 2022-11-20
+## [0.1.179] 2022-11-20
 
+- CHANGE: Remove HTML component
 - CHANGE: Update dependencies
 
 ## [0.1.175] 2022-11-18

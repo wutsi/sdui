@@ -27,7 +27,6 @@ import 'fitted_box.dart';
 import 'flexible.dart';
 import 'form.dart';
 import 'grid_view.dart';
-import 'html.dart';
 import 'icon.dart';
 import 'icon_button.dart';
 import 'image.dart';
@@ -146,9 +145,6 @@ class SDUIParser {
         break;
       case 'expandablepanel':
         widget = SDUIExpandablePanel();
-        break;
-      case "html":
-        widget = SDUIHtml();
         break;
       case "fittedbox":
         widget = SDUIFittedBox();
