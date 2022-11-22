@@ -10,6 +10,7 @@ export 'src/center.dart';
 export 'src/chat.dart';
 export 'src/chip.dart';
 export 'src/circle_avatar.dart';
+export 'src/clip_rrect.dart';
 export 'src/column.dart';
 export 'src/container.dart';
 export 'src/deeplink.dart';

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.180] 2022-11-22
+
+- ADD: Add ClipRRect
+
 ## [0.1.179] 2022-11-20
 
 - CHANGE: Remove HTML component

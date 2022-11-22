@@ -14,6 +14,7 @@ import 'center.dart';
 import 'chat.dart';
 import 'chip.dart';
 import 'circle_avatar.dart';
+import 'clip_rrect.dart';
 import 'column.dart';
 import 'container.dart';
 import 'dialog.dart';
@@ -107,6 +108,9 @@ class SDUIParser {
         break;
       case "chat":
         widget = SDUIChat();
+        break;
+      case "cliprrect":
+        widget = SDUIClipRRect();
         break;
       case "chip":
         widget = SDUIChip();
