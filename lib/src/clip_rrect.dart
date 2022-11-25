@@ -6,8 +6,9 @@ import 'widget.dart';
 class SDUIClipRRect extends SDUIWidget {
   double? borderRadius;
 
-  SDUIClipRRect fromJson(Map<String, dynamic>? attributes) {
-    borderRadius = attributes?["borderRadius"];
+  @override
+  SDUIClipRRect fromJson(Map<String, dynamic>? json) {
+    borderRadius = json?["borderRadius"];
     return this;
   }
 

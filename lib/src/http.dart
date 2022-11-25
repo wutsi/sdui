@@ -132,7 +132,8 @@ class Http {
 
   Future<String> uploadStream(String url, String name, path,
       Stream<Uint8List> stream, String? contentType, int contentLength) async {
-    RequestTemplate request = _pre('POST', url, {}, [HttpJsonInterceptor]);
+    RequestTemplate request =
+        _pre('(upload) POST', url, {}, [HttpJsonInterceptor]);
     http.StreamedResponse? response;
     Exception? ex;
     try {
