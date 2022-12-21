@@ -613,8 +613,10 @@ class _FileWidgetState extends State<_FileWidgetStateful> {
       Http.getInstance()
           .uploadStream(delegate.uploadUrl!, delegate.name, file.path,
               file.readAsBytes().asStream(), mimeType, await file.length())
-          .then((value) => setValue(file.uri.toString()))
-          .whenComplete(() => setLoading(false));
+          .then((value) {
+        setValue(file.uri.toString());
+        delegate.action.execute(context, null);
+      }).whenComplete(() => setLoading(false));
     }
     return file?.path;
   }

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.181] 2022-12-21
+
+- CHANGE: Handle response after uploading a file
+
 ## [0.1.180] 2022-11-22
 
 - ADD: Add ClipRRect
