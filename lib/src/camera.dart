@@ -73,37 +73,35 @@ class _CameraWidgetState extends State<_CameraWidgetStateful> {
   bool _cameraNotAvailable() => !_cameraAvailable();
 
   @override
-  Widget build(BuildContext context) =>
-      _cameraNotAvailable()
-          ? Container()
-          : FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return buzy
-                ? Center(child: sduiProgressIndicator(context))
-                : CameraPreview(_controller,
-                child: Container(
-                  width: 68,
-                  alignment: Alignment.bottomLeft,
-                  child: sduiCameras.length == 1
-                      ? _pictureButton()
-                      : Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [_pictureButton()],
-                  ),
-                ));
-          } else {
-            return Center(child: sduiProgressIndicator(context));
-          }
-        },
-      );
+  Widget build(BuildContext context) => _cameraNotAvailable()
+      ? Container()
+      : FutureBuilder<void>(
+          future: _initializeControllerFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return buzy
+                  ? Center(child: sduiProgressIndicator(context))
+                  : CameraPreview(_controller,
+                      child: Container(
+                        width: 68,
+                        alignment: Alignment.bottomLeft,
+                        child: sduiCameras.length == 1
+                            ? _pictureButton()
+                            : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [_pictureButton()],
+                              ),
+                      ));
+            } else {
+              return Center(child: sduiProgressIndicator(context));
+            }
+          },
+        );
 
-  Widget _pictureButton() =>
-      FloatingActionButton(
-          enableFeedback: true,
-          onPressed: () => _takePicture(),
-          child: const Icon(Icons.camera_alt, size: 48));
+  Widget _pictureButton() => FloatingActionButton(
+      enableFeedback: true,
+      onPressed: () => _takePicture(),
+      child: const Icon(Icons.camera_alt, size: 48));
 
   CameraDescription? findCamera(String? lensDirection) {
     CameraLensDirection direction = _toLensDirection(lensDirection);

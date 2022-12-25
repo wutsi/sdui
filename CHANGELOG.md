@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.182] 2022-12-24
+
+- CHANGE: Update dependencies
+
 ## [0.1.181] 2022-12-21
 
 - CHANGE: Handle response after uploading a file
