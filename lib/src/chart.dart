@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sdui/src/logger.dart';
 import 'package:sdui/src/widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -6,6 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 /// This class does nothing. It's up the the application using this library
 /// to provide it's own implementation and set the global variable [sduiAnalytics].
 class SDUIChart extends SDUIWidget {
+  final _logger = LoggerFactory.create("SDUIChart");
   String? _title;
   final List<List<ChartData>> _series = [];
 
@@ -14,14 +16,25 @@ class SDUIChart extends SDUIWidget {
     _title = json?["title"];
 
     var series = json?["series"];
+
     if (series is List<dynamic>) {
-      List<ChartData> list = [];
       for (var element in series) {
-        if (element is Map<String, dynamic>) {
-          list.add(ChartData.fromJson(element));
+        if (element is List<dynamic>) {
+          List<ChartData> serie = [];
+
+          for (var data in element) {
+            if (data is Map<String, dynamic>) {
+              _logger.i('Adding data: $data');
+              serie.add(ChartData.fromJson(data));
+            } else {
+              _logger.i('Not data: $data');
+            }
+          }
+
+          _logger.i('serie= $serie');
+          _series.add(serie);
         }
       }
-      _series.add(list);
     }
     return super.fromJson(json);
   }
@@ -31,11 +44,20 @@ class SDUIChart extends SDUIWidget {
     return SfCartesianChart(
         title: _title == null ? null : ChartTitle(text: _title!),
         primaryXAxis: CategoryAxis(),
-        series: _series.map((e) => LineSeries<ChartData, String>(
-              dataSource: e,
-              xValueMapper: (ChartData data, _) => data.x,
-              yValueMapper: (ChartData data, _) => data.y,
-            )));
+        series: _toSeries());
+  }
+
+  List<LineSeries> _toSeries() {
+    var result = <LineSeries>[];
+    for (var element in _series) {
+      result.add(LineSeries<ChartData, String>(
+        dataSource: element,
+        xValueMapper: (ChartData data, _) => data.x,
+        yValueMapper: (ChartData data, _) => data.y,
+      ));
+    }
+
+    return result;
   }
 }
 
@@ -50,4 +72,7 @@ class ChartData {
 
     return data;
   }
+
+  @override
+  String toString() => "ChartData($x = $y)";
 }

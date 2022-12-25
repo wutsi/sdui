@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.184] 2022-12-24
+## [0.1.190] 2022-12-24
 
 - ADD: Add chart component
 

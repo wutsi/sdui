@@ -16,12 +16,12 @@ description: SDUI make it easy to implement Server Driven UI pattern on flutter.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.184
+version: 0.1.190
 
 environment:
     sdk: ">=2.12.0 <3.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
+# Dependencies specify othe9r packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
 # dependencies can be manually updated by changing the version numbers below to
