@@ -11,7 +11,6 @@ import 'button.dart';
 import 'camera.dart';
 import 'carousel_slider.dart';
 import 'center.dart';
-import 'chat.dart';
 import 'chip.dart';
 import 'circle_avatar.dart';
 import 'clip_rrect.dart';
@@ -105,9 +104,6 @@ class SDUIParser {
         break;
       case "center":
         widget = SDUICenter();
-        break;
-      case "chat":
-        widget = SDUIChat();
         break;
       case "cliprrect":
         widget = SDUIClipRRect();

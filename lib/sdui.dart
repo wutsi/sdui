@@ -7,7 +7,6 @@ export 'src/button.dart';
 export 'src/camera.dart';
 export 'src/carousel_slider.dart';
 export 'src/center.dart';
-export 'src/chat.dart';
 export 'src/chip.dart';
 export 'src/circle_avatar.dart';
 export 'src/clip_rrect.dart';

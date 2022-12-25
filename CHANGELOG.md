@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.182] 2022-12-24
+## [0.1.183] 2022-12-24
 
 - CHANGE: Update dependencies
 
