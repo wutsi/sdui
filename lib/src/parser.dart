@@ -11,6 +11,7 @@ import 'button.dart';
 import 'camera.dart';
 import 'carousel_slider.dart';
 import 'center.dart';
+import 'chart.dart';
 import 'chip.dart';
 import 'circle_avatar.dart';
 import 'clip_rrect.dart';
@@ -98,6 +99,9 @@ class SDUIParser {
         break;
       case "camera":
         widget = SDUICamera();
+        break;
+      case "chart":
+        widget = SDUIChart();
         break;
       case "carouselslider":
         widget = SDUICarouselSlider();
