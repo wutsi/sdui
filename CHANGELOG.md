@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.1.192] 2022-12-25
+
+- CHANGE: Add alignment to MoneyText
+- CHANGE: Use `SDUINull` for unsupported widgets
+
 ## [0.1.190] 2022-12-24
 
 - ADD: Add chart component

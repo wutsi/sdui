@@ -21,6 +21,7 @@ class SDUIMoneyText extends SDUIWidget {
   double? valueFontSize;
   double? currencyFontSize;
   bool? bold;
+  String? alignment;
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -31,6 +32,7 @@ class SDUIMoneyText extends SDUIWidget {
     valueFontSize = json?['valueFontSize'];
     currencyFontSize = json?['currencyFontSize'];
     bold = json?['bold'];
+    alignment = json?['alignment'];
     return super.fromJson(json);
   }
 
@@ -44,6 +46,7 @@ class SDUIMoneyText extends SDUIWidget {
         valueFontSize: valueFontSize ?? 50,
         currencyFontSize: currencyFontSize ?? 12,
         bold: bold,
+        textAlign: toTextAlign(alignment),
       );
 }
 
@@ -56,6 +59,7 @@ class MoneyText extends StatelessWidget {
   final double currencyFontSize;
   final Color? color;
   final bool? bold;
+  final TextAlign? textAlign;
 
   const MoneyText(
       {Key? key,
@@ -65,7 +69,8 @@ class MoneyText extends StatelessWidget {
       this.valueFontSize = 50,
       this.currencyFontSize = 12,
       this.color,
-      this.bold = false})
+      this.bold = false,
+      this.textAlign})
       : super(key: key);
 
   @override
@@ -94,6 +99,7 @@ class MoneyText extends StatelessWidget {
               ),
             ]),
         key: key,
+        textAlign: textAlign,
       );
 }
 

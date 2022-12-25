@@ -57,6 +57,24 @@ abstract class SDUIWidget {
     return Color(int.parse('FF$hexCode', radix: 16));
   }
 
+  TextAlign? toTextAlign(String? alignment) {
+    switch (alignment?.toLowerCase()) {
+      case 'left':
+        return TextAlign.left;
+      case 'right':
+        return TextAlign.right;
+      case 'center':
+        return TextAlign.center;
+      case 'justify':
+        return TextAlign.justify;
+      case 'end':
+        return TextAlign.end;
+      case 'start':
+        return TextAlign.start;
+    }
+    return null;
+  }
+
   IconData? toIconData(String? code) {
     if (code == null) {
       return null;

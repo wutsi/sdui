@@ -29,7 +29,7 @@ class SDUIText extends SDUIWidget {
         caption ?? '',
         overflow: _toTextOverflow(),
         style: _toTextStyle(),
-        textAlign: _toTextAlign(),
+        textAlign: toTextAlign(alignment),
         maxLines: maxLines,
         key: id == null ? null : Key(id!),
       );
@@ -68,24 +68,6 @@ class SDUIText extends SDUIWidget {
       fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
       fontStyle: italic == true ? FontStyle.italic : FontStyle.normal,
       decoration: _toTextDecoration());
-
-  TextAlign? _toTextAlign() {
-    switch (alignment?.toLowerCase()) {
-      case 'left':
-        return TextAlign.left;
-      case 'right':
-        return TextAlign.right;
-      case 'center':
-        return TextAlign.center;
-      case 'justify':
-        return TextAlign.justify;
-      case 'end':
-        return TextAlign.end;
-      case 'start':
-        return TextAlign.start;
-    }
-    return null;
-  }
 
   TextDecoration? _toTextDecoration() {
     switch (decoration?.toLowerCase()) {

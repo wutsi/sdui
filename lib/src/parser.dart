@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import 'action.dart';
 import 'appbar.dart';
@@ -32,8 +33,10 @@ import 'icon_button.dart';
 import 'image.dart';
 import 'input.dart';
 import 'list_view.dart';
+import 'logger.dart';
 import 'money.dart';
 import 'noop.dart';
+import 'null.dart';
 import 'page_view.dart';
 import 'photo_view.dart';
 import 'pin_with_keyboard.dart';
@@ -56,7 +59,7 @@ import 'wrap.dart';
 //-- Core ------------------------------------
 /// Parser that convert JSON to flutter [Widget]
 class SDUIParser {
-  // static final Logger _logger = LoggerFactory.create('SDUIParser');
+  static final Logger _logger = LoggerFactory.create('SDUIParser');
   static final SDUIParser _singleton = SDUIParser._internal();
 
   SDUIParser._internal();
@@ -259,7 +262,8 @@ class SDUIParser {
       default:
         widget = SDUIWidgetRegistry.getInstance().create(type);
         if (widget == null) {
-          throw Exception("Unsupported node: ${json["type"]}");
+          _logger.w(">>>> Unsupported node: ${json["type"]}");
+          widget = SDUINull();
         }
     }
 
