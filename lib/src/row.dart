@@ -9,8 +9,7 @@ class SDUIRow extends SDUIWidget {
   String? mainAxisSize;
 
   @override
-  Widget toWidget(BuildContext context) =>
-      Row(
+  Widget toWidget(BuildContext context) => Row(
         key: id == null ? null : Key(id!),
         mainAxisSize: toMainAxisSize(mainAxisSize),
         crossAxisAlignment: toCrossAxisAlignment(crossAxisAlignment),

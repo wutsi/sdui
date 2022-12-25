@@ -10,8 +10,7 @@ class SDUIFittedBox extends SDUIWidget {
   String? clip;
 
   @override
-  Widget toWidget(BuildContext context) =>
-      FittedBox(
+  Widget toWidget(BuildContext context) => FittedBox(
         fit: toBoxFit(fit) ?? BoxFit.none,
         alignment: toAlignment(alignment) ?? Alignment.center,
         clipBehavior: toClip(clip) ?? Clip.none,

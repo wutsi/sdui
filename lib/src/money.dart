@@ -35,8 +35,7 @@ class SDUIMoneyText extends SDUIWidget {
   }
 
   @override
-  Widget toWidget(BuildContext context) =>
-      MoneyText(
+  Widget toWidget(BuildContext context) => MoneyText(
         key: id == null ? null : Key(id!),
         value: value ?? 0,
         currency: currency ?? 'XAF',
@@ -58,19 +57,19 @@ class MoneyText extends StatelessWidget {
   final Color? color;
   final bool? bold;
 
-  const MoneyText({Key? key,
-    required this.value,
-    required this.currency,
-    this.numberFormat,
-    this.valueFontSize = 50,
-    this.currencyFontSize = 12,
-    this.color,
-    this.bold = false})
+  const MoneyText(
+      {Key? key,
+      required this.value,
+      required this.currency,
+      this.numberFormat,
+      this.valueFontSize = 50,
+      this.currencyFontSize = 12,
+      this.color,
+      this.bold = false})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      Text.rich(
+  Widget build(BuildContext context) => Text.rich(
         TextSpan(
             text: numberFormat == null
                 ? value.toString()
@@ -88,7 +87,7 @@ class MoneyText extends StatelessWidget {
                     style: TextStyle(
                         color: color,
                         fontWeight:
-                        bold == true ? FontWeight.bold : FontWeight.normal,
+                            bold == true ? FontWeight.bold : FontWeight.normal,
                         fontSize: currencyFontSize),
                   ),
                 ),
@@ -174,8 +173,7 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Column(
+  Widget build(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
@@ -215,9 +213,7 @@ class _MoneyWithKeyboardState extends State<_MoneyWithKeyboard>
   }
 
   void _changeText(int value) {
-    if (value
-        .toString()
-        .length <= delegate.maxLength) {
+    if (value.toString().length <= delegate.maxLength) {
       setState(() {
         state = value;
       });
@@ -301,8 +297,7 @@ class _MoneyWithSliderState extends State<_MoneyWithSlider> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Column(
+  Widget build(BuildContext context) => Column(
         children: [
           Container(
             padding: const EdgeInsets.all(10),

@@ -19,5 +19,4 @@ class SDUIDynamicWidget extends SDUIWidget {
     url = json?["url"];
     return this;
   }
-
 }
