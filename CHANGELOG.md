@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.1.184] 2022-12-24
+
+- ADD: Add chart component
+
 ## [0.1.183] 2022-12-24
 
 - CHANGE: Update dependencies
