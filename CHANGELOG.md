@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.1.194] 2023-01-04
+
+- FIX: Reset date/time default value
+
+## [0.1.193] 2023-01-03
+
+- FIX: Busy state of ListView switch
+- CHANGE: Reset date/time default value
+
 ## [0.1.192] 2022-12-25
 
 - CHANGE: Add alignment to MoneyText

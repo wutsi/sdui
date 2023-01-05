@@ -307,9 +307,10 @@ class _DateTimeWidgetStateful extends StatefulWidget {
 class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
   static final Logger _logger = LoggerFactory.create('_DateTimeWidgetState');
 
-  DateTime state = DateTime.now();
+  DateTime? state;
   DateFormat displayDateFormat = DateFormat("yyyy-MM-dd");
   DateFormat dataDateFormat = DateFormat("yyyy-MM-dd");
+  String emptyText = "";
   SDUIInput delegate;
 
   _DateTimeWidgetState(this.delegate);
@@ -321,13 +322,15 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
     if (delegate.type == 'date') {
       displayDateFormat = DateFormat("dd MMM yyyy");
       dataDateFormat = DateFormat("yyyy-MM-dd");
+      emptyText = sduiL10.selectDate;
     } else {
       displayDateFormat = DateFormat("HH:mm");
       dataDateFormat = DateFormat("HH:mm");
+      emptyText = sduiL10.selectTime;
     }
 
     if (delegate.value == null || delegate.value?.isEmpty == true) {
-      state = DateTime.now();
+      state = null;
     } else {
       try {
         state = dataDateFormat.parse(delegate.value!);
@@ -368,9 +371,10 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
         ],
       ));
 
-  String _text() => dataDateFormat.format(state);
+  String _text() => state == null ? emptyText : dataDateFormat.format(state!);
 
-  String _displayText() => displayDateFormat.format(state);
+  String _displayText() =>
+      state == null ? emptyText : displayDateFormat.format(state!);
 
   void _selectDateOrTime(BuildContext context) async {
     if (delegate.type == 'date') {
@@ -383,7 +387,7 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
   void _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: state,
+      initialDate: state ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(DateTime.now().year + 100),
     );
@@ -399,12 +403,15 @@ class _DateTimeWidgetState extends State<_DateTimeWidgetStateful> {
   void _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay(hour: state.hour, minute: state.minute));
+        initialTime: state == null
+            ? TimeOfDay.fromDateTime(DateTime.now())
+            : TimeOfDay(hour: state!.hour, minute: state!.minute));
 
     if (picked != null) {
       setState(() {
+        var date = state ?? DateTime.now();
         state = DateTime(
-            state.year, state.month, state.day, picked.hour, picked.minute);
+            date.year, date.month, date.day, picked.hour, picked.minute);
         delegate.provider?.setData(delegate.name, _text());
       });
     }

@@ -87,7 +87,7 @@ class SDUIAction {
     _notifyAnalytics();
 
     /* handle the result */
-    if (result == null) {
+    if (result == null || result.isEmpty) {
       return Future.value(null);
     }
 
