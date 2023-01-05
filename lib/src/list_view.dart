@@ -11,9 +11,12 @@ class SDUIListView extends SDUIWidget {
   String? separatorColor;
 
   @override
-  Widget toWidget(BuildContext context) => ListView(
-      scrollDirection: toAxis(direction),
-      children: childrenWidgets(context).map((e) => _toListItem(e)).toList());
+  Widget toWidget(BuildContext context) =>
+      ListView(
+          scrollDirection: toAxis(direction),
+          children: childrenWidgets(context)
+              .map((e) => _toListItem(e))
+              .toList());
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -53,7 +56,8 @@ class SDUIListItem extends SDUIWidget {
   SDUIListItem({this.caption, this.subCaption, this.iconLeft, this.iconRight});
 
   @override
-  Widget toWidget(BuildContext context) => ListTile(
+  Widget toWidget(BuildContext context) =>
+      ListTile(
         key: id == null ? null : Key(id!),
         title: Text(caption ?? '<NO-TITLE>'),
         subtitle: subCaption == null ? null : Text(subCaption!),
@@ -161,7 +165,8 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
 
     delegate.action.execute(context, {delegate.name: value}).then((value) {
       delegate.action.handleResult(context, value);
-    }).whenComplete(() => setState(() {
+    }).whenComplete(() =>
+        setState(() {
           buzy = false;
         }));
   }
