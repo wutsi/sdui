@@ -147,15 +147,15 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
       value: _selected,
       title: Text(delegate.caption ?? '<NO-TITLE>'),
       subtitle: delegate.subCaption == null ? null : Text(delegate.subCaption!),
-      secondary: delegate.toIcon(delegate.icon),
+      secondary: delegate.toIcon(delegate.icon, size: 48),
       onChanged: _buzy ? null : (bool value) => _changeState(value),
     );
   }
 
   void _changeState(bool value) {
     setState(() {
+      _selected = value;
       _buzy = true;
-      _selected = true;
     });
     submit(context, value);
   }
@@ -166,7 +166,9 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
     delegate.action.execute(context, {delegate.name: value}).then((value) {
       delegate.action.handleResult(context, value);
     }).whenComplete(() => setState(() {
-          _buzy = false;
+          setState(() {
+            _buzy = false;
+          });
         }));
   }
 }
