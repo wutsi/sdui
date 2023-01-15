@@ -11,12 +11,9 @@ class SDUIListView extends SDUIWidget {
   String? separatorColor;
 
   @override
-  Widget toWidget(BuildContext context) =>
-      ListView(
-          scrollDirection: toAxis(direction),
-          children: childrenWidgets(context)
-              .map((e) => _toListItem(e))
-              .toList());
+  Widget toWidget(BuildContext context) => ListView(
+      scrollDirection: toAxis(direction),
+      children: childrenWidgets(context).map((e) => _toListItem(e)).toList());
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -56,8 +53,7 @@ class SDUIListItem extends SDUIWidget {
   SDUIListItem({this.caption, this.subCaption, this.iconLeft, this.iconRight});
 
   @override
-  Widget toWidget(BuildContext context) =>
-      ListTile(
+  Widget toWidget(BuildContext context) => ListTile(
         key: id == null ? null : Key(id!),
         title: Text(caption ?? '<NO-TITLE>'),
         subtitle: subCaption == null ? null : Text(subCaption!),
@@ -129,7 +125,8 @@ class _ListItemSwitchWidget extends StatefulWidget {
 }
 
 class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
-  bool buzy = false;
+  bool _buzy = false;
+  bool _selected = false;
   SDUIListItemSwitch delegate;
 
   _ListItemSwitchState(this.delegate);
@@ -138,6 +135,8 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   void initState() {
     super.initState();
 
+    _buzy = false;
+    _selected = delegate.selected;
     delegate.provider?.setData(delegate.name, delegate.selected.toString());
   }
 
@@ -145,17 +144,18 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
   Widget build(BuildContext context) {
     return SwitchListTile(
       key: delegate.id == null ? null : Key(delegate.id!),
-      value: delegate.selected,
+      value: _selected,
       title: Text(delegate.caption ?? '<NO-TITLE>'),
       subtitle: delegate.subCaption == null ? null : Text(delegate.subCaption!),
       secondary: delegate.toIcon(delegate.icon),
-      onChanged: buzy ? null : (bool value) => _changeState(value),
+      onChanged: _buzy ? null : (bool value) => _changeState(value),
     );
   }
 
   void _changeState(bool value) {
     setState(() {
-      buzy = true;
+      _buzy = true;
+      _selected = true;
     });
     submit(context, value);
   }
@@ -165,9 +165,8 @@ class _ListItemSwitchState extends State<_ListItemSwitchWidget> {
 
     delegate.action.execute(context, {delegate.name: value}).then((value) {
       delegate.action.handleResult(context, value);
-    }).whenComplete(() =>
-        setState(() {
-          buzy = false;
+    }).whenComplete(() => setState(() {
+          _buzy = false;
         }));
   }
 }

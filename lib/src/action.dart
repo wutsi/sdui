@@ -118,7 +118,7 @@ class SDUIAction {
 
   Future<String?> _execute(
       String? result, BuildContext context, Map<String, dynamic>? data) async {
-    if (result == null) {
+    if (result == null || result.isEmpty) {
       return _emptyFuture;
     }
 

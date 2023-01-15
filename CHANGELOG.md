@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [0.1.195] 2023-01-14
+
+## Changes
+
+- Log error when downloading images
+
+## Fixes
+
+- Fix the `ListItemSwitch` state on selection
+- French translations for time selector
+
 ## [0.1.194] 2023-01-04
 
 - FIX: Reset date/time default value

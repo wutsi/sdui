@@ -53,6 +53,6 @@ class SDUIL10nFr extends SDUIL10n {
           validationMalformedURL: "L'URL n'est pas valide",
           validationMissingField: 'Le champ est manquant',
           selectDate: 'Selectionnez la date',
-          selectTime: 'Selectionnez l' 'heure',
+          selectTime: 'Selectionnez l\'heure',
         );
 }
