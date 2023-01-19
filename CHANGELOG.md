@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.1.198] 2023-01-19
+
+## Changes
+
+- Add support for more chart
+
 ## [0.1.197] 2023-01-14
 
 ## Changes

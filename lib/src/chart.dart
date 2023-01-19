@@ -9,11 +9,13 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class SDUIChart extends SDUIWidget {
   final _logger = LoggerFactory.create("SDUIChart");
   String? _title;
+  String? _type;
   final List<List<ChartData>> _series = [];
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
     _title = json?["title"];
+    _type = json?["type"];
 
     var series = json?["series"];
 
@@ -47,14 +49,52 @@ class SDUIChart extends SDUIWidget {
         series: _toSeries());
   }
 
-  List<LineSeries> _toSeries() {
-    var result = <LineSeries>[];
+  List<XyDataSeries> _toSeries() {
+    var result = <XyDataSeries>[];
     for (var element in _series) {
-      result.add(LineSeries<ChartData, String>(
-        dataSource: element,
-        xValueMapper: (ChartData data, _) => data.x,
-        yValueMapper: (ChartData data, _) => data.y,
-      ));
+      XyDataSeries<ChartData, String> item;
+      switch (_type?.toLowerCase()) {
+        case "line":
+          item = LineSeries<ChartData, String>(
+            dataSource: element,
+            xValueMapper: (ChartData data, _) => data.x,
+            yValueMapper: (ChartData data, _) => data.y,
+          );
+          break;
+
+        case "spline":
+          item = SplineSeries<ChartData, String>(
+            dataSource: element,
+            xValueMapper: (ChartData data, _) => data.x,
+            yValueMapper: (ChartData data, _) => data.y,
+          );
+          break;
+
+        case "bar":
+          item = BarSeries<ChartData, String>(
+            dataSource: element,
+            xValueMapper: (ChartData data, _) => data.x,
+            yValueMapper: (ChartData data, _) => data.y,
+          );
+          break;
+
+        case "step":
+          item = StepLineSeries<ChartData, String>(
+            dataSource: element,
+            xValueMapper: (ChartData data, _) => data.x,
+            yValueMapper: (ChartData data, _) => data.y,
+          );
+          break;
+
+        default:
+          item = ColumnSeries<ChartData, String>(
+            dataSource: element,
+            xValueMapper: (ChartData data, _) => data.x,
+            yValueMapper: (ChartData data, _) => data.y,
+          );
+      }
+
+      result.add(item);
     }
 
     return result;
