@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.1.199] 2023-02-03
+
+## Changes
+
+- Add local to MoneyText
+
 ## [0.1.198] 2023-01-19
 
 ## Changes

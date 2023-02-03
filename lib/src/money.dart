@@ -13,6 +13,7 @@ import 'widget.dart';
 /// - **currency**: Currency code
 /// - **color**: Text color
 /// - **numberFormat**: Number format of the money to display
+/// - **locale**: Locale
 class SDUIMoneyText extends SDUIWidget {
   double? value;
   String? currency;
@@ -22,6 +23,7 @@ class SDUIMoneyText extends SDUIWidget {
   double? currencyFontSize;
   bool? bold;
   String? alignment;
+  String? locale;
 
   @override
   SDUIWidget fromJson(Map<String, dynamic>? json) {
@@ -33,6 +35,7 @@ class SDUIMoneyText extends SDUIWidget {
     currencyFontSize = json?['currencyFontSize'];
     bold = json?['bold'];
     alignment = json?['alignment'];
+    locale = json?['locale'];
     return super.fromJson(json);
   }
 
@@ -47,6 +50,7 @@ class SDUIMoneyText extends SDUIWidget {
         currencyFontSize: currencyFontSize ?? 12,
         bold: bold,
         textAlign: toTextAlign(alignment),
+        locale: locale,
       );
 }
 
@@ -60,6 +64,7 @@ class MoneyText extends StatelessWidget {
   final Color? color;
   final bool? bold;
   final TextAlign? textAlign;
+  final String? locale;
 
   const MoneyText(
       {Key? key,
@@ -70,7 +75,8 @@ class MoneyText extends StatelessWidget {
       this.currencyFontSize = 12,
       this.color,
       this.bold = false,
-      this.textAlign})
+      this.textAlign,
+      this.locale})
       : super(key: key);
 
   @override
@@ -78,7 +84,7 @@ class MoneyText extends StatelessWidget {
         TextSpan(
             text: numberFormat == null
                 ? value.toString()
-                : NumberFormat(numberFormat).format(value),
+                : NumberFormat(numberFormat, locale).format(value),
             style: TextStyle(
                 color: color,
                 fontWeight: bold == true ? FontWeight.bold : FontWeight.normal,
