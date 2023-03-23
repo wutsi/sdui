@@ -61,7 +61,7 @@ dependencies:
     qr_flutter: ^4.0.0
     share_plus: ^6.3.0
     search_choices: ^2.2.1
-    syncfusion_flutter_charts: ^20.4.38
+    syncfusion_flutter_charts: ^21.0.0
     uuid: ^3.0.7
     uni_links: ^0.5.1
     url_launcher: ^6.1.7
