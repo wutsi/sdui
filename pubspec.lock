@@ -28,7 +28,7 @@ packages:
       name: badges
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "3.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -741,14 +741,14 @@ packages:
       name: syncfusion_flutter_charts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.4.38"
+    version: "21.1.41"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "20.4.38"
+    version: "21.1.41"
   synchronized:
     dependency: transitive
     description:

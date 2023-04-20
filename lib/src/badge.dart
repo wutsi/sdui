@@ -18,14 +18,16 @@ class SDUIBadge extends SDUIWidget {
   @override
   Widget toWidget(BuildContext context) => Badge(
         key: id == null ? null : Key(id!),
-        elevation: elevation ?? 2,
-        badgeColor: toColor(backgroundColor) ?? Colors.red,
-        borderRadius: borderRadius == null
-            ? BorderRadius.zero
-            : BorderRadius.all(Radius.circular(borderRadius!)),
-        shape: _toBadgeShape(shape),
+        badgeStyle: BadgeStyle(
+          elevation: elevation ?? 2,
+          badgeColor: toColor(backgroundColor) ?? Colors.red,
+          borderRadius: borderRadius == null
+              ? BorderRadius.zero
+              : BorderRadius.all(Radius.circular(borderRadius!)),
+          shape: _toBadgeShape(shape),
+          padding: EdgeInsets.all(padding ?? 5.0),
+        ),
         position: _toBadgePosition(position),
-        padding: EdgeInsets.all(padding ?? 5.0),
         badgeContent: caption != null
             ? Text(
                 caption!,

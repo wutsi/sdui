@@ -16,7 +16,7 @@ description: SDUI make it easy to implement Server Driven UI pattern on flutter.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.200
+version: 0.1.201
 
 environment:
     sdk: ">=2.12.0 <3.0.0"
@@ -35,7 +35,7 @@ dependencies:
     # Use with the CupertinoIcons class for iOS style icons.
     cupertino_icons: ^1.0.5
 
-    badges: ^3.0.0
+    badges: ^3.1.1
     cached_network_image: ^3.2.3
     camera: ^0.10.1
     carousel_slider: ^4.2.1
@@ -61,7 +61,7 @@ dependencies:
     qr_flutter: ^4.0.0
     share_plus: ^6.3.0
     search_choices: ^2.2.1
-    syncfusion_flutter_charts: ^21.0.0
+    syncfusion_flutter_charts: ^21.1.41
     uuid: ^3.0.7
     uni_links: ^0.5.1
     url_launcher: ^6.1.7

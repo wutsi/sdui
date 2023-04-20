@@ -4,6 +4,13 @@
 
 ## Changes
 
+- upgrade to syncfusion_flutter_charts v21.1.41
+- upgrade to badges v3.1.1
+
+## [0.1.200] 2023-02-03
+
+## Changes
+
 - upgrade to gradle v8
 - upgrade to kotlin v1.8.20
 - upgrade to syncfusion_flutter_charts v21.0.0
