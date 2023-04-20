@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.1.200] 2023-02-03
+
+## Changes
+
+- upgrade to gradle v8
+- upgrade to kotlin v1.8.20
+- upgrade to syncfusion_flutter_charts v21.0.0
+- upgrade to badges v3.0.0
+
 ## [0.1.199] 2023-02-03
 
 ## Changes
