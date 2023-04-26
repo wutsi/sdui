@@ -44,7 +44,7 @@ dependencies:
     file_picker: ^5.2.4
     firebase_core: ^2.4.0
     firebase_messaging: ^14.2.0
-    flutter_local_notifications: ^13.0.0
+    flutter_local_notifications: ^14.0.0
     flutter_link_previewer: ^3.2.0
     http: ^0.13.5
     http_parser: ^4.0.2
