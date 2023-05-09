@@ -59,7 +59,7 @@ dependencies:
     pinput: ^2.0.20
     qr_code_scanner: ^1.0.1
     qr_flutter: ^4.0.0
-    share_plus: ^6.3.0
+    share_plus: ^7.0.0
     search_choices: ^2.2.1
     syncfusion_flutter_charts: ^21.1.41
     uuid: ^3.0.7
