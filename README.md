@@ -1,4 +1,4 @@
-[![](https://github.com/wutsi/sdui/actions/workflows/master.yml/badge.svg)](https://github.com/wutsi/sdui/actions/workflows/master.yml)
+a[![](https://github.com/wutsi/sdui/actions/workflows/master.yml/badge.svg)](https://github.com/wutsi/sdui/actions/workflows/master.yml)
 
 [![pub package](https://img.shields.io/pub/v/sdui.svg)](https://pub.dev/packages/sdui)
 ![](https://img.shields.io/badge/licence-MIT-yellow.svg)

@@ -1,9 +1,10 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 import 'widget.dart';
 
-/// Descriptor of a [Badge]
+/// Descriptor of a ['Badge']
 class SDUIBadge extends SDUIWidget {
   String? shape;
   String? color;
@@ -16,7 +17,7 @@ class SDUIBadge extends SDUIWidget {
   double? padding;
 
   @override
-  Widget toWidget(BuildContext context) => Badge(
+  Widget toWidget(BuildContext context) => badges.Badge(
         key: id == null ? null : Key(id!),
         badgeStyle: BadgeStyle(
           elevation: elevation ?? 2,
