@@ -19,7 +19,7 @@ description: SDUI make it easy to implement Server Driven UI pattern on flutter.
 version: 0.1.201
 
 environment:
-    sdk: ">=2.12.0 <3.0.0"
+    sdk: "<4.0.0"
 
 # Dependencies specify othe9r packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
