@@ -51,7 +51,7 @@ dependencies:
     image_picker: ^0.8.6
     intl: ^0.17.0
     intl_phone_number_input: ^0.7.1
-    logger: ^1.1.0
+    logger: ^2.0.0
     mime: ^1.0.3
     path: ^1.8.2
     path_provider: ^2.0.11
