@@ -48,7 +48,7 @@ dependencies:
     flutter_link_previewer: ^3.2.0
     http: ^0.13.5
     http_parser: ^4.0.2
-    image_picker: ^0.8.6
+    image_picker: ^1.0.0
     intl: ^0.17.0
     intl_phone_number_input: ^0.7.1
     logger: ^1.1.0
